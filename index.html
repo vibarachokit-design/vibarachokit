@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- ========== META BÁSICAS ========== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- ========== SEO ========== -->
+  <title>Kihnally — Libros por VibaraChokiT | Mejillones, Chile</title>
+  <meta name="description" content="Descubre los libros de VibaraChokiT: humor absurdo, aventuras y mucha imaginación. Nacidos en la cafetería Kihnally en Mejillones, Chile.">
+  <meta name="keywords" content="libros infantiles, humor, aventuras, VibaraChokiT, Kihnally, Mejillones, Chile">
+  <meta name="author" content="VibaraChokiT">
+  <link rel="canonical" href="https://kihnally.cl/">
+  
+  <!-- ========== OPEN GRAPH (Redes Sociales) ========== -->
+  <meta property="og:title" content="Kihnally — Libros por VibaraChokiT">
+  <meta property="og:description" content="Historias que dan sabor. Libros de humor, aventura e imaginación desde Mejillones, Chile.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kihnally.cl/">
+  <meta property="og:image" content="https://kihnally.cl/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kihnally — Libros por VibaraChokiT">
+  <meta name="twitter:description" content="Historias que dan sabor. Libros de humor, aventura e imaginación desde Mejillones, Chile.">
+  
+  <!-- ========== FAVICON ========== -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+  
+  <!-- ========== RECURSOS ========== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- ========== TAILWIND ========== -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            coral: {
+              50: '#FFF5F0',
+              100: '#FFE8DB',
+              200: '#FFD0B5',
+              300: '#FFB088',
+              400: '#FF8C55',
+              500: '#FF6B35',
+              600: '#E5551F',
+              700: '#BF4018',
+              800: '#993318',
+              900: '#7A2C18'
+            },
+            teal: {
+              50: '#EDFCF8',
+              100: '#D0F7ED',
+              200: '#A5EDE0',
+              300: '#6DDEC9',
+              400: '#3DC9AD',
+              500: '#00C9A7',
+              600: '#00A68C',
+              700: '#008572',
+              800: '#00695B',
+              900: '#00574B'
+            },
+            sun: {
+              50: '#FFFDF0',
+              100: '#FFF9D6',
+              200: '#FFF3AD',
+              300: '#FFEB78',
+              400: '#FFE03E',
+              500: '#FFD23F',
+              600: '#E6B800',
+              700: '#BF9900',
+              800: '#997A00',
+              900: '#7A6200'
+            },
+            grape: {
+              50: '#F5F0FF',
+              100: '#EBE0FF',
+              200: '#D4C0FF',
+              300: '#B899FF',
+              400: '#9B6FFF',
+              500: '#7B2FF7',
+              600: '#6A1DE6',
+              700: '#5814C7',
+              800: '#4810A3',
+              900: '#3C0E86'
+            },
+            navy: {
+              50: '#F0F3F9',
+              100: '#DCE3F0',
+              200: '#B9C7E1',
+              300: '#8DA4CC',
+              400: '#6280B5',
+              500: '#3D5A99',
+              600: '#2D4478',
+              700: '#1F3359',
+              800: '#162544',
+              900: '#0F1A32'
+            },
+            cream: '#FFFCF5',
+            wasap: '#25D366'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            serif: ['Playfair Display', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    /* ========== ANIMACIONES ========== */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(3deg); }
+    }
+    @keyframes floatRev {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(-2deg); }
+    }
+    @keyframes bounceS {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes gradShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes spinS {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes modalIn {
+      0% { opacity: 0; transform: scale(.92) translateY(30px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes ovIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes cartIn {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(0); }
+    }
+    @keyframes cartOut {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(100%); }
+    }
+    @keyframes popIn {
+      0% { transform: scale(0); }
+      60% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: rotate(0); }
+      20% { transform: rotate(-12deg); }
+      40% { transform: rotate(10deg); }
+      60% { transform: rotate(-6deg); }
+      80% { transform: rotate(4deg); }
+    }
+    @keyframes flyUp {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-60px) scale(.5); }
+    }
+    @keyframes toastIn {
+      0% { opacity: 0; transform: translateY(20px) scale(.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes toastOut {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-20px) scale(.95); }
+    }
+
+    .anim-fade { animation: fadeIn 1s ease-out forwards; }
+    .anim-up { animation: slideUp .8s cubic-bezier(.16,1,.3,1) forwards; }
+    .anim-float { animation: float 6s ease-in-out infinite; }
+    .anim-floatR { animation: floatRev 5s ease-in-out infinite; }
+    .anim-bounce { animation: bounceS 2s ease-in-out infinite; }
+    .anim-spin { animation: spinS 20s linear infinite; }
+    .anim-shake { animation: shake .5s ease-in-out; }
+    .anim-toast-in { animation: toastIn .4s cubic-bezier(.16,1,.3,1) forwards; }
+    .anim-toast-out { animation: toastOut .3s ease-in forwards; }
+
+    .grad-anim {
+      background: linear-gradient(135deg, #FF6B35, #FFD23F, #00C9A7, #7B2FF7, #FF6B35);
+      background-size: 300% 300%;
+      animation: gradShift 8s ease infinite;
+    }
+    .t-grad {
+      background: linear-gradient(135deg, #FF6B35, #FFD23F);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .t-gradT {
+      background: linear-gradient(135deg, #00C9A7, #3DC9AD);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .t-gradG {
+      background: linear-gradient(135deg, #7B2FF7, #B899FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .rv { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(.16,1,.3,1); }
+    .rv.on { opacity: 1; transform: translateY(0); }
+    .rvL { opacity: 0; transform: translateX(-40px); transition: all 1s cubic-bezier(.16,1,.3,1); }
+    .rvL.on { opacity: 1; transform: translateX(0); }
+    .rvR { opacity: 0; transform: translateX(40px); transition: all 1s cubic-bezier(.16,1,.3,1); }
+    .rvR.on { opacity: 1; transform: translateX(0); }
+    .d1 { transition-delay: .1s; }
+    .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; }
+    .d4 { transition-delay: .4s; }
+
+    .bcard {
+      cursor: pointer;
+      transition: all .5s cubic-bezier(.16,1,.3,1);
+    }
+    .bcard:hover { transform: translateY(-12px) scale(1.02); }
+    .bcard:hover .bsh { transform: scale(1.1); opacity: .6; }
+    .bcard:hover .bimg { transform: scale(1.05); }
+    .bcard:hover .bov { opacity: 1; }
+
+    .nav-s {
+      background: rgba(255, 252, 245, .92) !important;
+      backdrop-filter: blur(24px) !important;
+      box-shadow: 0 1px 30px rgba(0, 0, 0, .08) !important;
+    }
+    .bl1 { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
+    .bl2 { border-radius: 58% 42% 30% 70% / 55% 45% 55% 45%; }
+    .mtrack { display: flex; animation: marquee 30s linear infinite; }
+    .m-ov { animation: ovIn .3s ease-out forwards; }
+    .m-cont { animation: modalIn .4s cubic-bezier(.16,1,.3,1) forwards; }
+    .c-in { animation: cartIn .4s cubic-bezier(.16,1,.3,1) forwards; }
+    .c-out { animation: cartOut .3s ease-in forwards; }
+    .b-pop { animation: popIn .3s ease-out forwards; }
+    .fly { animation: flyUp .6s ease-out forwards; }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #FFFCF5; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(#FF6B35, #FFD23F); border-radius: 4px; }
+    
+    html { scroll-behavior: smooth; }
+    body.no-scroll { overflow: hidden; }
+
+    /* Placeholder para imágenes que no cargan */
+    .img-fallback {
+      background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .img-fallback::after {
+      content: "📚";
+      font-size: 48px;
+    }
+  </style>
+</head>
+<body class="bg-cream font-sans text-navy-800 overflow-x-hidden">
+
+  <!-- ========== MODAL LIBRO ========== -->
+  <div id="bookModal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="m-ov absolute inset-0 bg-navy-900/70 backdrop-blur-sm" onclick="closeBookModal()" aria-hidden="true"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-4 sm:p-6">
+      <div class="m-cont bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="grid md:grid-cols-2">
+          <div class="relative h-72 md:h-auto md:min-h-[500px] bg-gradient-to-br from-coral-50 to-sun-50 overflow-hidden rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none">
+            <img id="mImg" src="" alt="" class="w-full h-full object-cover" onerror="this.classList.add('img-fallback')">
+            <div id="mBadge" class="absolute top-4 left-4 text-[9px] font-bold tracking-[.2em] uppercase px-3 py-1.5 rounded-full text-white"></div>
+          </div>
+          <div class="p-6 sm:p-8 lg:p-10 flex flex-col">
+            <button onclick="closeBookModal()" class="self-end w-10 h-10 rounded-full bg-navy-50 hover:bg-navy-100 flex items-center justify-center transition-colors -mt-2 -mr-2 mb-4" aria-label="Cerrar modal">
+              <iconify-icon icon="mdi:close" class="text-navy-600 text-xl"></iconify-icon>
+            </button>
+            <div class="flex-1">
+              <h3 id="mTitle" class="text-2xl sm:text-3xl font-black tracking-tight text-navy-800"></h3>
+              <p id="mSub" class="mt-1 text-sm font-semibold tracking-wide"></p>
+              <p id="mDesc" class="mt-4 text-sm text-navy-500 font-light leading-relaxed"></p>
+            </div>
+            <div class="mt-6 space-y-3">
+              <!-- BOTÓN DIGITAL -->
+              <button id="btnDigital" onclick="" class="w-full flex items-center justify-between bg-navy-50 hover:bg-navy-100 rounded-2xl px-5 py-4 transition-all duration-300 group/d hover:shadow-md active:scale-[.98]">
+                <div class="flex items-center gap-3">
+                  <div class="w-11 h-11 rounded-xl bg-grape-100 flex items-center justify-center">
+                    <iconify-icon icon="mdi:cellphone" class="text-grape-600 text-xl"></iconify-icon>
+                  </div>
+                  <div class="text-left">
+                    <div class="text-xs text-navy-400 font-medium">Digital (PDF)</div>
+                    <div class="text-lg font-black text-navy-800" id="mPriceD"></div>
+                  </div>
+                </div>
+                <span class="flex items-center gap-2 bg-grape-500 hover:bg-grape-600 text-white text-[10px] font-bold tracking-wider uppercase px-4 py-2.5 rounded-full transition-colors">
+                  <iconify-icon icon="mdi:cart-plus" class="text-sm"></iconify-icon>
+                  Agregar
+                </span>
+              </button>
+              <!-- BOTÓN FÍSICO -->
+              <button id="btnFisico" onclick="" class="w-full flex items-center justify-between bg-coral-50 hover:bg-coral-100 rounded-2xl px-5 py-4 transition-all duration-300 group/f hover:shadow-md active:scale-[.98]">
+                <div class="flex items-center gap-3">
+                  <div class="w-11 h-11 rounded-xl bg-coral-100 flex items-center justify-center">
+                    <iconify-icon icon="mdi:book-open-page-variant" class="text-coral-600 text-xl"></iconify-icon>
+                  </div>
+                  <div class="text-left">
+                    <div class="text-xs text-navy-400 font-medium">Físico (retiro en cafetería)</div>
+                    <div class="text-lg font-black text-navy-800" id="mPriceF"></div>
+                  </div>
+                </div>
+                <span class="flex items-center gap-2 bg-coral-500 hover:bg-coral-600 text-white text-[10px] font-bold tracking-wider uppercase px-4 py-2.5 rounded-full transition-colors">
+                  <iconify-icon icon="mdi:cart-plus" class="text-sm"></iconify-icon>
+                  Agregar
+                </span>
+              </button>
+            </div>
+            <div class="mt-5 flex items-start gap-2 text-xs text-navy-400 bg-sun-50 rounded-xl px-4 py-3">
+              <iconify-icon icon="mdi:information-outline" class="text-sun-600 text-base flex-shrink-0 mt-0.5"></iconify-icon>
+              <span>Se agrega a tu <strong class="text-navy-700">carrito</strong>. Al finalizar, se envía todo junto por WhatsApp.</span>
+            </div>
+            <div id="mTags" class="mt-4 flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== CARRITO DRAWER ========== -->
+  <div id="cartOv" class="fixed inset-0 z-[110] hidden">
+    <div class="m-ov absolute inset-0 bg-navy-900/60 backdrop-blur-sm" onclick="closeCart()" aria-hidden="true"></div>
+  </div>
+  <div id="cartDr" class="fixed top-0 right-0 h-full w-full sm:w-[420px] z-[120] hidden" role="dialog" aria-modal="true" aria-label="Carrito de compras">
+    <div class="h-full bg-white shadow-2xl flex flex-col">
+      <div class="flex items-center justify-between px-6 py-5 border-b border-navy-100">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl grad-anim flex items-center justify-center">
+            <iconify-icon icon="mdi:cart" class="text-white text-lg"></iconify-icon>
+          </div>
+          <div>
+            <h3 class="font-bold text-navy-800 text-lg">Tu carrito</h3>
+            <p id="cLabel" class="text-[10px] text-navy-400 tracking-wider uppercase">0 productos</p>
+          </div>
+        </div>
+        <button onclick="closeCart()" class="w-10 h-10 rounded-full bg-navy-50 hover:bg-navy-100 flex items-center justify-center transition-colors" aria-label="Cerrar carrito">
+          <iconify-icon icon="mdi:close" class="text-navy-600 text-xl"></iconify-icon>
+        </button>
+      </div>
+      <div class="flex-1 overflow-y-auto px-6 py-4">
+        <div id="cEmpty" class="flex flex-col items-center justify-center h-full text-center">
+          <div class="w-20 h-20 rounded-full bg-navy-50 flex items-center justify-center mb-4">
+            <iconify-icon icon="mdi:cart-off" class="text-navy-200 text-3xl"></iconify-icon>
+          </div>
+          <p class="text-navy-400 font-medium">Tu carrito está vacío</p>
+          <p class="text-navy-300 text-xs mt-1">Pincha en un libro para agregarlo</p>
+          <button onclick="closeCart()" class="mt-6 text-[10px] font-bold tracking-widest uppercase text-coral-500 hover:text-coral-600 transition-colors">Ver libros →</button>
+        </div>
+        <div id="cList" class="space-y-3 hidden"></div>
+      </div>
+      <div id="cFoot" class="border-t border-navy-100 px-6 py-5 hidden">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-base font-bold text-navy-800">Total</span>
+          <span id="cTotal" class="text-2xl font-black t-grad"></span>
+        </div>
+        <button onclick="sendWhatsApp()" class="w-full flex items-center justify-center gap-2 bg-wasap hover:bg-green-600 text-white text-[11px] font-bold tracking-[.15em] uppercase px-6 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-wasap/30 hover:-translate-y-0.5 active:scale-[.98]">
+          <iconify-icon icon="mdi:whatsapp" class="text-base"></iconify-icon>
+          Finalizar compra por WhatsApp
+        </button>
+        <button onclick="clearCart()" class="w-full mt-2 text-[10px] font-semibold tracking-wider uppercase text-navy-300 hover:text-red-400 transition-colors py-2">Vaciar carrito</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== BOTÓN FLOTANTE CARRITO ========== -->
+  <button id="cartFab" onclick="openCart()" class="fixed bottom-6 right-6 z-[90] w-16 h-16 rounded-full bg-navy-800 hover:bg-navy-700 text-white shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-navy-800/40" aria-label="Abrir carrito">
+    <iconify-icon icon="mdi:cart" class="text-2xl"></iconify-icon>
+    <span id="cBadge" class="absolute -top-1 -right-1 min-w-[22px] h-[22px] rounded-full bg-coral-500 text-white text-[10px] font-bold flex items-center justify-center shadow-lg hidden px-1">0</span>
+  </button>
+
+  <!-- ========== FLYING DOT (efecto al agregar) ========== -->
+  <div id="flyDot" class="fixed z-[200] w-4 h-4 rounded-full bg-coral-500 shadow-lg pointer-events-none hidden"></div>
+
+  <!-- ========== TOAST CONTAINER ========== -->
+  <div id="toastContainer" class="fixed top-6 right-6 z-[130] flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- ========== NAV ========== -->
+  <nav id="nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-500" style="background:transparent" role="navigation" aria-label="Navegación principal">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3 group" aria-label="Kihnally - Inicio">
+        <div class="w-10 h-10 rounded-xl grad-anim flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+          <span class="text-white font-black text-lg leading-none">K</span>
+        </div>
+        <span class="text-xl font-bold tracking-tight text-navy-800">Kihnally</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#libros" class="text-[11px] font-semibold tracking-[.15em] uppercase text-navy-600 hover:text-coral-500 transition-colors">Libros</a>
+        <a href="#autor" class="text-[11px] font-semibold tracking-[.15em] uppercase text-navy-600 hover:text-coral-500 transition-colors">Autor</a>
+        <a href="#cafeteria" class="text-[11px] font-semibold tracking-[.15em] uppercase text-navy-600 hover:text-coral-500 transition-colors">Cafetería</a>
+        <button onclick="openCart()" class="relative w-10 h-10 rounded-full bg-navy-50 hover:bg-navy-100 flex items-center justify-center transition-colors" aria-label="Abrir carrito">
+          <iconify-icon icon="mdi:cart-outline" class="text-navy-700 text-lg"></iconify-icon>
+          <span id="nBadge" class="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 rounded-full bg-coral-500 text-white text-[8px] font-bold flex items-center justify-center hidden px-0.5">0</span>
+        </button>
+      </div>
+      <button id="menuBtn" class="md:hidden w-10 h-10 flex items-center justify-center text-navy-800" aria-label="Abrir menú" aria-expanded="false">
+        <iconify-icon icon="mdi:menu" class="text-2xl"></iconify-icon>
+      </button>
+    </div>
+    <div id="mobMenu" class="md:hidden overflow-hidden transition-all duration-500 max-h-0 opacity-0" role="menu">
+      <div class="px-6 pb-6 pt-2 bg-white/95 backdrop-blur-xl border-t border-navy-100 flex flex-col gap-4">
+        <a href="#libros" class="text-sm font-medium text-navy-700 py-2 hover:text-coral-500 transition-colors" role="menuitem">Libros</a>
+        <a href="#autor" class="text-sm font-medium text-navy-700 py-2 hover:text-coral-500 transition-colors" role="menuitem">Autor</a>
+        <a href="#cafeteria" class="text-sm font-medium text-navy-700 py-2 hover:text-coral-500 transition-colors" role="menuitem">Cafetería</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-20">
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div class="absolute -top-20 -right-20 w-[500px] h-[500px] bg-coral-200/40 bl1 anim-float"></div>
+      <div class="absolute top-1/3 -left-32 w-[400px] h-[400px] bg-teal-200/40 bl2 anim-floatR"></div>
+      <div class="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-sun-200/30 bl1 anim-float" style="animation-delay:-2s"></div>
+      <div class="absolute top-20 left-1/3 w-[200px] h-[200px] bg-grape-200/20 bl2 anim-floatR" style="animation-delay:-3s"></div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div class="text-center lg:text-left">
+        <div class="anim-fade" style="animation-delay:.1s;opacity:0">
+          <span class="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-coral-200 text-coral-600 text-[10px] font-bold tracking-[.2em] uppercase px-4 py-2 rounded-full mb-8">
+            <span class="w-2 h-2 rounded-full bg-coral-500 animate-pulse"></span>Mejillones, Chile
+          </span>
+        </div>
+        <h1 class="anim-up" style="animation-delay:.2s;opacity:0">
+          <span class="block text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[.9] tracking-tight text-navy-800">Historias</span>
+          <span class="block text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[.9] tracking-tight mt-2"><span class="t-grad">que dan</span></span>
+          <span class="block text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[.9] tracking-tight text-navy-800 mt-2">sabor<span class="text-coral-500">.</span></span>
+        </h1>
+        <p class="mt-8 text-base sm:text-lg text-navy-500 font-light leading-relaxed max-w-md mx-auto lg:mx-0 anim-up" style="animation-delay:.4s;opacity:0">
+          Descubre los libros de <strong class="font-semibold text-navy-700">VibaraChokiT</strong>: humor absurdo, aventuras y mucha imaginación. Nacidos en la cafatería <strong class="font-semibold text-navy-700">Kihnally</strong>, hechos para ti.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start anim-up" style="animation-delay:.5s;opacity:0">
+          <a href="#libros" class="group inline-flex items-center justify-center gap-2 bg-navy-800 hover:bg-navy-700 text-white text-[11px] font-bold tracking-[.15em] uppercase px-8 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1">Ver libros <iconify-icon icon="mdi:arrow-down" class="text-base group-hover:translate-y-0.5 transition-transform"></iconify-icon></a>
+          <button onclick="openCart()" class="group inline-flex items-center justify-center gap-2 bg-white/70 hover:bg-white border border-navy-200 text-navy-700 text-[11px] font-bold tracking-[.15em] uppercase px-8 py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1"><iconify-icon icon="mdi:cart" class="text-base text-coral-500"></iconify-icon> Mi carrito</button>
+        </div>
+        <div class="mt-12 flex gap-8 justify-center lg:justify-start anim-up" style="animation-delay:.6s;opacity:0">
+          <div><div class="text-3xl font-black t-grad">4</div><div class="text-[10px] font-semibold tracking-[.15em] uppercase text-navy-400 mt-1">Títulos</div></div>
+          <div class="w-px bg-navy-200"></div>
+          <div><div class="text-3xl font-black t-gradT">100%</div><div class="text-[10px] font-semibold tracking-[.15em] uppercase text-navy-400 mt-1">Local</div></div>
+          <div class="w-px bg-navy-200"></div>
+          <div><div class="text-3xl font-black t-gradG">∞</div><div class="text-[10px] font-semibold tracking-[.15em] uppercase text-navy-400 mt-1">Diversión</div></div>
+        </div>
+      </div>
+      <div class="relative flex justify-center lg:justify-end anim-fade" style="animation-delay:.3s;opacity:0">
+        <div class="relative w-72 sm:w-80 lg:w-96">
+          <div class="absolute -top-6 -left-6 w-48 h-64 rounded-2xl overflow-hidden shadow-2xl rotate-[-8deg] anim-floatR z-10 border-2 border-white">
+            <img src="img/chinowon.png" alt="Portada del libro Chinowon" class="w-full h-full object-cover" onerror="this.classList.add('img-fallback')">
+          </div>
+          <div class="absolute top-8 -right-4 w-48 h-64 rounded-2xl overflow-hidden shadow-2xl rotate-[6deg] anim-float z-20 border-2 border-white" style="animation-delay:-1.5s">
+            <img src="img/turon.jpg" alt="Portada del libro Turón" class="w-full h-full object-cover" onerror="this.classList.add('img-fallback')">
+          </div>
+          <div class="relative w-56 h-72 sm:w-64 sm:h-80 mx-auto rounded-2xl overflow-hidden shadow-2xl z-30 border-2 border-white anim-bounce">
+            <img src="img/chanchini.png" alt="Portada del libro ¿Dónde está Chanchini?" class="w-full h-full object-cover" onerror="this.classList.add('img-fallback')">
+          </div>
+        </div>
+        <div class="absolute -top-4 right-0 bg-sun-400 text-navy-900 text-xs font-black px-3 py-1.5 rounded-full shadow-lg anim-float" style="animation-delay:-1s">¡NUEVO! ✨</div>
+        <div class="absolute bottom-12 -left-8 bg-grape-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg anim-floatR" style="animation-delay:-2s">Humor 😂</div>
+        <div class="absolute bottom-0 right-0 bg-teal-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg anim-float" style="animation-delay:-3s">Infantil 🐶</div>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 anim-bounce">
+      <span class="text-[9px] font-bold tracking-[.2em] uppercase text-navy-300">Scroll</span>
+      <iconify-icon icon="mdi:chevron-down" class="text-navy-300 text-xl"></iconify-icon>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="py-6 border-y border-navy-100 overflow-hidden bg-white/50">
+    <div class="mtrack whitespace-nowrap">
+      <span class="inline-flex items-center gap-8 mx-4 text-navy-300">
+        <span class="text-sm font-bold tracking-widest uppercase">¿Dónde está Chanchini?</span><span class="text-coral-400">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">Chinowon</span><span class="text-teal-400">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">Barista Kihnally</span><span class="text-sun-500">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">Turón</span><span class="text-grape-400">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">VibaraChokiT</span><span class="text-coral-400">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">Kihnally</span><span class="text-teal-400">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">Mejillones</span><span class="text-sun-500">✦</span>
+      </span>
+      <span class="inline-flex items-center gap-8 mx-4 text-navy-300">
+        <span class="text-sm font-bold tracking-widest uppercase">¿Dónde está Chanchini?</span><span class="text-coral-400">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">Chinowon</span><span class="text-teal-400">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">Barista Kihnally</span><span class="text-sun-500">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">Turón</span><span class="text-grape-400">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">VibaraChokiT</span><span class="text-coral-400">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">Kihnally</span><span class="text-teal-400">✦</span>
+        <span class="text-sm font-bold tracking-widest uppercase">Mejillones</span><span class="text-sun-500">✦</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- LIBROS -->
+  <section id="libros" class="py-20 lg:py-32 relative">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-coral-100/30 bl1 pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16 lg:mb-24">
+        <span class="rv inline-block text-[10px] font-bold tracking-[.25em] uppercase text-coral-500 mb-4">Colección completa</span>
+        <h2 class="rv d1 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-navy-800 leading-[.95]">Nuestros <span class="t-grad">libros</span></h2>
+        <p class="rv d2 mt-6 text-navy-500 font-light max-w-lg mx-auto">Pincha en cualquier libro para ver el detalle y agregarlo a tu carrito.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 lg:gap-12" id="booksGrid">
+        <!-- Los libros se generan dinámicamente con JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTOR -->
+  <section id="autor" class="py-20 lg:py-32 bg-navy-800 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-coral-500/10 bl1 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-500/10 bl2 pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rounded-full anim-spin pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="rv inline-block text-[10px] font-bold tracking-[.25em] uppercase text-coral-400 mb-4">El creador</span>
+          <h2 class="rv d1 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[.95]">Vibara<span class="t-grad">ChokiT</span></h2>
+          <p class="rv d2 mt-8 text-base text-white/60 font-light leading-relaxed">Creador, soñador y barista de las historias más absurdas del norte de Chile. Desde Mejillones, VibaraChokiT conjuga mundos donde los cerditos viajan, los diccionarios mienten y los perros tienen cara de ratón.</p>
+          <p class="rv d3 mt-4 text-base text-white/60 font-light leading-relaxed">Cada libro nace entre tazas de café en <strong class="text-white font-medium">Kihnally</strong>, la cafetería que es mucho más que un lugar: es el laboratorio donde la imaginación se mezcla con el aroma del mejor café de puerto.</p>
+          <div class="rv d4 mt-10 flex flex-wrap gap-4">
+            <div class="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-3"><iconify-icon icon="mdi:book-open-page-variant" class="text-coral-400 text-xl"></iconify-icon><div><div class="text-white font-bold text-lg">4</div><div class="text-white/40 text-[10px] tracking-wider uppercase">Libros</div></div></div>
+            <div class="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-3"><iconify-icon icon="mdi:map-marker" class="text-teal-400 text-xl"></iconify-icon><div><div class="text-white font-bold text-sm">Mejillones</div><div class="text-white/40 text-[10px] tracking-wider uppercase">Chile 🇨🇱</div></div></div>
+            <div class="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-3"><iconify-icon icon="mdi:coffee" class="text-sun-400 text-xl"></iconify-icon><div><div class="text-white font-bold text-sm">Kihnally</div><div class="text-white/40 text-[10px] tracking-wider uppercase">Cafetería</div></div></div>
+          </div>
+        </div>
+        <div class="rvR relative flex justify-center">
+          <div class="relative w-80 h-96 rounded-3xl overflow-hidden shadow-2xl border-2 border-white/10">
+            <div class="absolute inset-0 grad-anim opacity-20"></div>
+            <div class="absolute inset-0 bg-navy-700 flex flex-col items-center justify-center p-8 text-center">
+              <div class="w-24 h-24 rounded-full grad-anim flex items-center justify-center mb-6 shadow-xl"><span class="text-white text-3xl font-black">VC</span></div>
+              <h3 class="text-white text-2xl font-bold">VibaraChokiT</h3>
+              <p class="text-white/50 text-sm mt-2">Autor & Creador</p>
+              <div class="mt-6 w-12 h-px bg-gradient-to-r from-coral-500 to-sun-500"></div>
+              <p class="text-white/40 text-xs mt-6 font-light leading-relaxed italic">"Escribo lo que el café me dicta. Y el café tiene buen humor."</p>
+            </div>
+          </div>
+          <div class="absolute -top-4 -right-4 w-16 h-16 rounded-2xl bg-coral-500 flex items-center justify-center shadow-lg anim-float text-2xl">🐷</div>
+          <div class="absolute -bottom-4 -left-4 w-16 h-16 rounded-2xl bg-teal-500 flex items-center justify-center shadow-lg anim-floatR text-2xl">☕</div>
+          <div class="absolute top-1/2 -right-8 w-12 h-12 rounded-xl bg-sun-400 flex items-center justify-center shadow-lg anim-float text-xl" style="animation-delay:-2s">📖</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAFETERÍA -->
+  <section id="cafeteria" class="py-20 lg:py-32 relative overflow-hidden">
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-teal-100/30 bl2 pointer-events-none"></div>
+    <div class="absolute top-20 right-0 w-72 h-72 bg-sun-100/30 bl1 pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="rvL relative order-2 lg:order-1">
+          <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+            <img src="img/cafeteria.jpg" alt="Cafetería Kihnally - Mejillones" class="w-full h-80 sm:h-96 lg:h-[500px] object-cover" onerror="this.classList.add('img-fallback')">
+            <div class="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+              <div class="flex items-center gap-3 mb-3"><div class="w-3 h-3 rounded-full bg-teal-400 animate-pulse"></div><span class="text-white/80 text-[10px] font-bold tracking-[.2em] uppercase">Abierto ahora</span></div>
+              <h3 class="text-white text-2xl sm:text-3xl font-bold">Cafetería Kihnally</h3>
+              <p class="text-white/60 text-sm mt-1">Mejillones, Antofagasta, Chile</p>
+            </div>
+          </div>
+          <div class="absolute -bottom-6 -right-4 sm:right-8 bg-white rounded-2xl shadow-xl p-5 border border-navy-100 max-w-[220px]">
+            <div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center"><iconify-icon icon="mdi:bookshelf" class="text-teal-600 text-xl"></iconify-icon></div><div><div class="text-sm font-bold text-navy-800">Libros físicos</div><div class="text-[10px] text-navy-400">En tienda</div></div></div>
+            <p class="text-xs text-navy-500 font-light">Ven, tómate un café y hojea los libros.</p>
+          </div>
+        </div>
+        <div class="order-1 lg:order-2">
+          <span class="rv inline-block text-[10px] font-bold tracking-[.25em] uppercase text-teal-600 mb-4">Visítanos</span>
+          <h2 class="rv d1 text-4xl sm:text-5xl font-black tracking-tight text-navy-800 leading-[.95]">Más que una <span class="t-gradT">cafetería</span></h2>
+          <p class="rv d2 mt-8 text-base text-navy-500 font-light leading-relaxed">Kihnally es el punto de encuentro donde el café, la cultura y las historias se fusionan. Aquí nacieron los libros de VibaraChokiT.</p>
+          <div class="rv d3 mt-10 space-y-5">
+            <div class="flex items-start gap-4 group"><div class="w-12 h-12 rounded-2xl bg-coral-50 group-hover:bg-coral-100 flex items-center justify-center flex-shrink-0 transition-colors"><iconify-icon icon="mdi:map-marker-radius" class="text-coral-500 text-xl"></iconify-icon></div><div><div class="font-semibold text-navy-800">Ubicación</div><div class="text-sm text-navy-500 font-light mt-0.5">Mejillones, Región de Antofagasta, Chile</div></div></div>
+            <div class="flex items-start gap-4 group"><div class="w-12 h-12 rounded-2xl bg-teal-50 group-hover:bg-teal-100 flex items-center justify-center flex-shrink-0 transition-colors"><iconify-icon icon="mdi:book-open-variant" class="text-teal-500 text-xl"></iconify-icon></div><div><div class="font-semibold text-navy-800">Libros físicos</div><div class="text-sm text-navy-500 font-light mt-0.5">Todos los títulos disponibles</div></div></div>
+            <div class="flex items-start gap-4 group"><div class="w-12 h-12 rounded-2xl bg-sun-50 group-hover:bg-sun-100 flex items-center justify-center flex-shrink-0 transition-colors"><iconify-icon icon="mdi:coffee" class="text-sun-600 text-xl"></iconify-icon></div><div><div class="font-semibold text-navy-800">Café + Lectura</div><div class="text-sm text-navy-500 font-light mt-0.5">El combo perfecto</div></div></div>
+          </div>
+          <a href="https://maps.google.com/?q=Mejillones+Chile" target="_blank" class="rv d4 mt-10 inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-white text-[11px] font-bold tracking-[.15em] uppercase px-8 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-teal-500/30 hover:-translate-y-1"><iconify-icon icon="mdi:directions" class="text-base"></iconify-icon>Cómo llegar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRECIOS -->
+  <section class="py-16 lg:py-24 bg-white relative">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="rv inline-block text-[10px] font-bold tracking-[.25em] uppercase text-grape-500 mb-4">Precios</span>
+        <h2 class="rv d1 text-3xl sm:text-4xl font-black tracking-tight text-navy-800">Tabla de <span class="t-gradG">precios</span></h2>
+      </div>
+      <div class="rv d2 bg-cream rounded-3xl border border-navy-100 overflow-hidden shadow-sm">
+        <div class="grid grid-cols-3 text-center py-4 px-6 border-b border-navy-100 bg-navy-800 text-white">
+          <div class="text-[10px] font-bold tracking-[.2em] uppercase">Nombre</div>
+          <div class="text-[10px] font-bold tracking-[.2em] uppercase">Digital</div>
+          <div class="text-[10px] font-bold tracking-[.2em] uppercase">Físico</div>
+        </div>
+        <div id="priceTable">
+          <!-- Generado dinámicamente -->
+        </div>
+      </div>
+      <p class="rv d3 text-center text-xs text-navy-400 mt-4">Pincha en cualquier fila para agregar al carrito 🛒</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 lg:py-28 relative overflow-hidden">
+    <div class="absolute inset-0 grad-anim opacity-10 pointer-events-none"></div>
+    <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+      <div class="rv"><iconify-icon icon="mdi:cart" class="text-5xl text-coral-400 mb-6"></iconify-icon></div>
+      <h2 class="rv d1 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-navy-800 leading-tight">¿Cuál libro te <span class="t-grad">llevas</span>?</h2>
+      <p class="rv d2 mt-6 text-navy-500 font-light max-w-md mx-auto">Agrega los que quieras a tu carrito y al finalizar te conectamos por WhatsApp.</p>
+      <div class="rv d3 mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+        <button onclick="openCart()" class="group inline-flex items-center justify-center gap-2 bg-navy-800 hover:bg-navy-700 text-white text-[11px] font-bold tracking-[.15em] uppercase px-10 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1"><iconify-icon icon="mdi:cart" class="text-base"></iconify-icon>Ver mi carrito<iconify-icon icon="mdi:arrow-right" class="text-base group-hover:translate-x-1 transition-transform"></iconify-icon></button>
+        <a href="#libros" class="group inline-flex items-center justify-center gap-2 bg-white hover:bg-coral-50 border border-navy-200 text-navy-700 text-[11px] font-bold tracking-[.15em] uppercase px-10 py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">Ver libros</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy-800 pt-16 pb-8 relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-coral-500/50 to-transparent"></div>
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-12 pb-12 border-b border-white/10">
+        <div>
+          <div class="flex items-center gap-3 mb-6"><div class="w-10 h-10 rounded-xl grad-anim flex items-center justify-center"><span class="text-white font-black text-lg">K</span></div><span class="text-xl font-bold text-white tracking-tight">Kihnally</span></div>
+          <p class="text-white/40 text-sm font-light leading-relaxed">Cafetería y editorial independiente en Mejillones, Chile.</p>
+        </div>
+        <div>
+          <h4 class="text-[10px] font-bold tracking-[.25em] uppercase text-white/30 mb-6">Navegación</h4>
+          <div class="space-y-3"><a href="#libros" class="block text-sm text-white/50 hover:text-coral-400 transition-colors">Libros</a><a href="#autor" class="block text-sm text-white/50 hover:text-coral-400 transition-colors">Autor</a><a href="#cafeteria" class="block text-sm text-white/50 hover:text-coral-400 transition-colors">Cafetería</a></div>
+        </div>
+        <div>
+          <h4 class="text-[10px] font-bold tracking-[.25em] uppercase text-white/30 mb-6">Contacto</h4>
+          <div class="space-y-3">
+            <a href="https://wa.me/56995436140" target="_blank" class="flex items-center gap-3 text-sm text-white/50 hover:text-wasap transition-colors"><iconify-icon icon="mdi:whatsapp" class="text-wasap"></iconify-icon>+56 9 9543 6140</a>
+            <div class="flex items-center gap-3 text-sm text-white/50"><iconify-icon icon="mdi:map-marker" class="text-coral-400"></iconify-icon>Mejillones, Chile</div>
+            <div class="flex items-center gap-3 text-sm text-white/50"><iconify-icon icon="mdi:instagram" class="text-grape-400"></iconify-icon>@kihnally</div>
+          </div>
+        </div>
+      </div>
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-[10px] text-white/20 tracking-wider">© 2025 Kihnally · por VibaraChokiT · Hecho con ☕ en Mejillones</p>
+        <div class="flex items-center gap-4">
+          <a href="#" class="w-9 h-9 rounded-full bg-white/5 hover:bg-coral-500/20 flex items-center justify-center transition-colors" aria-label="Instagram"><iconify-icon icon="mdi:instagram" class="text-white/40 hover:text-coral-400 text-base"></iconify-icon></a>
+          <a href="https://wa.me/56995436140" target="_blank" class="w-9 h-9 rounded-full bg-white/5 hover:bg-wasap/20 flex items-center justify-center transition-colors" aria-label="WhatsApp"><iconify-icon icon="mdi:whatsapp" class="text-white/40 hover:text-wasap text-base"></iconify-icon></a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/5 hover:bg-teal-500/20 flex items-center justify-center transition-colors" aria-label="Facebook"><iconify-icon icon="mdi:facebook" class="text-white/40 hover:text-teal-400 text-base"></iconify-icon></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== JAVASCRIPT MODULAR ========== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // =============================================
+      // CONFIGURACIÓN
+      // =============================================
+      const WA = '56995436140';
+
+      // =============================================
+      // DATOS DE LIBROS (imágenes locales)
+      // =============================================
+      const BOOKS = {
+        chanchini: {
+          id: 'chanchini',
+          title: '¿Dónde está Chanchini?',
+          subtitle: 'Aventura · Viajes · Infantil',
+          description: 'Conoce a Chanchini, la viajera más pequeña de Chile. Este cerdito soñador vive en la cafetería Kihnally y quiere recorrer cada rincón del país, desde Arica hasta Punta Arenas.',
+          img: 'img/chanchini.png',
+          badge: 'Aventura',
+          badgeColor: 'bg-coral-500',
+          colorKey: 'coral',
+          priceDigital: 3500,
+          pricePhysical: 5900,
+          tags: ['Viajes', 'Infantil', 'Chile', 'Aventura'],
+          tagColors: ['bg-coral-50 text-coral-600', 'bg-sun-50 text-sun-700', 'bg-teal-50 text-teal-700', 'bg-grape-50 text-grape-600'],
+          cardBg: 'from-coral-50 to-sun-50'
+        },
+        chinowon: {
+          id: 'chinowon',
+          title: 'Chinowon',
+          subtitle: 'El diccionario menos confiable del mundo',
+          description: 'Traducciones que jamás encontrarás en una academia. Humor absurdo 100% garantizado. Si no tiene sentido… ¡es Chinowon!',
+          img: 'img/chinowon.png',
+          badge: 'Humor',
+          badgeColor: 'bg-sun-500',
+          colorKey: 'sun',
+          priceDigital: 4500,
+          pricePhysical: 5990,
+          tags: ['Humor', 'Absurdo', 'Diccionario', 'Risa'],
+          tagColors: ['bg-sun-50 text-sun-700', 'bg-coral-50 text-coral-600', 'bg-grape-50 text-grape-600', 'bg-teal-50 text-teal-700'],
+          cardBg: 'from-sun-50 to-coral-50'
+        },
+        barista: {
+          id: 'barista',
+          title: 'Barista Kihnally',
+          subtitle: 'Temporada 1 — Café · Cultura · Aventura',
+          description: '6 aventuras en Mejillones como nunca antes las viste. Gaviotas con actitud, fantasmas en el faro y el mejor café del puerto.',
+          img: 'img/barista.png',
+          badge: 'Serie',
+          badgeColor: 'bg-teal-500',
+          colorKey: 'teal',
+          priceDigital: 3500,
+          pricePhysical: 4990,
+          tags: ['Aventura', 'Mejillones', 'Café', '6 episodios'],
+          tagColors: ['bg-teal-50 text-teal-700', 'bg-coral-50 text-coral-600', 'bg-sun-50 text-sun-700', 'bg-grape-50 text-grape-600'],
+          cardBg: 'from-teal-50 to-grape-50'
+        },
+        turon: {
+          id: 'turon',
+          title: 'Turón: El perro con carita de ratón',
+          subtitle: 'Amistad · Sueños · Un camarón muy especial',
+          description: 'Una historia sobre amistad, sueños y un camarón muy especial. Turón te robará el corazón con esa carita imposible.',
+          img: 'img/turon.jpg',
+          badge: 'Infantil',
+          badgeColor: 'bg-grape-500',
+          colorKey: 'grape',
+          priceDigital: 3500,
+          pricePhysical: 4990,
+          tags: ['Infantil', 'Amistad', 'Sueños', 'Emoción'],
+          tagColors: ['bg-grape-50 text-grape-600', 'bg-pink-50 text-pink-600', 'bg-sun-50 text-sun-700', 'bg-coral-50 text-coral-600'],
+          cardBg: 'from-grape-50 to-pink-50'
+        }
+      };
+
+      // =============================================
+      // UTILIDADES
+      // =============================================
+      const formatPrice = (n) => '$' + n.toLocaleString('es-CL');
+
+      // =============================================
+      // ESTADO DEL CARRITO
+      // =============================================
+      let cart = [];
+
+      // =============================================
+      // FUNCIONES DEL CARRITO
+      // =============================================
+      function addToCart(bookId, format) {
+        const book = BOOKS[bookId];
+        if (!book) return;
+
+        const existing = cart.find(item => item.bookId === bookId && item.format === format);
+        if (existing) {
+          existing.quantity++;
+        } else {
+          cart.push({
+            bookId: bookId,
+            format: format,
+            title: book.title,
+            price: format === 'digital' ? book.priceDigital : book.pricePhysical,
+            img: book.img,
+            colorKey: book.colorKey,
+            quantity: 1
+          });
+        }
+
+        renderCart();
+        shakeFab();
+        flyDot();
+        showToast(`¡"${book.title}" agregado al carrito! 🎉`);
+        closeBookModal();
+      }
+
+      function removeFromCart(index) {
+        cart.splice(index, 1);
+        renderCart();
+      }
+
+      function changeQuantity(index, delta) {
+        cart[index].quantity += delta;
+        if (cart[index].quantity <= 0) {
+          cart.splice(index, 1);
+        }
+        renderCart();
+      }
+
+      function clearCart() {
+        if (cart.length === 0) return;
+        if (confirm('¿Seguro que quieres vaciar tu carrito?')) {
+          cart = [];
+          renderCart();
+          showToast('Carrito vaciado 🗑️');
+        }
+      }
+
+      function getCartTotal() {
+        return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      }
+
+      function getCartCount() {
+        return cart.reduce((sum, item) => sum + item.quantity, 0);
+      }
+
+      // =============================================
+      // RENDER CARRITO
+      // =============================================
+      function renderCart() {
+        const count = getCartCount();
+        const total = getCartTotal();
+
+        // Badges
+        const cBadge = document.getElementById('cBadge');
+        const nBadge = document.getElementById('nBadge');
+        const badge = document.getElementById('cLabel');
+
+        if (count > 0) {
+          cBadge.classList.remove('hidden');
+          cBadge.textContent = count;
+          cBadge.classList.remove('b-pop');
+          void cBadge.offsetWidth;
+          cBadge.classList.add('b-pop');
+
+          nBadge.classList.remove('hidden');
+          nBadge.textContent = count;
+        } else {
+          cBadge.classList.add('hidden');
+          nBadge.classList.add('hidden');
+        }
+
+        badge.textContent = count + (count === 1 ? ' producto' : ' productos');
+
+        const empty = document.getElementById('cEmpty');
+        const list = document.getElementById('cList');
+        const foot = document.getElementById('cFoot');
+
+        if (cart.length === 0) {
+          empty.classList.remove('hidden');
+          list.classList.add('hidden');
+          foot.classList.add('hidden');
+        } else {
+          empty.classList.add('hidden');
+          list.classList.remove('hidden');
+          foot.classList.remove('hidden');
+
+          document.getElementById('cTotal').textContent = formatPrice(total);
+
+          list.innerHTML = cart.map((item, index) => {
+            const isDigital = item.format === 'digital';
+            return `
+              <div class="flex gap-3 bg-navy-50/50 rounded-2xl p-3 group/it hover:bg-navy-50 transition-colors">
+                <div class="w-16 h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
+                  <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover" onerror="this.classList.add('img-fallback')">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm font-bold text-navy-800 truncate">${item.title}</h4>
+                  <span class="inline-flex items-center gap-1 text-[9px] font-semibold tracking-wider uppercase ${isDigital ? 'bg-grape-50 text-grape-600' : 'bg-coral-50 text-coral-600'} px-2 py-0.5 rounded-full mt-1">
+                    <iconify-icon icon="${isDigital ? 'mdi:cellphone' : 'mdi:book-open-page-variant'}" class="text-[10px]"></iconify-icon>
+                    ${isDigital ? 'Digital (PDF)' : 'Físico'}
+                  </span>
+                  <div class="flex items-center justify-between mt-2">
+                    <div class="flex items-center gap-0">
+                      <button onclick="window.changeQuantity(${index}, -1)" class="w-7 h-7 rounded-lg bg-white hover:bg-navy-100 flex items-center justify-center text-navy-600 text-sm transition-colors shadow-sm" aria-label="Disminuir cantidad">−</button>
+                      <span class="w-8 text-center text-sm font-bold text-navy-800">${item.quantity}</span>
+                      <button onclick="window.changeQuantity(${index}, 1)" class="w-7 h-7 rounded-lg bg-white hover:bg-navy-100 flex items-center justify-center text-navy-600 text-sm transition-colors shadow-sm" aria-label="Aumentar cantidad">+</button>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="text-sm font-black text-navy-800">${formatPrice(item.price * item.quantity)}</span>
+                      <button onclick="window.removeFromCart(${index})" class="w-7 h-7 rounded-lg hover:bg-red-50 flex items-center justify-center text-navy-300 hover:text-red-400 transition-colors opacity-0 group-hover/it:opacity-100" aria-label="Eliminar producto">
+                        <iconify-icon icon="mdi:delete-outline" class="text-base"></iconify-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // =============================================
+      // TOAST (notificación emergente)
+      // =============================================
+      function showToast(message) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = 'pointer-events-auto bg-navy-800 text-white px-5 py-4 rounded-2xl shadow-2xl flex items-center gap-3 anim-toast-in max-w-sm w-full';
+        toast.innerHTML = `
+          <iconify-icon icon="mdi:check-circle" class="text-teal-400 text-xl flex-shrink-0"></iconify-icon>
+          <span class="text-sm font-medium">${message}</span>
+          <button onclick="this.closest('div').remove()" class="ml-auto text-white/50 hover:text-white transition-colors" aria-label="Cerrar notificación">
+            <iconify-icon icon="mdi:close" class="text-lg"></iconify-icon>
+          </button>
+        `;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+          toast.classList.remove('anim-toast-in');
+          toast.classList.add('anim-toast-out');
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+
+      // =============================================
+      // EFECTOS VISUALES
+      // =============================================
+      function shakeFab() {
+        const fab = document.getElementById('cartFab');
+        fab.classList.remove('anim-shake');
+        void fab.offsetWidth;
+        fab.classList.add('anim-shake');
+      }
+
+      function flyDot() {
+        const dot = document.getElementById('flyDot');
+        const fab = document.getElementById('cartFab');
+        const rect = fab.getBoundingClientRect();
+        dot.style.left = (rect.left + rect.width / 2 - 8) + 'px';
+        dot.style.top = (rect.top + rect.height / 2 - 8) + 'px';
+        dot.classList.remove('hidden', 'fly');
+        void dot.offsetWidth;
+        dot.classList.add('fly');
+        setTimeout(() => dot.classList.add('hidden'), 600);
+      }
+
+      // =============================================
+      // WHATSAPP
+      // =============================================
+      function sendWhatsApp() {
+        if (cart.length === 0) return;
+
+        let msg = '📚 *Pedido desde Kihnally*\n\n';
+        cart.forEach((item, i) => {
+          const fmt = item.format === 'digital' ? '📱 Digital' : '📖 Físico';
+          msg += `${i + 1}. *${item.title}*\n   ${fmt} × ${item.quantity} = ${formatPrice(item.price * item.quantity)}\n\n`;
+        });
+        msg += `━━━━━━━━━━━━━━━\n💰 *Total: ${formatPrice(getCartTotal())}*\n\n¡Gracias por tu compra! 💚`;
+
+        window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank');
+      }
+
+      // =============================================
+      // MODAL LIBRO
+      // =============================================
+      function openBookModal(bookId) {
+        const book = BOOKS[bookId];
+        if (!book) return;
+
+        document.getElementById('mImg').src = book.img;
+        document.getElementById('mImg').alt = book.title;
+        document.getElementById('mTitle').textContent = book.title;
+
+        const sub = document.getElementById('mSub');
+        sub.textContent = book.subtitle;
+        sub.className = 'mt-1 text-sm font-semibold tracking-wide text-' + book.colorKey + '-600';
+
+        document.getElementById('mDesc').textContent = book.description;
+        document.getElementById('mPriceD').textContent = formatPrice(book.priceDigital);
+        document.getElementById('mPriceF').textContent = formatPrice(book.pricePhysical);
+
+        const badge = document.getElementById('mBadge');
+        badge.textContent = book.badge;
+        badge.className = 'absolute top-4 left-4 text-[9px] font-bold tracking-[.2em] uppercase px-3 py-1.5 rounded-full text-white ' + book.badgeColor;
+
+        document.getElementById('btnDigital').setAttribute('onclick', "window.addToCart('" + bookId + "','digital')");
+        document.getElementById('btnFisico').setAttribute('onclick', "window.addToCart('" + bookId + "','physical')");
+
+        document.getElementById('mTags').innerHTML = book.tags.map((tag, i) =>
+          '<span class="text-[9px] font-semibold tracking-wider uppercase ' + book.tagColors[i] + ' px-3 py-1 rounded-full">' + tag + '</span>'
+        ).join('');
+
+        document.getElementById('bookModal').classList.remove('hidden');
+        document.body.classList.add('no-scroll');
+      }
+
+      function closeBookModal() {
+        document.getElementById('bookModal').classList.add('hidden');
+        document.body.classList.remove('no-scroll');
+      }
+
+      // =============================================
+      // CARRITO DRAWER
+      // =============================================
+      function openCart() {
+        const ov = document.getElementById('cartOv');
+        const dr = document.getElementById('cartDr');
+        ov.classList.remove('hidden');
+        dr.classList.remove('hidden', 'c-out');
+        dr.classList.add('c-in');
+        document.body.classList.add('no-scroll');
+      }
+
+      function closeCart() {
+        const ov = document.getElementById('cartOv');
+        const dr = document.getElementById('cartDr');
+        dr.classList.remove('c-in');
+        dr.classList.add('c-out');
+        document.body.classList.remove('no-scroll');
+        setTimeout(() => {
+          ov.classList.add('hidden');
+          dr.classList.add('hidden');
+        }, 300);
+      }
+
+      // =============================================
+      // GENERAR LIBROS DINÁMICAMENTE
+      // =============================================
+      function renderBooks() {
+        const grid = document.getElementById('booksGrid');
+        grid.innerHTML = Object.keys(BOOKS).map((key, index) => {
+          const b = BOOKS[key];
+          const delay = index % 2 === 0 ? '' : ' d1';
+          return `
+            <div class="rv${delay} bcard group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl border border-navy-100/50" onclick="window.openBookModal('${key}')">
+              <div class="relative h-72 sm:h-80 overflow-hidden bg-gradient-to-br ${b.cardBg}">
+                <div class="bsh absolute inset-0 bg-coral-200/20 transition-all duration-700"></div>
+                <img src="${b.img}" alt="${b.title}" class="bimg w-full h-full object-cover transition-transform duration-700" onerror="this.classList.add('img-fallback')">
+                <div class="bov absolute inset-0 bg-navy-900/30 flex items-center justify-center opacity-0 transition-opacity duration-300">
+                  <span class="bg-white text-navy-800 text-[10px] font-bold tracking-[.15em] uppercase px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2">
+                    <iconify-icon icon="mdi:cart-plus" class="text-sm text-${b.colorKey}-500"></iconify-icon>
+                    Ver detalle
+                  </span>
+                </div>
+                <div class="absolute top-4 left-4 ${b.badgeColor} text-white text-[9px] font-bold tracking-[.2em] uppercase px-3 py-1.5 rounded-full">${b.badge}</div>
+                <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-navy-800 text-xs font-bold px-3 py-1.5 rounded-full shadow">Desde ${formatPrice(Math.min(b.priceDigital, b.pricePhysical))}</div>
+              </div>
+              <div class="p-6 sm:p-8">
+                <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-navy-800 group-hover:text-${b.colorKey}-600 transition-colors">${b.title}</h3>
+                <p class="mt-3 text-sm text-navy-500 font-light leading-relaxed">${b.description.length > 100 ? b.description.substring(0, 100) + '…' : b.description}</p>
+                <div class="mt-5 flex items-center justify-between">
+                  <div class="flex gap-2">
+                    ${b.tags.slice(0, 2).map((tag, i) => `<span class="text-[9px] font-semibold tracking-wider uppercase ${b.tagColors[i]} px-3 py-1 rounded-full">${tag}</span>`).join('')}
+                  </div>
+                  <iconify-icon icon="mdi:arrow-right" class="text-navy-300 text-xl group-hover:text-${b.colorKey}-500 group-hover:translate-x-1 transition-all"></iconify-icon>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Reobservar los nuevos elementos
+        setTimeout(() => {
+          document.querySelectorAll('.rv, .rvL, .rvR').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+              el.classList.add('on');
+            }
+          });
+        }, 100);
+      }
+
+      // =============================================
+      // GENERAR TABLA DE PRECIOS
+      // =============================================
+      function renderPriceTable() {
+        const container = document.getElementById('priceTable');
+        container.innerHTML = Object.keys(BOOKS).map(key => {
+          const b = BOOKS[key];
+          return `
+            <div class="grid grid-cols-3 text-center py-4 px-6 border-b border-navy-50 hover:bg-${b.colorKey}-50/50 transition-colors cursor-pointer" onclick="window.openBookModal('${key}')">
+              <div class="text-sm font-semibold text-navy-800">${b.title}</div>
+              <div class="text-sm font-bold text-grape-600">${formatPrice(b.priceDigital)}</div>
+              <div class="text-sm font-bold text-coral-600">${formatPrice(b.pricePhysical)}</div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // =============================================
+      // NAV, MENU, SCROLL, REVEAL
+      // =============================================
+      function initNav() {
+        window.addEventListener('scroll', () => {
+          document.getElementById('nav').classList.toggle('nav-s', window.scrollY > 60);
+        });
+      }
+
+      function initMobileMenu() {
+        let isOpen = false;
+        const menuBtn = document.getElementById('menuBtn');
+        const mobMenu = document.getElementById('mobMenu');
+
+        function toggleMenu(force) {
+          isOpen = force !== undefined ? force : !isOpen;
+          if (isOpen) {
+            mobMenu.style.maxHeight = mobMenu.scrollHeight + 'px';
+            mobMenu.style.opacity = '1';
+            menuBtn.innerHTML = '<iconify-icon icon="mdi:close" class="text-2xl"></iconify-icon>';
+            menuBtn.setAttribute('aria-expanded', 'true');
+          } else {
+            mobMenu.style.maxHeight = '0';
+            mobMenu.style.opacity = '0';
+            menuBtn.innerHTML = '<iconify-icon icon="mdi:menu" class="text-2xl"></iconify-icon>';
+            menuBtn.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        menuBtn.addEventListener('click', () => toggleMenu());
+
+        // Cerrar al hacer clic en un enlace
+        document.querySelectorAll('.ml').forEach(link => {
+          link.addEventListener('click', () => toggleMenu(false));
+        });
+
+        // Cerrar al hacer scroll
+        window.addEventListener('scroll', () => {
+          if (isOpen) toggleMenu(false);
+        });
+
+        // Cerrar al hacer clic fuera
+        document.addEventListener('click', (e) => {
+          if (isOpen && !mobMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+            toggleMenu(false);
+          }
+        });
+      }
+
+      function initReveal() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('on');
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.rv, .rvL, .rvR').forEach(el => observer.observe(el));
+      }
+
+      function initSmoothScroll() {
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+          a.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+        });
+      }
+
+      // =============================================
+      // KEYBOARD SHORTCUTS
+      // =============================================
+      function initKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            if (!document.getElementById('bookModal').classList.contains('hidden')) {
+              closeBookModal();
+            } else if (!document.getElementById('cartDr').classList.contains('hidden')) {
+              closeCart();
+            }
+          }
+        });
+      }
+
+      // =============================================
+      // EXPONER FUNCIONES GLOBALES
+      // =============================================
+      window.addToCart = addToCart;
+      window.removeFromCart = removeFromCart;
+      window.changeQuantity = changeQuantity;
+      window.clearCart = clearCart;
+      window.sendWhatsApp = sendWhatsApp;
+      window.openBookModal = openBookModal;
+      window.closeBookModal = closeBookModal;
+      window.openCart = openCart;
+      window.closeCart = closeCart;
+
+      // =============================================
+      // INICIALIZACIÓN
+      // =============================================
+      function init() {
+        renderBooks();
+        renderPriceTable();
+        renderCart();
+        initNav();
+        initMobileMenu();
+        initReveal();
+        initSmoothScroll();
+        initKeyboardShortcuts();
+
+        // Re-observar después de renderizar
+        setTimeout(initReveal, 500);
+      }
+
+      // Iniciar cuando el DOM esté listo
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+    })();
+  </script>
+</body>
+</html>
