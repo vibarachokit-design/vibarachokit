@@ -3,12 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kihnally — Libros por VibaraChokiT</title>
+  <title>Kihnally — Libros por VibaraChokiT | Mejillones, Chile</title>
+  
+  <!-- ========== SEO ========== -->
+  <meta name="description" content="Descubre los libros de VibaraChokiT: humor absurdo, aventuras y mucha imaginación. Nacidos en la cafetería Kihnally en Mejillones, Chile.">
+  <meta name="keywords" content="libros infantiles, humor, aventuras, VibaraChokiT, Kihnally, Mejillones, Chile">
+  <meta name="author" content="VibaraChokiT">
+  
+  <!-- ========== OPEN GRAPH ========== -->
+  <meta property="og:title" content="Kihnally — Libros por VibaraChokiT">
+  <meta property="og:description" content="Historias que dan sabor. Libros de humor, aventura e imaginación desde Mejillones, Chile.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <!-- ========== FAVICON ========== -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+  
+  <!-- ========== RECURSOS ========== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- ========== TAILWIND ========== -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- ========== SUPABASE ========== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
   <script>
+    // =============================================
+    // CONFIGURACIÓN DE TAILWIND
+    // =============================================
     tailwind.config = {
       theme: {
         extend: {
@@ -25,8 +50,9 @@
       }
     }
   </script>
+  
   <style>
-    /* ========== ANIMACIONES BASE ========== */
+    /* ========== ANIMACIONES ========== */
     @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
     @keyframes slideUp { 0% { opacity: 0; transform: translateY(40px); } 100% { opacity: 1; transform: translateY(0); } }
     @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(3deg); } }
@@ -44,10 +70,6 @@
     @keyframes flyUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-60px) scale(.5); } }
     @keyframes toastIn { 0% { opacity: 0; transform: scale(.8) translateY(30px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
     @keyframes toastOut { 0% { opacity: 1; transform: scale(1) translateY(0); } 100% { opacity: 0; transform: scale(.8) translateY(-30px); } }
-    @keyframes testimonialScroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
     
     /* ========== EFECTO 3D PARA LIBROS ========== */
     .book-3d {
@@ -261,11 +283,7 @@
       transform: translateY(-4px);
       box-shadow: 0 12px 40px rgba(0,0,0,0.1);
     }
-    .testimonial-card .stars {
-      color: #FFD23F;
-      font-size: 18px;
-      letter-spacing: 2px;
-    }
+    .testimonial-card .stars { color: #FFD23F; font-size: 18px; letter-spacing: 2px; }
     .testimonial-card .avatar {
       width: 48px;
       height: 48px;
@@ -288,12 +306,8 @@
       scrollbar-width: none;
     }
     .testimonial-carousel::-webkit-scrollbar { display: none; }
-    .testimonial-carousel .testimonial-card {
-      scroll-snap-align: start;
-    }
-    .testimonial-carousel-wrapper {
-      position: relative;
-    }
+    .testimonial-carousel .testimonial-card { scroll-snap-align: start; }
+    .testimonial-carousel-wrapper { position: relative; }
     .testimonial-carousel-wrapper .scroll-btn {
       position: absolute;
       top: 50%;
@@ -313,17 +327,31 @@
       z-index: 10;
       color: #162544;
     }
-    .testimonial-carousel-wrapper .scroll-btn:hover {
-      background: #162544;
-      color: white;
-      border-color: #162544;
-    }
+    .testimonial-carousel-wrapper .scroll-btn:hover { background: #162544; color: white; border-color: #162544; }
     .testimonial-carousel-wrapper .scroll-btn.prev { left: -12px; }
     .testimonial-carousel-wrapper .scroll-btn.next { right: -12px; }
-    @media (max-width: 640px) {
-      .testimonial-carousel-wrapper .scroll-btn { display: none; }
-      .testimonial-card { min-width: 240px; }
+    @media (max-width: 640px) { .testimonial-carousel-wrapper .scroll-btn { display: none; } .testimonial-card { min-width: 240px; } }
+
+    /* ========== BOTÓN ADMIN ========== */
+    .admin-btn {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      z-index: 90;
+      background: #162544;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+    .admin-btn:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
   </style>
 </head>
 <body class="bg-cream font-sans text-navy-800 overflow-x-hidden">
@@ -430,6 +458,16 @@
     🛒
     <span id="cBadge" class="absolute -top-1 -right-1 min-w-[22px] h-[22px] rounded-full bg-coral-500 text-white text-[10px] font-bold flex items-center justify-center shadow-lg hidden px-1">0</span>
   </button>
+
+  <!-- ========== BOTÓN FLOTANTE WHATSAPP ========== -->
+  <a href="https://wa.me/56995436140" target="_blank" 
+     class="fixed bottom-24 right-6 z-[89] w-14 h-14 rounded-full bg-wasap hover:bg-green-600 text-white shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-wasap/40 text-2xl"
+     aria-label="Contactar por WhatsApp">
+    💬
+  </a>
+
+  <!-- ========== BOTÓN ADMIN ========== -->
+  <a href="admin.html" class="admin-btn" target="_blank">⚙️ Administrar</a>
 
   <!-- ========== FLYING DOT ========== -->
   <div id="flyDot" class="fixed z-[200] w-4 h-4 rounded-full bg-coral-500 shadow-lg pointer-events-none hidden"></div>
@@ -590,7 +628,9 @@
         <h2 class="rv d1 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-navy-800 leading-[.95]">Nuestros <span class="t-grad">libros</span></h2>
         <p class="rv d2 mt-6 text-navy-500 font-light max-w-lg mx-auto">Pincha en cualquier libro para ver el detalle y agregarlo a tu carrito.</p>
       </div>
-      <div class="grid md:grid-cols-2 gap-8 lg:gap-12" id="booksGrid"></div>
+      <div class="grid md:grid-cols-2 gap-8 lg:gap-12" id="booksGrid">
+        <!-- Generado dinámicamente desde Supabase -->
+      </div>
     </div>
   </section>
 
@@ -704,7 +744,7 @@
     </div>
   </section>
 
-  <!-- ========== RESEÑAS (Carrusel) ========== -->
+  <!-- ========== RESEÑAS ========== -->
   <section class="py-16 lg:py-24 bg-white relative">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-12">
@@ -716,14 +756,10 @@
       <div class="rv d3 testimonial-carousel-wrapper">
         <button class="scroll-btn prev" onclick="scrollTestimonials(-1)" aria-label="Anterior">‹</button>
         <div class="testimonial-carousel" id="testimonialCarousel">
-          <!-- Reseña 1 -->
           <div class="testimonial-card">
             <div class="flex items-center gap-3 mb-3">
               <div class="avatar" style="background: linear-gradient(135deg, #FF6B35, #FF8C55);">MA</div>
-              <div>
-                <div class="font-bold text-navy-800 text-sm">María A.</div>
-                <div class="stars">★★★★★</div>
-              </div>
+              <div><div class="font-bold text-navy-800 text-sm">María A.</div><div class="stars">★★★★★</div></div>
             </div>
             <p class="text-sm text-navy-600 font-light leading-relaxed">"Mi hijo de 7 años ama a Chanchini. Se ríe a carcajadas con las aventuras de este cerdito viajero. ¡Ya queremos el próximo libro!"</p>
             <div class="mt-3 text-[10px] font-semibold text-navy-400 tracking-wider uppercase flex items-center gap-2">
@@ -731,15 +767,10 @@
               Verificado · Mejillones
             </div>
           </div>
-          
-          <!-- Reseña 2 -->
           <div class="testimonial-card">
             <div class="flex items-center gap-3 mb-3">
               <div class="avatar" style="background: linear-gradient(135deg, #7B2FF7, #B899FF);">CR</div>
-              <div>
-                <div class="font-bold text-navy-800 text-sm">Carlos R.</div>
-                <div class="stars">★★★★★</div>
-              </div>
+              <div><div class="font-bold text-navy-800 text-sm">Carlos R.</div><div class="stars">★★★★★</div></div>
             </div>
             <p class="text-sm text-navy-600 font-light leading-relaxed">"Chinowon es genial. Lo compré para mi sobrino y terminé leyéndolo yo también. El humor absurdo es perfecto para todas las edades."</p>
             <div class="mt-3 text-[10px] font-semibold text-navy-400 tracking-wider uppercase flex items-center gap-2">
@@ -747,15 +778,10 @@
               Verificado · Antofagasta
             </div>
           </div>
-          
-          <!-- Reseña 3 -->
           <div class="testimonial-card">
             <div class="flex items-center gap-3 mb-3">
               <div class="avatar" style="background: linear-gradient(135deg, #00C9A7, #3DC9AD);">FV</div>
-              <div>
-                <div class="font-bold text-navy-800 text-sm">Francisca V.</div>
-                <div class="stars">★★★★★</div>
-              </div>
+              <div><div class="font-bold text-navy-800 text-sm">Francisca V.</div><div class="stars">★★★★★</div></div>
             </div>
             <p class="text-sm text-navy-600 font-light leading-relaxed">"Los libros de Barista Kihnally nos transportan a Mejillones de una manera mágica. Mi hija se aprende los personajes de memoria."</p>
             <div class="mt-3 text-[10px] font-semibold text-navy-400 tracking-wider uppercase flex items-center gap-2">
@@ -763,15 +789,10 @@
               Verificado · Santiago
             </div>
           </div>
-          
-          <!-- Reseña 4 -->
           <div class="testimonial-card">
             <div class="flex items-center gap-3 mb-3">
               <div class="avatar" style="background: linear-gradient(135deg, #FFD23F, #FFE03E); color: #7A6200;">JP</div>
-              <div>
-                <div class="font-bold text-navy-800 text-sm">Jorge P.</div>
-                <div class="stars">★★★★★</div>
-              </div>
+              <div><div class="font-bold text-navy-800 text-sm">Jorge P.</div><div class="stars">★★★★★</div></div>
             </div>
             <p class="text-sm text-navy-600 font-light leading-relaxed">"Turón es el libro favorito de mi hijo. La historia de amistad es hermosa y el camarón es todo un personaje. ¡100% recomendado!"</p>
             <div class="mt-3 text-[10px] font-semibold text-navy-400 tracking-wider uppercase flex items-center gap-2">
@@ -779,15 +800,10 @@
               Verificado · Calama
             </div>
           </div>
-          
-          <!-- Reseña 5 -->
           <div class="testimonial-card">
             <div class="flex items-center gap-3 mb-3">
               <div class="avatar" style="background: linear-gradient(135deg, #FF6B35, #FFD23F);">LC</div>
-              <div>
-                <div class="font-bold text-navy-800 text-sm">Laura C.</div>
-                <div class="stars">★★★★★</div>
-              </div>
+              <div><div class="font-bold text-navy-800 text-sm">Laura C.</div><div class="stars">★★★★★</div></div>
             </div>
             <p class="text-sm text-navy-600 font-light leading-relaxed">"Compré los 4 libros para mi clase de 2do básico y fue un éxito. Los niños se pelean por quién se lleva cada título a la casa."</p>
             <div class="mt-3 text-[10px] font-semibold text-navy-400 tracking-wider uppercase flex items-center gap-2">
@@ -800,12 +816,8 @@
       </div>
       
       <div class="rv d4 mt-8 flex justify-center gap-2">
-        <span class="inline-flex items-center gap-1.5 bg-grape-50 text-grape-700 text-[10px] font-bold tracking-wider uppercase px-4 py-2 rounded-full border border-grape-200">
-          ⭐ 4.9 · 127 reseñas
-        </span>
-        <span class="inline-flex items-center gap-1.5 bg-teal-50 text-teal-700 text-[10px] font-bold tracking-wider uppercase px-4 py-2 rounded-full border border-teal-200">
-          ❤️ 98% recomienda
-        </span>
+        <span class="inline-flex items-center gap-1.5 bg-grape-50 text-grape-700 text-[10px] font-bold tracking-wider uppercase px-4 py-2 rounded-full border border-grape-200">⭐ 4.9 · 127 reseñas</span>
+        <span class="inline-flex items-center gap-1.5 bg-teal-50 text-teal-700 text-[10px] font-bold tracking-wider uppercase px-4 py-2 rounded-full border border-teal-200">❤️ 98% recomienda</span>
       </div>
     </div>
   </section>
@@ -844,139 +856,69 @@
     </div>
   </footer>
 
-  <!-- ========== JAVASCRIPT ========== -->
+  <!-- ========== JAVASCRIPT CON SUPABASE ========== -->
   <script>
     (function() {
       'use strict';
 
+      // =============================================
+      // CONFIGURACIÓN DE SUPABASE
+      // =============================================
+      // 🔴 REEMPLAZA ESTOS VALORES CON LOS TUYOS 🔴
+      const SUPABASE_URL = 'https://lpjuwxywvuifjqoudglp.supabase.co';
+      const SUPABASE_ANON_KEY = 'sb_publishable_rpXOqZZab_dCCRJAeUhBPQ_1b6zFBeQ';
+      
+      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
       const WA = '56995436140';
-
-      // =============================================
-      // DATOS DE LIBROS
-      // =============================================
-      const BOOKS = {
-        chanchini: {
-          id: 'chanchini',
-          title: '¿Dónde está Chanchini?',
-          subtitle: 'Aventura · Viajes · Infantil',
-          description: 'Conoce a Chanchini, la viajera más pequeña de Chile. Este cerdito soñador vive en la cafetería Kihnally y quiere recorrer cada rincón del país, desde Arica hasta Punta Arenas.',
-          img: 'img/chanchini.png',
-          previewImages: ['img/chanchini-pagina1.png', 'img/chanchini-pagina2.png'],
-          badge: 'Aventura',
-          badgeColor: 'bg-coral-500',
-          colorKey: 'coral',
-          priceDigital: 3500,
-          pricePhysical: 5900,
-          tags: ['Viajes', 'Infantil', 'Chile', 'Aventura'],
-          tagColors: ['bg-coral-50 text-coral-600', 'bg-sun-50 text-sun-700', 'bg-teal-50 text-teal-700', 'bg-grape-50 text-grape-600'],
-          cardBg: 'from-coral-50 to-sun-50'
-        },
-        chinowon: {
-          id: 'chinowon',
-          title: 'Chinowon',
-          subtitle: 'El diccionario menos confiable del mundo',
-          description: 'Traducciones que jamás encontrarás en una academia. Humor absurdo 100% garantizado. Si no tiene sentido… ¡es Chinowon!',
-          img: 'img/chinowon.png',
-          previewImages: ['img/chinowon-pagina1.png', 'img/chinowon-pagina2.png'],
-          badge: 'Humor',
-          badgeColor: 'bg-sun-500',
-          colorKey: 'sun',
-          priceDigital: 4500,
-          pricePhysical: 5990,
-          tags: ['Humor', 'Absurdo', 'Diccionario', 'Risa'],
-          tagColors: ['bg-sun-50 text-sun-700', 'bg-coral-50 text-coral-600', 'bg-grape-50 text-grape-600', 'bg-teal-50 text-teal-700'],
-          cardBg: 'from-sun-50 to-coral-50'
-        },
-        barista: {
-          id: 'barista',
-          title: 'Barista Kihnally',
-          subtitle: 'Temporada 1 — Café · Cultura · Aventura',
-          description: '6 aventuras en Mejillones como nunca antes las viste. Gaviotas con actitud, fantasmas en el faro y el mejor café del puerto.',
-          img: 'img/barista.png',
-          previewImages: ['img/barista-pagina1.png', 'img/barista-pagina2.png'],
-          badge: 'Serie',
-          badgeColor: 'bg-teal-500',
-          colorKey: 'teal',
-          priceDigital: 3500,
-          pricePhysical: 4990,
-          tags: ['Aventura', 'Mejillones', 'Café', '6 episodios'],
-          tagColors: ['bg-teal-50 text-teal-700', 'bg-coral-50 text-coral-600', 'bg-sun-50 text-sun-700', 'bg-grape-50 text-grape-600'],
-          cardBg: 'from-teal-50 to-grape-50'
-        },
-        turon: {
-          id: 'turon',
-          title: 'Turón: El perro con carita de ratón',
-          subtitle: 'Amistad · Sueños · Un camarón muy especial',
-          description: 'Una historia sobre amistad, sueños y un camarón muy especial. Turón te robará el corazón con esa carita imposible.',
-          img: 'img/turon.jpg',
-          previewImages: ['img/turon-pagina1.png', 'img/turon-pagina2.png'],
-          badge: 'Infantil',
-          badgeColor: 'bg-grape-500',
-          colorKey: 'grape',
-          priceDigital: 3500,
-          pricePhysical: 4990,
-          tags: ['Infantil', 'Amistad', 'Sueños', 'Emoción'],
-          tagColors: ['bg-grape-50 text-grape-600', 'bg-pink-50 text-pink-600', 'bg-sun-50 text-sun-700', 'bg-coral-50 text-coral-600'],
-          cardBg: 'from-grape-50 to-pink-50'
-        }
-      };
-
-      let currentPreviewBook = null;
+      let BOOKS = {};
       let cart = [];
+      let currentPreviewBook = null;
       const formatPrice = (n) => '$' + n.toLocaleString('es-CL');
 
       // =============================================
-      // EFECTOS 3D EN HERO
+      // CARGAR LIBROS DESDE SUPABASE
       // =============================================
-      window.selectBook = function(el) {
-        document.querySelectorAll('.book-3d').forEach(b => b.classList.remove('selected'));
-        el.classList.add('selected');
-      };
-
-      window.deselectBook = function(el) {
-        el.classList.remove('selected');
-      };
-
-      // =============================================
-      // MODAL VISTA PREVIA
-      // =============================================
-      window.openPreviewModal = function(bookId) {
-        const book = BOOKS[bookId];
-        if (!book) return;
-        currentPreviewBook = bookId;
-        document.getElementById('previewTitle').textContent = book.title;
-
-        const grid = document.getElementById('previewGrid');
-        const images = book.previewImages || [];
-
-        if (images.length === 0) {
-          grid.innerHTML = `
-            <div class="text-center py-12 text-navy-400">
-              <span class="text-5xl block mb-4">📖</span>
-              <p class="text-lg font-medium">Vista previa no disponible</p>
-              <p class="text-sm mt-2">Pronto añadiremos imágenes del interior</p>
-            </div>
-          `;
-        } else {
-          grid.innerHTML = images.map((img, i) => `
-            <div class="preview-img" onclick="window.openBookModal('${bookId}')">
-              <img src="${img}" alt="${book.title} - página ${i+1}" onerror="this.parentElement.innerHTML='<div class=\\'min-h-[300px] flex items-center justify-center bg-navy-50 text-navy-400 text-lg\\'>📄 Página ${i+1}</div>'">
-              <div class="page-label"><span>📄 Página ${i+1}</span></div>
-            </div>
-          `).join('');
+      async function loadBooksFromSupabase() {
+        try {
+          const { data, error } = await supabase
+            .from('books')
+            .select('*')
+            .order('title');
+          
+          if (error) throw error;
+          
+          const booksObj = {};
+          data.forEach(book => {
+            booksObj[book.id] = {
+              id: book.id,
+              title: book.title,
+              subtitle: book.subtitle || '',
+              description: book.description || '',
+              img: book.img || 'img/placeholder.png',
+              previewImages: book.preview_images || [],
+              badge: book.badge || 'Libro',
+              badgeColor: book.badge_color || 'bg-coral-500',
+              colorKey: book.color_key || 'coral',
+              priceDigital: book.price_digital || 0,
+              pricePhysical: book.price_physical || 0,
+              popular: book.popular || false,
+              tags: book.tags || [],
+              tagColors: book.tag_colors || [],
+              cardBg: book.card_bg || 'from-coral-50 to-sun-50'
+            };
+          });
+          
+          BOOKS = booksObj;
+          return true;
+        } catch (error) {
+          console.error('Error cargando libros desde Supabase:', error);
+          return false;
         }
-
-        document.getElementById('previewModal').classList.remove('hidden');
-        document.body.classList.add('no-scroll');
-      };
-
-      window.closePreviewModal = function() {
-        document.getElementById('previewModal').classList.add('hidden');
-        document.body.classList.remove('no-scroll');
-      };
+      }
 
       // =============================================
-      // CARRITO
+      // FUNCIONES DEL CARRITO
       // =============================================
       function addToCart(bookId, format) {
         const book = BOOKS[bookId];
@@ -1145,7 +1087,7 @@
       }
 
       // =============================================
-      // MODAL LIBRO (detalle)
+      // MODALES
       // =============================================
       function openBookModal(bookId) {
         const book = BOOKS[bookId];
@@ -1170,8 +1112,8 @@
         document.getElementById('btnDigital').setAttribute('onclick', "window.addToCart('" + bookId + "','digital')");
         document.getElementById('btnFisico').setAttribute('onclick', "window.addToCart('" + bookId + "','physical')");
 
-        document.getElementById('mTags').innerHTML = book.tags.map((tag, i) =>
-          '<span class="text-[9px] font-semibold tracking-wider uppercase ' + book.tagColors[i] + ' px-3 py-1 rounded-full">' + tag + '</span>'
+        document.getElementById('mTags').innerHTML = (book.tags || []).map((tag, i) =>
+          '<span class="text-[9px] font-semibold tracking-wider uppercase ' + (book.tagColors[i] || 'bg-navy-50 text-navy-600') + ' px-3 py-1 rounded-full">' + tag + '</span>'
         ).join('');
 
         document.getElementById('bookModal').classList.remove('hidden');
@@ -1183,9 +1125,41 @@
         document.body.classList.remove('no-scroll');
       }
 
-      // =============================================
-      // CARRITO DRAWER
-      // =============================================
+      function openPreviewModal(bookId) {
+        const book = BOOKS[bookId];
+        if (!book) return;
+        currentPreviewBook = bookId;
+        document.getElementById('previewTitle').textContent = book.title;
+
+        const grid = document.getElementById('previewGrid');
+        const images = book.previewImages || [];
+
+        if (images.length === 0) {
+          grid.innerHTML = `
+            <div class="text-center py-12 text-navy-400">
+              <span class="text-5xl block mb-4">📖</span>
+              <p class="text-lg font-medium">Vista previa no disponible</p>
+              <p class="text-sm mt-2">Pronto añadiremos imágenes del interior</p>
+            </div>
+          `;
+        } else {
+          grid.innerHTML = images.map((img, i) => `
+            <div class="preview-img" onclick="window.openBookModal('${bookId}')">
+              <img src="${img}" alt="${book.title} - página ${i+1}" onerror="this.parentElement.innerHTML='<div class=\\'min-h-[300px] flex items-center justify-center bg-navy-50 text-navy-400 text-lg\\'>📄 Página ${i+1}</div>'">
+              <div class="page-label"><span>📄 Página ${i+1}</span></div>
+            </div>
+          `).join('');
+        }
+
+        document.getElementById('previewModal').classList.remove('hidden');
+        document.body.classList.add('no-scroll');
+      }
+
+      function closePreviewModal() {
+        document.getElementById('previewModal').classList.add('hidden');
+        document.body.classList.remove('no-scroll');
+      }
+
       function openCart() {
         const ov = document.getElementById('cartOv');
         const dr = document.getElementById('cartDr');
@@ -1205,40 +1179,58 @@
       }
 
       // =============================================
-      // RESEÑAS - CARRUSEL
+      // EFECTOS 3D
       // =============================================
-      window.scrollTestimonials = function(direction) {
-        const container = document.getElementById('testimonialCarousel');
-        const cardWidth = container.querySelector('.testimonial-card')?.offsetWidth || 300;
-        const scrollAmount = cardWidth + 20; // card width + gap
-        container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+      window.selectBook = function(el) {
+        document.querySelectorAll('.book-3d').forEach(b => b.classList.remove('selected'));
+        el.classList.add('selected');
+      };
+
+      window.deselectBook = function(el) {
+        el.classList.remove('selected');
       };
 
       // =============================================
-      // GENERAR LIBROS Y TABLA
+      // RENDER LIBROS
       // =============================================
       function renderBooks() {
         const grid = document.getElementById('booksGrid');
-        grid.innerHTML = Object.keys(BOOKS).map((key, index) => {
+        const bookKeys = Object.keys(BOOKS);
+        
+        if (bookKeys.length === 0) {
+          grid.innerHTML = `
+            <div class="col-span-2 text-center py-12">
+              <span class="text-4xl block mb-4">📚</span>
+              <p class="text-navy-500 font-medium">Cargando libros...</p>
+              <div class="mt-4 flex justify-center">
+                <div class="w-8 h-8 border-4 border-coral-500 border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        grid.innerHTML = bookKeys.map((key, index) => {
           const b = BOOKS[key];
           const delay = index % 2 === 0 ? '' : ' d1';
           return `
             <div class="rv${delay} bcard group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl border border-navy-100/50" onclick="window.openBookModal('${key}')">
-              <div class="relative h-72 sm:h-80 overflow-hidden bg-gradient-to-br ${b.cardBg}">
+              <div class="relative h-72 sm:h-80 overflow-hidden bg-gradient-to-br ${b.cardBg || 'from-coral-50 to-sun-50'}">
                 <div class="bsh absolute inset-0 bg-coral-200/20 transition-all duration-700"></div>
                 <img src="${b.img}" alt="${b.title}" class="bimg w-full h-full object-cover transition-transform duration-700" onerror="this.classList.add('img-fallback')">
                 <div class="bov absolute inset-0 bg-navy-900/30 flex items-center justify-center opacity-0 transition-opacity duration-300">
                   <span class="bg-white text-navy-800 text-[10px] font-bold tracking-[.15em] uppercase px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2">🛒 Ver detalle</span>
                 </div>
-                <div class="absolute top-4 left-4 ${b.badgeColor} text-white text-[9px] font-bold tracking-[.2em] uppercase px-3 py-1.5 rounded-full">${b.badge}</div>
-                <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-navy-800 text-xs font-bold px-3 py-1.5 rounded-full shadow">Desde ${formatPrice(Math.min(b.priceDigital, b.pricePhysical))}</div>
+                <div class="absolute top-4 left-4 ${b.badgeColor || 'bg-coral-500'} text-white text-[9px] font-bold tracking-[.2em] uppercase px-3 py-1.5 rounded-full">${b.badge || 'Libro'}</div>
+                ${b.popular ? '<div class="absolute top-4 right-4 bg-coral-500 text-white text-[8px] font-bold px-2 py-1 rounded-full shadow-lg">🔥 Más vendido</div>' : ''}
+                <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-navy-800 text-xs font-bold px-3 py-1.5 rounded-full shadow">Desde ${formatPrice(Math.min(b.priceDigital || 0, b.pricePhysical || 0))}</div>
               </div>
               <div class="p-6 sm:p-8">
-                <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-navy-800 group-hover:text-${b.colorKey}-600 transition-colors">${b.title}</h3>
-                <p class="mt-3 text-sm text-navy-500 font-light leading-relaxed">${b.description.length > 100 ? b.description.substring(0, 100) + '…' : b.description}</p>
+                <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-navy-800 group-hover:text-${b.colorKey || 'coral'}-600 transition-colors">${b.title}</h3>
+                <p class="mt-3 text-sm text-navy-500 font-light leading-relaxed">${(b.description || '').length > 100 ? (b.description || '').substring(0, 100) + '…' : (b.description || '')}</p>
                 <div class="mt-5 flex items-center justify-between">
-                  <div class="flex gap-2">${b.tags.slice(0, 2).map((tag, i) => `<span class="text-[9px] font-semibold tracking-wider uppercase ${b.tagColors[i]} px-3 py-1 rounded-full">${tag}</span>`).join('')}</div>
-                  <span class="text-navy-300 text-xl group-hover:text-${b.colorKey}-500 group-hover:translate-x-1 transition-all">→</span>
+                  <div class="flex gap-2">${(b.tags || []).slice(0, 2).map((tag, i) => `<span class="text-[9px] font-semibold tracking-wider uppercase ${(b.tagColors || [])[i] || 'bg-navy-50 text-navy-600'} px-3 py-1 rounded-full">${tag}</span>`).join('')}</div>
+                  <span class="text-navy-300 text-xl group-hover:text-${b.colorKey || 'coral'}-500 group-hover:translate-x-1 transition-all">→</span>
                 </div>
               </div>
             </div>
@@ -1253,7 +1245,7 @@
       }
 
       // =============================================
-      // NAV, MENU, REVEAL
+      // FUNCIONES DE NAVEGACIÓN
       // =============================================
       function initNav() {
         window.addEventListener('scroll', () => {
@@ -1316,6 +1308,16 @@
       }
 
       // =============================================
+      // SCROLL TESTIMONIALS
+      // =============================================
+      window.scrollTestimonials = function(direction) {
+        const container = document.getElementById('testimonialCarousel');
+        const cardWidth = container.querySelector('.testimonial-card')?.offsetWidth || 300;
+        const scrollAmount = cardWidth + 20;
+        container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+      };
+
+      // =============================================
       // EXPONER FUNCIONES GLOBALES
       // =============================================
       window.addToCart = addToCart;
@@ -1333,7 +1335,14 @@
       // =============================================
       // INICIALIZACIÓN
       // =============================================
-      function init() {
+      async function init() {
+        // Mostrar loading
+        renderBooks();
+        
+        // Cargar libros desde Supabase
+        await loadBooksFromSupabase();
+        
+        // Renderizar todo
         renderBooks();
         renderCart();
         initNav();

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Kihnally</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <style>
+    .admin-card { transition: all 0.3s ease; }
+    .admin-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+    .toast-admin {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #162544;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      z-index: 999;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #FF6B35; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body class="bg-gray-50 p-4 md:p-8">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div>
+        <h1 class="text-3xl font-black text-navy-800">📚 Administrar Libros</h1>
+        <p class="text-sm text-gray-500">Gestiona tu catálogo de libros en tiempo real</p>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <button onclick="addBook()" class="bg-coral-500 hover:bg-coral-600 text-white px-4 py-2 rounded-lg font-bold transition flex items-center gap-2">➕ Nuevo Libro</button>
+        <button onclick="loadBooks()" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg font-bold transition flex items-center gap-2">🔄 Sincronizar</button>
+        <a href="index.html" target="_blank" class="bg-navy-800 hover:bg-navy-700 text-white px-4 py-2 rounded-lg font-bold transition flex items-center gap-2">👁️ Ver Web</a>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="stats">
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <div class="text-2xl font-black text-coral-500" id="totalBooks">0</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider">Total Libros</div>
+      </div>
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <div class="text-2xl font-black text-teal-500" id="totalPopular">0</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider">Más Vendidos</div>
+      </div>
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <div class="text-2xl font-black text-grape-500" id="totalTags">0</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider">Categorías</div>
+      </div>
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <div class="text-2xl font-black text-sun-600" id="avgPrice">$0</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider">Precio Promedio</div>
+      </div>
+    </div>
+
+    <!-- Lista de libros -->
+    <div id="bookList" class="grid gap-4">
+      <div class="col-span-full text-center py-12">
+        <div class="spinner mx-auto"></div>
+        <p class="text-gray-500 mt-4">Cargando libros...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =============================================
+    // CONFIGURACIÓN SUPABASE
+    // =============================================
+    // 🔴 REEMPLAZA ESTOS VALORES CON LOS TUYOS 🔴
+    const SUPABASE_URL = 'https://lpjuwxywvuifjqoudglp.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_rpXOqZZab_dCCRJAeUhBPQ_1b6zFBeQ';
+    
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    let books = [];
+
+    // =============================================
+    // CARGAR LIBROS
+    // =============================================
+    async function loadBooks() {
+      try {
+        const { data, error } = await supabase
+          .from('books')
+          .select('*')
+          .order('title');
+        
+        if (error) throw error;
+        
+        books = data || [];
+        renderBooks();
+        updateStats();
+        showToast('✅ Libros cargados correctamente');
+      } catch (error) {
+        console.error('Error:', error);
+        showToast('❌ Error al cargar libros');
+        document.getElementById('bookList').innerHTML = `
+          <div class="col-span-full text-center py-12 bg-white rounded-xl">
+            <span class="text-6xl block mb-4">⚠️</span>
+            <p class="text-gray-500 font-medium">Error al cargar libros</p>
+            <p class="text-sm text-gray-400 mt-2">${error.message}</p>
+            <button onclick="loadBooks()" class="mt-4 bg-coral-500 text-white px-6 py-2 rounded-lg font-bold">Reintentar</button>
+          </div>
+        `;
+      }
+    }
+
+    // =============================================
+    // RENDER LIBROS
+    // =============================================
+    function renderBooks() {
+      const container = document.getElementById('bookList');
+      
+      if (books.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-12 bg-white rounded-xl">
+            <span class="text-6xl block mb-4">📚</span>
+            <p class="text-gray-500 font-medium">No hay libros aún</p>
+            <p class="text-sm text-gray-400 mt-2">Haz clic en "Nuevo Libro" para comenzar</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = books.map(book => `
+        <div class="admin-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-4 items-start md:items-center">
+          <img src="${book.img || 'img/placeholder.png'}" alt="${book.title}" 
+               class="w-20 h-28 object-cover rounded-lg flex-shrink-0" 
+               onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%22112%22><rect width=%2280%22 height=%22112%22 fill=%22%23f0f0f0%22/><text x=%2240%22 y=%2256%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2232%22>📚</text></svg>'">
+          
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <h3 class="font-bold text-navy-800">${book.title}</h3>
+              ${book.popular ? '<span class="text-[8px] bg-coral-500 text-white px-2 py-0.5 rounded-full font-bold">🔥 POPULAR</span>' : ''}
+            </div>
+            <p class="text-sm text-gray-500">${book.subtitle || 'Sin subtítulo'}</p>
+            <div class="flex flex-wrap gap-3 mt-1 text-xs">
+              <span class="text-grape-600 font-bold">💻 $${book.price_digital || 0}</span>
+              <span class="text-coral-600 font-bold">📖 $${book.price_physical || 0}</span>
+              <span class="text-gray-400">🏷️ ${(book.tags || []).join(', ')}</span>
+            </div>
+          </div>
+          
+          <div class="flex gap-2 flex-shrink-0">
+            <button onclick="editBook('${book.id}')" class="bg-blue-50 hover:bg-blue-100 text-blue-600 px-3 py-1.5 rounded-lg text-sm font-medium transition">✏️ Editar</button>
+            <button onclick="deleteBook('${book.id}')" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1.5 rounded-lg text-sm font-medium transition">🗑️</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // =============================================
+    // ACTUALIZAR ESTADÍSTICAS
+    // =============================================
+    function updateStats() {
+      document.getElementById('totalBooks').textContent = books.length;
+      document.getElementById('totalPopular').textContent = books.filter(b => b.popular).length;
+      
+      const allTags = new Set();
+      books.forEach(b => (b.tags || []).forEach(t => allTags.add(t)));
+      document.getElementById('totalTags').textContent = allTags.size;
+      
+      const totalPrices = books.reduce((sum, b) => sum + (b.price_digital || 0), 0);
+      const avg = books.length > 0 ? Math.round(totalPrices / books.length) : 0;
+      document.getElementById('avgPrice').textContent = '$' + avg.toLocaleString('es-CL');
+    }
+
+    // =============================================
+    // CRUD OPERACIONES
+    // =============================================
+    async function addBook() {
+      const id = prompt('ID único del libro (ej: nuevo-libro):');
+      if (!id) return;
+      
+      const tagsInput = prompt('Tags (separados por coma):');
+      const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
+      
+      const newBook = {
+        id: id,
+        title: prompt('Título:') || 'Nuevo Libro',
+        subtitle: prompt('Subtítulo:') || '',
+        description: prompt('Descripción:') || '',
+        img: prompt('URL de la imagen:') || 'img/placeholder.png',
+        preview_images: [],
+        badge: prompt('Etiqueta (Ej: Aventura):') || 'Nuevo',
+        badge_color: 'bg-coral-500',
+        color_key: 'coral',
+        price_digital: parseInt(prompt('Precio Digital:') || 0),
+        price_physical: parseInt(prompt('Precio Físico:') || 0),
+        popular: confirm('¿Es un libro popular? (OK=Sí, Cancelar=No)'),
+        tags: tags,
+        tag_colors: [],
+        card_bg: 'from-coral-50 to-sun-50'
+      };
+      
+      try {
+        const { error } = await supabase.from('books').insert([newBook]);
+        if (error) throw error;
+        
+        await loadBooks();
+        showToast(`✅ "${newBook.title}" agregado`);
+      } catch (error) {
+        console.error('Error:', error);
+        showToast('❌ Error al agregar libro: ' + error.message);
+      }
+    }
+
+    async function editBook(id) {
+      const book = books.find(b => b.id === id);
+      if (!book) return;
+      
+      const tagsInput = prompt('Tags (separados por coma):', (book.tags || []).join(', '));
+      const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
+      
+      const updates = {
+        title: prompt('Título:', book.title) || book.title,
+        subtitle: prompt('Subtítulo:', book.subtitle) || book.subtitle,
+        description: prompt('Descripción:', book.description) || book.description,
+        price_digital: parseInt(prompt('Precio Digital:', book.price_digital) || book.price_digital),
+        price_physical: parseInt(prompt('Precio Físico:', book.price_physical) || book.price_physical),
+        popular: confirm('¿Es popular? (OK=Sí, Cancelar=No)'),
+        tags: tags
+      };
+      
+      try {
+        const { error } = await supabase
+          .from('books')
+          .update(updates)
+          .eq('id', id);
+        
+        if (error) throw error;
+        
+        await loadBooks();
+        showToast(`✅ "${updates.title}" actualizado`);
+      } catch (error) {
+        console.error('Error:', error);
+        showToast('❌ Error al actualizar libro: ' + error.message);
+      }
+    }
+
+    async function deleteBook(id) {
+      const book = books.find(b => b.id === id);
+      if (!book) return;
+      
+      if (!confirm(`¿Eliminar "${book.title}" permanentemente?`)) return;
+      
+      try {
+        const { error } = await supabase
+          .from('books')
+          .delete()
+          .eq('id', id);
+        
+        if (error) throw error;
+        
+        await loadBooks();
+        showToast(`🗑️ "${book.title}" eliminado`);
+      } catch (error) {
+        console.error('Error:', error);
+        showToast('❌ Error al eliminar libro: ' + error.message);
+      }
+    }
+
+    // =============================================
+    // TOAST
+    // =============================================
+    function showToast(message) {
+      const existing = document.querySelector('.toast-admin');
+      if (existing) existing.remove();
+      
+      const toast = document.createElement('div');
+      toast.className = 'toast-admin';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // =============================================
+    // INICIALIZAR
+    // =============================================
+    document.addEventListener('DOMContentLoaded', loadBooks);
+  </script>
+</body>
+</html>
