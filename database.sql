@@ -16,11 +16,11 @@ create table if not exists public.books (
   subtitle text not null default '',
   description text not null default '',
   image_url text not null default '',
-  preview_images text[] not null default '{}',
+  preview_images jsonb not null default '[]'::jsonb,
   badge text not null default 'Libro',
   color_key text not null default 'coral' check (color_key in ('coral','teal','sun','grape')),
   price_physical integer not null default 0 check (price_physical >= 0),
-  tags text[] not null default '{}',
+  tags jsonb not null default '[]'::jsonb,
   published boolean not null default true,
   sort_order integer not null default 0,
   created_at timestamptz not null default now(),
@@ -32,11 +32,11 @@ alter table public.books add column if not exists slug text;
 alter table public.books add column if not exists subtitle text not null default '';
 alter table public.books add column if not exists description text not null default '';
 alter table public.books add column if not exists image_url text not null default '';
-alter table public.books add column if not exists preview_images text[] not null default '{}';
+alter table public.books add column if not exists preview_images jsonb not null default '[]'::jsonb;
 alter table public.books add column if not exists badge text not null default 'Libro';
 alter table public.books add column if not exists color_key text not null default 'coral';
 alter table public.books add column if not exists price_physical integer not null default 0;
-alter table public.books add column if not exists tags text[] not null default '{}';
+alter table public.books add column if not exists tags jsonb not null default '[]'::jsonb;
 alter table public.books add column if not exists published boolean not null default true;
 alter table public.books add column if not exists sort_order integer not null default 0;
 alter table public.books add column if not exists created_at timestamptz not null default now();
@@ -125,10 +125,10 @@ using (bucket_id = 'book-images' and public.is_admin());
 
 -- Catálogo inicial. Puedes modificarlo después desde admin.html.
 insert into public.books (slug,title,subtitle,description,image_url,preview_images,badge,color_key,price_physical,tags,published,sort_order) values
-('chanchini','¿Dónde está Chanchini?','Aventura · Viajes · Infantil','Conoce a Chanchini, la viajera más pequeña de Chile. Este cerdito soñador vive en la cafetería Kihnally y quiere recorrer cada rincón del país, desde Arica hasta Punta Arenas.','img/chanchini.png',array['img/chanchini-pagina1.png','img/chanchini-pagina2.png'],'Aventura','coral',5990,array['Viajes','Infantil','Chile','Aventura'],true,1),
-('chinowon','Chinowon','El diccionario menos confiable del mundo','Traducciones que jamás encontrarás en una academia. Humor absurdo 100% garantizado. Si no tiene sentido… ¡es Chinowon!','img/chinowon.png',array['img/chinowon-pagina1.png','img/chinowon-pagina2.png'],'Humor','sun',5990,array['Humor','Absurdo','Diccionario','Risa'],true,2),
-('barista','Barista Kihnally','Temporada 1 — Café · Cultura · Aventura','6 aventuras en Mejillones como nunca antes las viste. Gaviotas con actitud, fantasmas en el faro y el mejor café del puerto.','img/barista.png',array['img/barista-pagina1.png','img/barista-pagina2.png'],'Serie','teal',4990,array['Aventura','Mejillones','Café','6 episodios'],true,3),
-('turon','Turón: El perro con carita de ratón','Amistad · Sueños · Un camarón muy especial','Una historia sobre amistad, sueños y un camarón muy especial. Turón te robará el corazón con esa carita imposible.','img/turon.jpg',array['img/turon-pagina1.png','img/turon-pagina2.png'],'Infantil','grape',4990,array['Infantil','Amistad','Sueños','Emoción'],true,4)
+('chanchini','¿Dónde está Chanchini?','Aventura · Viajes · Infantil','Conoce a Chanchini, la viajera más pequeña de Chile. Este cerdito soñador vive en la cafetería Kihnally y quiere recorrer cada rincón del país, desde Arica hasta Punta Arenas.','img/chanchini.png','["img/chanchini-pagina1.png","img/chanchini-pagina2.png"]'::jsonb,'Aventura','coral',5990,'["Viajes","Infantil","Chile","Aventura"]'::jsonb,true,1),
+('chinowon','Chinowon','El diccionario menos confiable del mundo','Traducciones que jamás encontrarás en una academia. Humor absurdo 100% garantizado. Si no tiene sentido… ¡es Chinowon!','img/chinowon.png','["img/chinowon-pagina1.png","img/chinowon-pagina2.png"]'::jsonb,'Humor','sun',5990,'["Humor","Absurdo","Diccionario","Risa"]'::jsonb,true,2),
+('barista','Barista Kihnally','Temporada 1 — Café · Cultura · Aventura','6 aventuras en Mejillones como nunca antes las viste. Gaviotas con actitud, fantasmas en el faro y el mejor café del puerto.','img/barista.png','["img/barista-pagina1.png","img/barista-pagina2.png"]'::jsonb,'Serie','teal',4990,'["Aventura","Mejillones","Café","6 episodios"]'::jsonb,true,3),
+('turon','Turón: El perro con carita de ratón','Amistad · Sueños · Un camarón muy especial','Una historia sobre amistad, sueños y un camarón muy especial. Turón te robará el corazón con esa carita imposible.','img/turon.jpg','["img/turon-pagina1.png","img/turon-pagina2.png"]'::jsonb,'Infantil','grape',4990,'["Infantil","Amistad","Sueños","Emoción"]'::jsonb,true,4)
 on conflict (slug) do nothing;
 
 delete from public.chapters where book_id in (select id from public.books where slug in ('chanchini','chinowon','barista','turon'));
