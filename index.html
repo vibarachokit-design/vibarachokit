@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -24,6 +26,16 @@
         }
       }
     }
+
+    window.handleImageError = function(img) {
+      const fallback = document.createElement('div');
+      fallback.className = img.className + ' img-fallback';
+      if (img.id) fallback.id = img.id;
+      fallback.setAttribute('role', 'img');
+      fallback.setAttribute('aria-label', img.alt || 'Imagen no disponible');
+      fallback.textContent = '📚';
+      img.replaceWith(fallback);
+    };
   </script>
   <style>
     /* ========== ANIMACIONES BASE ========== */
@@ -45,6 +57,12 @@
     @keyframes toastIn { 0% { opacity: 0; transform: scale(.8) translateY(30px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
     @keyframes toastOut { 0% { opacity: 1; transform: scale(1) translateY(0); } 100% { opacity: 0; transform: scale(.8) translateY(-30px); } }
     
+    /* ========== CARRUSEL CON MOVIMIENTO AUTOMÁTICO ========== */
+    @keyframes carouselScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
     /* ========== EFECTO 3D PARA LIBROS ========== */
     .book-3d {
       transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -108,19 +126,29 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
 
-    /* ========== CARRUSEL 3D - MÁS GRANDE ========== */
+    /* ========== CARRUSEL 3D CON SCROLL AUTOMÁTICO ========== */
     .carousel-3d {
       display: flex;
       gap: 30px;
       padding: 30px 20px;
       overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
       scrollbar-width: none;
       align-items: center;
-      justify-content: center;
+      position: relative;
+      width: 100%;
     }
     .carousel-3d::-webkit-scrollbar { display: none; }
+    .carousel-3d-inner {
+      display: flex;
+      gap: 30px;
+      animation: carouselScroll 25s linear infinite;
+      width: max-content;
+    }
+    .carousel-3d-inner:hover {
+      animation-play-state: paused;
+    }
     .carousel-3d .book-3d {
       scroll-snap-align: center;
       min-width: 220px;
@@ -137,8 +165,9 @@
       position: relative;
       max-width: 1000px;
       margin: 0 auto;
+      overflow: hidden;
+      border-radius: 24px;
     }
-    /* Botones más grandes y sobre los libros */
     .carousel-wrapper .scroll-btn {
       position: absolute;
       top: 50%;
@@ -166,18 +195,17 @@
       transform: translateY(-50%) scale(1.1);
       box-shadow: 0 8px 35px rgba(0,0,0,0.25);
     }
-    .carousel-wrapper .scroll-btn.prev { left: -10px; }
-    .carousel-wrapper .scroll-btn.next { right: -10px; }
+    .carousel-wrapper .scroll-btn.prev { left: 10px; }
+    .carousel-wrapper .scroll-btn.next { right: 10px; }
     @media (max-width: 768px) {
       .carousel-3d .book-3d { min-width: 160px; max-width: 200px; height: 240px; }
       .carousel-wrapper .scroll-btn { width: 44px; height: 44px; font-size: 22px; }
-      .carousel-wrapper .scroll-btn.prev { left: -4px; }
-      .carousel-wrapper .scroll-btn.next { right: -4px; }
     }
     @media (max-width: 480px) {
-      .carousel-3d { gap: 16px; padding: 16px 8px; }
       .carousel-3d .book-3d { min-width: 130px; max-width: 160px; height: 200px; }
       .carousel-wrapper .scroll-btn { width: 36px; height: 36px; font-size: 18px; }
+      .carousel-wrapper .scroll-btn.prev { left: 4px; }
+      .carousel-wrapper .scroll-btn.next { right: 4px; }
     }
 
     .anim-fade { animation: fadeIn 1s ease-out forwards; }
@@ -229,8 +257,7 @@
     html { scroll-behavior: smooth; }
     body.no-scroll { overflow: hidden; }
 
-    .img-fallback { background: linear-gradient(135deg, #f0f0f0, #e0e0e0); display: flex; align-items: center; justify-content: center; }
-    .img-fallback::after { content: "📚"; font-size: 48px; }
+    .img-fallback { background: linear-gradient(135deg, #f0f0f0, #e0e0e0); display: flex; align-items: center; justify-content: center; font-size: 48px; }
 
     /* ========== TOAST GRANDE ========== */
     .toast-big {
@@ -476,7 +503,7 @@
       <div class="m-cont bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div class="grid md:grid-cols-2">
           <div class="relative h-72 md:h-auto md:min-h-[500px] bg-gradient-to-br from-coral-50 to-sun-50 overflow-hidden rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none">
-            <img id="mImg" src="" alt="" class="w-full h-full object-cover" onerror="this.classList.add('img-fallback')">
+            <img id="mImg" src="" alt="" class="w-full h-full object-cover" onerror="handleImageError(this)">
             <div id="mBadge" class="absolute top-4 left-4 text-[9px] font-bold tracking-[.2em] uppercase px-3 py-1.5 rounded-full text-white"></div>
           </div>
           <div class="p-6 sm:p-8 lg:p-10 flex flex-col">
@@ -532,7 +559,7 @@
         <div class="p-6 sm:p-8 overflow-y-auto" style="max-height: calc(95vh - 120px);">
           <div id="previewGrid" class="preview-grid"></div>
           <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center pt-4 border-t border-navy-100">
-            <button onclick="closePreviewModal(); openBookModal(currentPreviewBook)" class="inline-flex items-center justify-center gap-2 bg-navy-800 hover:bg-navy-700 text-white text-[11px] font-bold tracking-[.15em] uppercase px-8 py-3.5 rounded-full transition-all duration-300 hover:shadow-lg">🛒 Ver detalles y comprar</button>
+            <button onclick="closePreviewModal(); openBookModal(window.currentPreviewBook)" class="inline-flex items-center justify-center gap-2 bg-navy-800 hover:bg-navy-700 text-white text-[11px] font-bold tracking-[.15em] uppercase px-8 py-3.5 rounded-full transition-all duration-300 hover:shadow-lg">🛒 Ver detalles y comprar</button>
             <button onclick="closePreviewModal()" class="inline-flex items-center justify-center gap-2 bg-navy-50 hover:bg-navy-100 text-navy-700 text-[11px] font-bold tracking-[.15em] uppercase px-8 py-3.5 rounded-full transition-all duration-300">← Seguir viendo</button>
           </div>
         </div>
@@ -639,18 +666,20 @@
           <div><div class="text-3xl font-black t-gradG">∞</div><div class="text-[10px] font-semibold tracking-[.15em] uppercase text-navy-400 mt-1">Diversión</div></div>
         </div>
       </div>
-      <!-- ========== CARRUSEL 3D DE LIBROS - MÁS GRANDE ========== -->
+      <!-- ========== CARRUSEL 3D CON MOVIMIENTO AUTOMÁTICO ========== -->
       <div class="anim-fade w-full" style="animation-delay:.3s;opacity:0">
         <div class="carousel-wrapper">
           <button class="scroll-btn prev" onclick="scrollBookCarousel(-1)" aria-label="Anterior">‹</button>
           <div class="carousel-3d" id="bookCarousel">
-            <!-- Libros insertados por JS -->
+            <div class="carousel-3d-inner" id="carouselInner">
+              <!-- Libros insertados por JS -->
+            </div>
           </div>
           <button class="scroll-btn next" onclick="scrollBookCarousel(1)" aria-label="Siguiente">›</button>
         </div>
         <div class="flex justify-center gap-2 mt-3">
           <span class="inline-flex items-center gap-1.5 bg-coral-50 text-coral-700 text-[10px] font-bold tracking-wider uppercase px-4 py-1.5 rounded-full border border-coral-200">
-            👆 Desliza o usa las flechas
+            🔄 Desliza o usa las flechas · Pausa al pasar el mouse
           </span>
         </div>
       </div>
@@ -743,7 +772,7 @@
       <div class="grid lg:grid-cols-2 gap-16 items-center">
         <div class="rvL relative order-2 lg:order-1">
           <div class="relative rounded-3xl overflow-hidden shadow-2xl">
-            <img src="img/cafeteria.jpg" alt="Cafetería Kihnally" class="w-full h-80 sm:h-96 lg:h-[500px] object-cover" onerror="this.classList.add('img-fallback')">
+            <img src="img/cafeteria.jpg" alt="Cafetería Kihnally" class="w-full h-80 sm:h-96 lg:h-[500px] object-cover" onerror="handleImageError(this)">
             <div class="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent"></div>
             <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
               <div class="flex items-center gap-3 mb-3"><div class="w-3 h-3 rounded-full bg-teal-400 animate-pulse"></div><span class="text-white/80 text-[10px] font-bold tracking-[.2em] uppercase">Abierto ahora</span></div>
@@ -956,9 +985,9 @@
       const WA = '56995436140';
 
       // =============================================
-      // DATOS DE LIBROS CON CAPÍTULOS Y PRECIOS ORIGINALES
+      // DATOS DE LIBROS CON PRECIOS CORREGIDOS
       // =============================================
-      const BOOKS = {
+      let BOOKS = {
         chanchini: {
           id: 'chanchini',
           title: '¿Dónde está Chanchini?',
@@ -969,13 +998,13 @@
           badge: 'Aventura',
           badgeColor: 'bg-coral-500',
           colorKey: 'coral',
-          pricePhysical: 5900,
+          pricePhysical: 5990,
           tags: ['Viajes', 'Infantil', 'Chile', 'Aventura'],
           tagColors: ['bg-coral-50 text-coral-600', 'bg-sun-50 text-sun-700', 'bg-teal-50 text-teal-700', 'bg-grape-50 text-grape-600'],
           cardBg: 'from-coral-50 to-sun-50',
           chapters: [
-            { id: 'c1', name: 'Capítulo 1', price: 2500 },
-            { id: 'c2', name: 'Capítulo 2', price: 2500 }
+            { id: 'c1', name: 'Capítulo 1', price: 5990 },
+            { id: 'c2', name: 'Capítulo 2', price: 5990 }
           ]
         },
         chinowon: {
@@ -993,10 +1022,10 @@
           tagColors: ['bg-sun-50 text-sun-700', 'bg-coral-50 text-coral-600', 'bg-grape-50 text-grape-600', 'bg-teal-50 text-teal-700'],
           cardBg: 'from-sun-50 to-coral-50',
           chapters: [
-            { id: 'c1', name: 'Capítulo 1', price: 1500 },
-            { id: 'c2', name: 'Capítulo 2', price: 1500 },
-            { id: 'c3', name: 'Capítulo 3', price: 1500 },
-            { id: 'c4', name: 'Capítulo 4', price: 1500 }
+            { id: 'c1', name: 'Capítulo 1', price: 5990 },
+            { id: 'c2', name: 'Capítulo 2', price: 5990 },
+            { id: 'c3', name: 'Capítulo 3', price: 5990 },
+            { id: 'c4', name: 'Capítulo 4', price: 5990 }
           ]
         },
         barista: {
@@ -1014,12 +1043,12 @@
           tagColors: ['bg-teal-50 text-teal-700', 'bg-coral-50 text-coral-600', 'bg-sun-50 text-sun-700', 'bg-grape-50 text-grape-600'],
           cardBg: 'from-teal-50 to-grape-50',
           chapters: [
-            { id: 'c1', name: 'Capítulo 1', price: 2000 },
-            { id: 'c2', name: 'Capítulo 2', price: 2000 },
-            { id: 'c3', name: 'Capítulo 3', price: 2000 },
-            { id: 'c4', name: 'Capítulo 4', price: 2000 },
-            { id: 'c5', name: 'Capítulo 5', price: 2000 },
-            { id: 'c6', name: 'Capítulo 6', price: 2000 }
+            { id: 'c1', name: 'Capítulo 1', price: 3500 },
+            { id: 'c2', name: 'Capítulo 2', price: 3500 },
+            { id: 'c3', name: 'Capítulo 3', price: 3500 },
+            { id: 'c4', name: 'Capítulo 4', price: 3500 },
+            { id: 'c5', name: 'Capítulo 5', price: 3500 },
+            { id: 'c6', name: 'Capítulo 6', price: 3500 }
           ]
         },
         turon: {
@@ -1037,30 +1066,83 @@
           tagColors: ['bg-grape-50 text-grape-600', 'bg-pink-50 text-pink-600', 'bg-sun-50 text-sun-700', 'bg-coral-50 text-coral-600'],
           cardBg: 'from-grape-50 to-pink-50',
           chapters: [
-            { id: 'c1', name: 'Capítulo 1', price: 1500 },
-            { id: 'c2', name: 'Capítulo 2', price: 1500 },
-            { id: 'c3', name: 'Capítulo 3', price: 1500 },
-            { id: 'c4', name: 'Capítulo 4', price: 1500 }
+            { id: 'c1', name: 'Capítulo 1', price: 3500 },
+            { id: 'c2', name: 'Capítulo 2', price: 3500 },
+            { id: 'c3', name: 'Capítulo 3', price: 3500 },
+            { id: 'c4', name: 'Capítulo 4', price: 3500 }
           ]
         }
       };
 
       // Orden de libros para el carrusel
-      const CAROUSEL_ORDER = ['chanchini', 'chinowon', 'barista', 'turon'];
+      let CAROUSEL_ORDER = ['chanchini', 'chinowon', 'barista', 'turon'];
 
       let currentPreviewBook = null;
       let cart = [];
       let currentBookId = null;
-      let selectedChapter = null;
+      let selectedChapters = new Set();
+      let closeCartTimer = null;
       
       const formatPrice = (n) => '$' + n.toLocaleString('es-CL');
 
+      async function loadCatalogFromSupabase() {
+        const config = window.KIHNALLY_CONFIG;
+        if (!config || !window.supabase) return;
+        try {
+          const db = window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey);
+          const { data, error } = await db
+            .from('books')
+            .select('*, chapters(*)')
+            .eq('published', true)
+            .order('sort_order', { ascending: true });
+          if (error) throw error;
+          if (!data || data.length === 0) return;
+
+          const colorStyles = {
+            coral: { badge: 'bg-coral-500', card: 'from-coral-50 to-sun-50' },
+            teal: { badge: 'bg-teal-500', card: 'from-teal-50 to-grape-50' },
+            sun: { badge: 'bg-sun-500', card: 'from-sun-50 to-coral-50' },
+            grape: { badge: 'bg-grape-500', card: 'from-grape-50 to-pink-50' }
+          };
+          const tagPalette = [
+            'bg-coral-50 text-coral-600', 'bg-sun-50 text-sun-700',
+            'bg-teal-50 text-teal-700', 'bg-grape-50 text-grape-600'
+          ];
+          BOOKS = Object.fromEntries(data.map(row => {
+            const color = colorStyles[row.color_key] || colorStyles.coral;
+            const chapters = (row.chapters || [])
+              .filter(ch => ch.published)
+              .sort((a, b) => a.sort_order - b.sort_order)
+              .map(ch => ({ id: ch.id, name: ch.name, price: ch.price }));
+            return [row.slug, {
+              id: row.slug,
+              title: row.title,
+              subtitle: row.subtitle || '',
+              description: row.description || '',
+              img: row.image_url || '',
+              previewImages: row.preview_images || [],
+              badge: row.badge || 'Libro',
+              badgeColor: color.badge,
+              colorKey: row.color_key || 'coral',
+              pricePhysical: row.price_physical || 0,
+              tags: row.tags || [],
+              tagColors: (row.tags || []).map((_, i) => tagPalette[i % tagPalette.length]),
+              cardBg: color.card,
+              chapters
+            }];
+          }));
+          CAROUSEL_ORDER = Object.keys(BOOKS);
+        } catch (error) {
+          console.warn('Supabase no disponible; se usa el catálogo incluido.', error.message);
+        }
+      }
+
       // =============================================
-      // CARRUSEL 3D
+      // CARRUSEL 3D CON MOVIMIENTO AUTOMÁTICO
       // =============================================
       function renderBookCarousel() {
-        const container = document.getElementById('bookCarousel');
-        container.innerHTML = CAROUSEL_ORDER.map(key => {
+        const inner = document.getElementById('carouselInner');
+        const booksHtml = CAROUSEL_ORDER.concat(CAROUSEL_ORDER).map(key => {
           const b = BOOKS[key];
           return `
             <div class="book-3d rounded-2xl overflow-hidden shadow-2xl border-2 border-white" 
@@ -1070,20 +1152,27 @@
                  onclick="openPreviewModal('${key}')">
               <div class="book-shadow"></div>
               <div class="book-glow"></div>
-              <img src="${b.img}" alt="${b.title}" class="w-full h-full object-cover" onerror="this.classList.add('img-fallback')">
+              <img src="${b.img}" alt="${b.title}" class="w-full h-full object-cover" onerror="handleImageError(this)">
               <div class="book-number">${CAROUSEL_ORDER.indexOf(key) + 1}</div>
               <div class="book-label">👆 Ver interior</div>
             </div>
           `;
         }).join('');
+        inner.innerHTML = booksHtml;
       }
 
       window.scrollBookCarousel = function(direction) {
-        const container = document.getElementById('bookCarousel');
-        const cardWidth = container.querySelector('.book-3d')?.offsetWidth || 220;
+        const carousel = document.getElementById('bookCarousel');
+        const inner = document.getElementById('carouselInner');
+        const bookWidth = inner.querySelector('.book-3d')?.offsetWidth || 220;
         const gap = 30;
-        const scrollAmount = cardWidth + gap;
-        container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+        const scrollAmount = (bookWidth + gap) * direction;
+
+        inner.style.animationPlayState = 'paused';
+        carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        setTimeout(() => {
+          inner.style.animationPlayState = 'running';
+        }, 2000);
       };
 
       // =============================================
@@ -1105,6 +1194,7 @@
         const book = BOOKS[bookId];
         if (!book) return;
         currentPreviewBook = bookId;
+        window.currentPreviewBook = bookId;
         document.getElementById('previewTitle').textContent = book.title;
 
         const grid = document.getElementById('previewGrid');
@@ -1120,7 +1210,7 @@
           `;
         } else {
           grid.innerHTML = images.map((img, i) => `
-            <div class="preview-img" onclick="window.openBookModal('${bookId}')">
+            <div class="preview-img" onclick="window.closePreviewModal(); window.openBookModal('${bookId}')">
               <img src="${img}" alt="${book.title} - página ${i+1}" onerror="this.parentElement.innerHTML='<div class=\\'min-h-[300px] flex items-center justify-center bg-navy-50 text-navy-400 text-lg\\'>📄 Página ${i+1}</div>'">
               <div class="page-label"><span>📄 Página ${i+1}</span></div>
             </div>
@@ -1152,46 +1242,50 @@
           if (priceEl) priceEl.textContent = formatPrice(book.pricePhysical || 0);
           const labelEl = document.getElementById('mChapterLabel');
           if (labelEl) labelEl.textContent = '';
-          selectedChapter = null;
+          selectedChapters.clear();
           updateAddButton(bookId);
           return;
         }
 
-        container.innerHTML = book.chapters.map((ch, idx) => `
-          <button class="chap-btn ${idx === 0 ? 'active' : ''}" 
+        selectedChapters.clear();
+        container.innerHTML = book.chapters.map(ch => `
+          <button class="chap-btn" 
                   data-chapter="${ch.id}" 
                   data-price="${ch.price}"
-                  onclick="selectChapter('${bookId}', '${ch.id}', ${ch.price}, this)">
+                  aria-pressed="false"
+                  onclick="selectChapter('${bookId}', '${ch.id}', this)">
             ${ch.name} <span class="chap-price">${formatPrice(ch.price)}</span>
           </button>
         `).join('');
 
-        // Seleccionar primero por defecto
-        const first = book.chapters[0];
-        selectedChapter = first.id;
         const priceEl = document.getElementById('mSelectedPrice');
-        if (priceEl) priceEl.textContent = formatPrice(first.price);
+        if (priceEl) priceEl.textContent = formatPrice(0);
         const labelEl = document.getElementById('mChapterLabel');
-        if (labelEl) labelEl.textContent = `· ${first.name}`;
+        if (labelEl) labelEl.textContent = 'Selecciona uno o más capítulos';
         updateAddButton(bookId);
       }
 
-      window.selectChapter = function(bookId, chapterId, price, btn) {
+      window.selectChapter = function(bookId, chapterId, btn) {
         const book = BOOKS[bookId];
         if (!book) return;
-        
-        document.querySelectorAll('.chapter-selector .chap-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        selectedChapter = chapterId;
-        const chapter = book.chapters.find(ch => ch.id === chapterId);
-        if (chapter) {
-          const priceEl = document.getElementById('mSelectedPrice');
-          if (priceEl) priceEl.textContent = formatPrice(chapter.price);
-          const labelEl = document.getElementById('mChapterLabel');
-          if (labelEl) labelEl.textContent = `· ${chapter.name}`;
+
+        if (selectedChapters.has(chapterId)) {
+          selectedChapters.delete(chapterId);
+          btn.classList.remove('active');
+          btn.setAttribute('aria-pressed', 'false');
+        } else {
+          selectedChapters.add(chapterId);
+          btn.classList.add('active');
+          btn.setAttribute('aria-pressed', 'true');
         }
-        
+
+        const selected = book.chapters.filter(ch => selectedChapters.has(ch.id));
+        document.getElementById('mSelectedPrice').textContent = formatPrice(
+          selected.reduce((sum, ch) => sum + ch.price, 0)
+        );
+        document.getElementById('mChapterLabel').textContent = selected.length
+          ? `· ${selected.length} ${selected.length === 1 ? 'capítulo' : 'capítulos'}`
+          : 'Selecciona uno o más capítulos';
         updateAddButton(bookId);
       };
 
@@ -1203,16 +1297,15 @@
         const btnEl = document.getElementById('btnFisico');
         if (!priceEl || !btnEl) return;
         
-        let price = book.pricePhysical || 0;
-        let label = '';
-        
-        if (selectedChapter && book.chapters) {
-          const ch = book.chapters.find(c => c.id === selectedChapter);
-          if (ch) {
-            price = ch.price;
-            label = ` (${ch.name})`;
-          }
-        }
+        const hasChapters = Array.isArray(book.chapters) && book.chapters.length > 0;
+        const selected = hasChapters ? book.chapters.filter(ch => selectedChapters.has(ch.id)) : [];
+        const price = hasChapters
+          ? selected.reduce((sum, ch) => sum + ch.price, 0)
+          : (book.pricePhysical || 0);
+        const canAdd = !hasChapters || selected.length > 0;
+        const label = hasChapters
+          ? `${selected.length} ${selected.length === 1 ? 'capítulo seleccionado' : 'capítulos seleccionados'}`
+          : 'Libro completo';
         
         priceEl.textContent = formatPrice(price);
         btnEl.innerHTML = `
@@ -1220,63 +1313,92 @@
             <div class="w-11 h-11 rounded-xl bg-coral-100 flex items-center justify-center text-2xl">📖</div>
             <div class="text-left">
               <div class="text-xs text-navy-400 font-medium">Físico (retiro en cafetería o envío por pagar)</div>
-              <div class="text-lg font-black text-navy-800">${formatPrice(price)}</div>
+              <div class="text-lg font-black text-navy-800" id="mPriceF">${formatPrice(price)}</div>
               <div class="text-[9px] text-navy-400">${label}</div>
             </div>
           </div>
-          <span class="flex items-center gap-2 bg-coral-500 hover:bg-coral-600 text-white text-[10px] font-bold tracking-wider uppercase px-4 py-2.5 rounded-full transition-colors">🛒 Agregar</span>
+          <span class="flex items-center gap-2 ${canAdd ? 'bg-coral-500 hover:bg-coral-600' : 'bg-navy-200'} text-white text-[10px] font-bold tracking-wider uppercase px-4 py-2.5 rounded-full transition-colors">🛒 ${canAdd ? 'Agregar' : 'Selecciona'}</span>
         `;
-        
-        btnEl.setAttribute('onclick', `window.addToCart('${bookId}', '${selectedChapter || ''}')`);
+
+        btnEl.disabled = !canAdd;
+        btnEl.classList.toggle('cursor-not-allowed', !canAdd);
+        btnEl.classList.toggle('opacity-70', !canAdd);
+        btnEl.setAttribute('onclick', canAdd ? `window.addToCart('${bookId}')` : '');
       }
 
       // =============================================
-      // CARRITO - Solo físico con capítulos
+      // CARRITO - CORREGIDO
       // =============================================
-      function addToCart(bookId, chapterId) {
+      function addToCart(bookId) {
         const book = BOOKS[bookId];
         if (!book) return;
 
-        let price = book.pricePhysical || 0;
-        let chapterName = 'Libro completo';
-        
-        if (chapterId && book.chapters) {
-          const ch = book.chapters.find(c => c.id === chapterId);
-          if (ch) {
-            price = ch.price;
-            chapterName = ch.name;
+        const choices = book.chapters && book.chapters.length
+          ? book.chapters.filter(ch => selectedChapters.has(ch.id))
+          : [{ id: null, name: 'Libro completo', price: book.pricePhysical || 0 }];
+        if (choices.length === 0) return;
+
+        choices.forEach(chapter => {
+          const existingIndex = cart.findIndex(item =>
+            item.bookId === bookId && item.chapterId === chapter.id
+          );
+          if (existingIndex !== -1) {
+            cart[existingIndex].quantity += 1;
+          } else {
+            cart.push({
+              bookId: bookId,
+              chapterId: chapter.id,
+              title: book.title,
+              chapterName: chapter.name,
+              price: chapter.price,
+              img: book.img,
+              colorKey: book.colorKey,
+              quantity: 1
+            });
           }
-        }
+        });
 
-        const existing = cart.find(item => item.bookId === bookId && item.chapterId === chapterId);
-        if (existing) {
-          existing.quantity++;
-        } else {
-          cart.push({
-            bookId: bookId,
-            chapterId: chapterId || null,
-            title: book.title,
-            chapterName: chapterName,
-            price: price,
-            img: book.img,
-            colorKey: book.colorKey,
-            quantity: 1
-          });
-        }
-
+        // Actualizar carrito
         renderCart();
         shakeFab();
         flyDot();
-        showToast(`✅ "${book.title} - ${chapterName}" agregado al carrito!`);
+        const selectionLabel = choices.length === 1 ? choices[0].name : `${choices.length} capítulos`;
+        showToast(`✅ "${book.title} - ${selectionLabel}" agregado al carrito!`);
         closeBookModal();
         closePreviewModal();
       }
 
-      function removeFromCart(index) { cart.splice(index, 1); renderCart(); }
-      function changeQuantity(index, delta) { cart[index].quantity += delta; if (cart[index].quantity <= 0) cart.splice(index, 1); renderCart(); }
-      function clearCart() { if (cart.length === 0) return; if (confirm('¿Seguro que quieres vaciar tu carrito?')) { cart = []; renderCart(); showToast('🗑️ Carrito vaciado'); } }
-      function getCartTotal() { return cart.reduce((sum, item) => sum + item.price * item.quantity, 0); }
-      function getCartCount() { return cart.reduce((sum, item) => sum + item.quantity, 0); }
+      function removeFromCart(index) { 
+        cart.splice(index, 1); 
+        renderCart(); 
+      }
+      
+      function changeQuantity(index, delta) { 
+        if (cart[index]) {
+          cart[index].quantity += delta; 
+          if (cart[index].quantity <= 0) {
+            cart.splice(index, 1);
+          }
+          renderCart();
+        }
+      }
+      
+      function clearCart() { 
+        if (cart.length === 0) return; 
+        if (confirm('¿Seguro que quieres vaciar tu carrito?')) { 
+          cart = []; 
+          renderCart(); 
+          showToast('🗑️ Carrito vaciado'); 
+        } 
+      }
+      
+      function getCartTotal() { 
+        return cart.reduce((sum, item) => sum + item.price * item.quantity, 0); 
+      }
+      
+      function getCartCount() { 
+        return cart.reduce((sum, item) => sum + item.quantity, 0); 
+      }
 
       function renderCart() {
         const count = getCartCount();
@@ -1284,7 +1406,11 @@
         const cBadge = document.getElementById('cBadge');
         const nBadge = document.getElementById('nBadge');
         const badge = document.getElementById('cLabel');
+        const empty = document.getElementById('cEmpty');
+        const list = document.getElementById('cList');
+        const foot = document.getElementById('cFoot');
 
+        // Actualizar badges
         if (count > 0) {
           cBadge.classList.remove('hidden');
           cBadge.textContent = count;
@@ -1300,42 +1426,42 @@
 
         badge.textContent = count + (count === 1 ? ' producto' : ' productos');
 
-        const empty = document.getElementById('cEmpty');
-        const list = document.getElementById('cList');
-        const foot = document.getElementById('cFoot');
-
+        // Mostrar/ocultar secciones
         if (cart.length === 0) {
           empty.classList.remove('hidden');
           list.classList.add('hidden');
           foot.classList.add('hidden');
-        } else {
-          empty.classList.add('hidden');
-          list.classList.remove('hidden');
-          foot.classList.remove('hidden');
-          document.getElementById('cTotal').textContent = formatPrice(total);
-          list.innerHTML = cart.map((item, index) => `
-            <div class="flex gap-3 bg-navy-50/50 rounded-2xl p-3 group/it hover:bg-navy-50 transition-colors">
-              <div class="w-16 h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
-                <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover" onerror="this.classList.add('img-fallback')">
-              </div>
-              <div class="flex-1 min-w-0">
-                <h4 class="text-sm font-bold text-navy-800 truncate">${item.title}</h4>
-                <span class="inline-flex items-center gap-1 text-[9px] font-semibold tracking-wider uppercase bg-coral-50 text-coral-600 px-2 py-0.5 rounded-full mt-1">📖 ${item.chapterName}</span>
-                <div class="flex items-center justify-between mt-2">
-                  <div class="flex items-center gap-0">
-                    <button onclick="window.changeQuantity(${index}, -1)" class="w-7 h-7 rounded-lg bg-white hover:bg-navy-100 flex items-center justify-center text-navy-600 text-sm transition-colors shadow-sm">−</button>
-                    <span class="w-8 text-center text-sm font-bold text-navy-800">${item.quantity}</span>
-                    <button onclick="window.changeQuantity(${index}, 1)" class="w-7 h-7 rounded-lg bg-white hover:bg-navy-100 flex items-center justify-center text-navy-600 text-sm transition-colors shadow-sm">+</button>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    <span class="text-sm font-black text-navy-800">${formatPrice(item.price * item.quantity)}</span>
-                    <button onclick="window.removeFromCart(${index})" class="w-7 h-7 rounded-lg hover:bg-red-50 flex items-center justify-center text-navy-300 hover:text-red-400 transition-colors opacity-0 group-hover/it:opacity-100">✕</button>
-                  </div>
+          return;
+        }
+
+        empty.classList.add('hidden');
+        list.classList.remove('hidden');
+        foot.classList.remove('hidden');
+        document.getElementById('cTotal').textContent = formatPrice(total);
+
+        // Renderizar items del carrito
+        list.innerHTML = cart.map((item, index) => `
+          <div class="flex gap-3 bg-navy-50/50 rounded-2xl p-3 group/it hover:bg-navy-50 transition-colors">
+            <div class="w-16 h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
+              <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover" onerror="handleImageError(this)">
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 class="text-sm font-bold text-navy-800 truncate">${item.title}</h4>
+              <span class="inline-flex items-center gap-1 text-[9px] font-semibold tracking-wider uppercase bg-coral-50 text-coral-600 px-2 py-0.5 rounded-full mt-1">📖 ${item.chapterName}</span>
+              <div class="flex items-center justify-between mt-2">
+                <div class="flex items-center gap-0">
+                  <button onclick="window.changeQuantity(${index}, -1)" class="w-7 h-7 rounded-lg bg-white hover:bg-navy-100 flex items-center justify-center text-navy-600 text-sm transition-colors shadow-sm">−</button>
+                  <span class="w-8 text-center text-sm font-bold text-navy-800">${item.quantity}</span>
+                  <button onclick="window.changeQuantity(${index}, 1)" class="w-7 h-7 rounded-lg bg-white hover:bg-navy-100 flex items-center justify-center text-navy-600 text-sm transition-colors shadow-sm">+</button>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-black text-navy-800">${formatPrice(item.price * item.quantity)}</span>
+                  <button onclick="window.removeFromCart(${index})" class="w-7 h-7 rounded-lg hover:bg-red-50 flex items-center justify-center text-navy-300 hover:text-red-400 transition-colors opacity-0 group-hover/it:opacity-100">✕</button>
                 </div>
               </div>
             </div>
-          `).join('');
-        }
+          </div>
+        `).join('');
       }
 
       // =============================================
@@ -1420,10 +1546,19 @@
         if (!book) return;
         
         currentBookId = bookId;
-        selectedChapter = null;
+        selectedChapters.clear();
 
-        document.getElementById('mImg').src = book.img;
-        document.getElementById('mImg').alt = book.title;
+        let modalImage = document.getElementById('mImg');
+        if (!(modalImage instanceof HTMLImageElement)) {
+          const replacement = document.createElement('img');
+          replacement.id = 'mImg';
+          replacement.className = 'w-full h-full object-cover';
+          replacement.onerror = function() { handleImageError(this); };
+          modalImage.replaceWith(replacement);
+          modalImage = replacement;
+        }
+        modalImage.src = book.img;
+        modalImage.alt = book.title;
         document.getElementById('mTitle').textContent = book.title;
 
         const sub = document.getElementById('mSub');
@@ -1450,7 +1585,7 @@
         document.getElementById('bookModal').classList.add('hidden');
         document.body.classList.remove('no-scroll');
         currentBookId = null;
-        selectedChapter = null;
+        selectedChapters.clear();
       }
 
       // =============================================
@@ -1459,6 +1594,10 @@
       function openCart() {
         const ov = document.getElementById('cartOv');
         const dr = document.getElementById('cartDr');
+        if (closeCartTimer) {
+          clearTimeout(closeCartTimer);
+          closeCartTimer = null;
+        }
         ov.classList.remove('hidden');
         dr.classList.remove('hidden', 'c-out');
         dr.classList.add('c-in');
@@ -1471,7 +1610,11 @@
         dr.classList.remove('c-in');
         dr.classList.add('c-out');
         document.body.classList.remove('no-scroll');
-        setTimeout(() => { ov.classList.add('hidden'); dr.classList.add('hidden'); }, 300);
+        closeCartTimer = setTimeout(() => {
+          ov.classList.add('hidden');
+          dr.classList.add('hidden');
+          closeCartTimer = null;
+        }, 300);
       }
 
       // =============================================
@@ -1497,7 +1640,7 @@
             <div class="rv${delay} bcard group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl border border-navy-100/50" onclick="window.openBookModal('${key}')">
               <div class="relative h-72 sm:h-80 overflow-hidden bg-gradient-to-br ${b.cardBg}">
                 <div class="bsh absolute inset-0 bg-coral-200/20 transition-all duration-700"></div>
-                <img src="${b.img}" alt="${b.title}" class="bimg w-full h-full object-cover transition-transform duration-700" onerror="this.classList.add('img-fallback')">
+                <img src="${b.img}" alt="${b.title}" class="bimg w-full h-full object-cover transition-transform duration-700" onerror="handleImageError(this)">
                 <div class="bov absolute inset-0 bg-navy-900/30 flex items-center justify-center opacity-0 transition-opacity duration-300">
                   <span class="bg-white text-navy-800 text-[10px] font-bold tracking-[.15em] uppercase px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2">🛒 Ver detalle</span>
                 </div>
@@ -1570,7 +1713,9 @@
       function initSmoothScroll() {
         document.querySelectorAll('a[href^="#"]').forEach(a => {
           a.addEventListener('click', function(e) {
-            const target = document.querySelector(this.getAttribute('href'));
+            const hash = this.getAttribute('href');
+            if (!hash || hash === '#') return;
+            const target = document.querySelector(hash);
             if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
           });
         });
@@ -1605,7 +1750,8 @@
       // =============================================
       // INICIALIZACIÓN
       // =============================================
-      function init() {
+      async function init() {
+        await loadCatalogFromSupabase();
         renderBookCarousel();
         renderBooks();
         renderCart();

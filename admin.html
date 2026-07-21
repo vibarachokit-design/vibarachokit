@@ -2,291 +2,182 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Kihnally</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administración · Kihnally</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
+  <script src="supabase-config.js"></script>
   <style>
-    .admin-card { transition: all 0.3s ease; }
-    .admin-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
-    .toast-admin {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: #162544;
-      color: white;
-      padding: 16px 24px;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-      z-index: 999;
-      animation: slideUp 0.3s ease;
-    }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #FF6B35; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    body { background: #f5f6fa; color: #162544; }
+    .field { width:100%; border:1px solid #dce3f0; border-radius:12px; padding:10px 12px; background:white; }
+    .field:focus { outline:none; border-color:#ff6b35; box-shadow:0 0 0 3px rgba(255,107,53,.12); }
+    .label { display:block; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px; color:#6280b5; }
+    .toast { position:fixed; right:20px; bottom:20px; z-index:100; padding:14px 18px; border-radius:14px; color:white; background:#162544; box-shadow:0 15px 40px #0003; max-width:360px; }
   </style>
 </head>
-<body class="bg-gray-50 p-4 md:p-8">
-  <div class="max-w-6xl mx-auto">
-    <!-- Header -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-      <div>
-        <h1 class="text-3xl font-black text-navy-800">📚 Administrar Libros</h1>
-        <p class="text-sm text-gray-500">Gestiona tu catálogo de libros en tiempo real</p>
-      </div>
-      <div class="flex gap-2 flex-wrap">
-        <button onclick="addBook()" class="bg-coral-500 hover:bg-coral-600 text-white px-4 py-2 rounded-lg font-bold transition flex items-center gap-2">➕ Nuevo Libro</button>
-        <button onclick="loadBooks()" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg font-bold transition flex items-center gap-2">🔄 Sincronizar</button>
-        <a href="index.html" target="_blank" class="bg-navy-800 hover:bg-navy-700 text-white px-4 py-2 rounded-lg font-bold transition flex items-center gap-2">👁️ Ver Web</a>
-      </div>
-    </div>
+<body class="min-h-screen">
+  <section id="loginView" class="min-h-screen flex items-center justify-center p-5">
+    <form id="loginForm" class="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md">
+      <div class="text-5xl mb-5">📚</div>
+      <h1 class="text-3xl font-black">Panel Kihnally</h1>
+      <p class="text-sm text-slate-500 mt-2 mb-7">Acceso exclusivo para administradores.</p>
+      <label class="label" for="loginEmail">Correo</label>
+      <input id="loginEmail" class="field mb-4" type="email" autocomplete="username" required>
+      <label class="label" for="loginPassword">Contraseña</label>
+      <input id="loginPassword" class="field mb-6" type="password" autocomplete="current-password" required>
+      <button id="loginButton" class="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-xl py-3 font-bold">Ingresar</button>
+      <p id="loginError" class="text-red-500 text-sm mt-4 hidden"></p>
+      <a href="index.html" class="block text-center text-sm text-slate-400 mt-6 hover:text-orange-500">← Volver a la tienda</a>
+    </form>
+  </section>
 
-    <!-- Stats -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="stats">
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-        <div class="text-2xl font-black text-coral-500" id="totalBooks">0</div>
-        <div class="text-xs text-gray-500 uppercase tracking-wider">Total Libros</div>
+  <main id="adminView" class="hidden max-w-7xl mx-auto p-4 md:p-8">
+    <header class="flex flex-col md:flex-row gap-4 md:items-center justify-between mb-8">
+      <div><h1 class="text-3xl font-black">Administrar catálogo</h1><p id="sessionEmail" class="text-sm text-slate-500"></p></div>
+      <div class="flex flex-wrap gap-2">
+        <button onclick="openEditor()" class="bg-orange-500 text-white px-5 py-2.5 rounded-xl font-bold">＋ Nuevo libro</button>
+        <button onclick="loadBooks()" class="bg-teal-500 text-white px-5 py-2.5 rounded-xl font-bold">↻ Actualizar</button>
+        <a href="index.html" target="_blank" class="bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold">Ver tienda</a>
+        <button onclick="logout()" class="bg-white border px-5 py-2.5 rounded-xl font-bold">Salir</button>
       </div>
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-        <div class="text-2xl font-black text-teal-500" id="totalPopular">0</div>
-        <div class="text-xs text-gray-500 uppercase tracking-wider">Más Vendidos</div>
-      </div>
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-        <div class="text-2xl font-black text-grape-500" id="totalTags">0</div>
-        <div class="text-xs text-gray-500 uppercase tracking-wider">Categorías</div>
-      </div>
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-        <div class="text-2xl font-black text-sun-600" id="avgPrice">$0</div>
-        <div class="text-xs text-gray-500 uppercase tracking-wider">Precio Promedio</div>
-      </div>
+    </header>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-7">
+      <div class="bg-white rounded-2xl p-5"><b id="statBooks" class="text-3xl">0</b><p class="text-xs text-slate-400 uppercase">Libros</p></div>
+      <div class="bg-white rounded-2xl p-5"><b id="statChapters" class="text-3xl">0</b><p class="text-xs text-slate-400 uppercase">Capítulos</p></div>
+      <div class="bg-white rounded-2xl p-5"><b id="statPublished" class="text-3xl">0</b><p class="text-xs text-slate-400 uppercase">Publicados</p></div>
+      <div class="bg-white rounded-2xl p-5"><b id="statAverage" class="text-3xl">$0</b><p class="text-xs text-slate-400 uppercase">Precio promedio</p></div>
     </div>
+    <div id="bookList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+  </main>
 
-    <!-- Lista de libros -->
-    <div id="bookList" class="grid gap-4">
-      <div class="col-span-full text-center py-12">
-        <div class="spinner mx-auto"></div>
-        <p class="text-gray-500 mt-4">Cargando libros...</p>
+  <div id="editor" class="hidden fixed inset-0 z-50 bg-slate-900/70 p-3 md:p-8 overflow-y-auto">
+    <form id="bookForm" class="bg-white max-w-4xl mx-auto rounded-3xl p-6 md:p-8 shadow-2xl">
+      <div class="flex justify-between items-center mb-7"><h2 id="editorTitle" class="text-2xl font-black">Nuevo libro</h2><button type="button" onclick="closeEditor()" class="text-2xl">✕</button></div>
+      <input id="bookId" type="hidden">
+      <div class="grid md:grid-cols-2 gap-5">
+        <div><label class="label" for="slug">Identificador (slug)</label><input id="slug" class="field" pattern="[a-z0-9-]+" required placeholder="mi-nuevo-libro"></div>
+        <div><label class="label" for="title">Título</label><input id="title" class="field" required></div>
+        <div class="md:col-span-2"><label class="label" for="subtitle">Subtítulo</label><input id="subtitle" class="field"></div>
+        <div class="md:col-span-2"><label class="label" for="description">Descripción</label><textarea id="description" class="field" rows="4"></textarea></div>
+        <div><label class="label" for="badge">Etiqueta</label><input id="badge" class="field" placeholder="Aventura"></div>
+        <div><label class="label" for="colorKey">Color</label><select id="colorKey" class="field"><option value="coral">Coral</option><option value="teal">Turquesa</option><option value="sun">Amarillo</option><option value="grape">Morado</option></select></div>
+        <div><label class="label" for="pricePhysical">Precio del libro completo</label><input id="pricePhysical" class="field" type="number" min="0" step="1" value="0"></div>
+        <div><label class="label" for="sortOrder">Orden</label><input id="sortOrder" class="field" type="number" step="1" value="0"></div>
+        <div class="md:col-span-2"><label class="label" for="tags">Categorías, separadas por coma</label><input id="tags" class="field" placeholder="Infantil, Aventura, Chile"></div>
+        <div><label class="label" for="coverFile">Portada</label><input id="coverFile" class="field" type="file" accept="image/jpeg,image/png,image/webp"><input id="imageUrl" type="hidden"><img id="coverPreview" class="hidden mt-3 w-28 h-36 object-cover rounded-xl" alt="Portada actual"></div>
+        <div><label class="label" for="previewFiles">Páginas interiores</label><input id="previewFiles" class="field" type="file" accept="image/jpeg,image/png,image/webp" multiple><p class="text-xs text-slate-400 mt-2">Las nuevas imágenes reemplazan las anteriores.</p><input id="previewUrls" type="hidden"></div>
+        <div class="md:col-span-2"><label class="label" for="chapters">Capítulos: uno por línea, con formato Nombre | Precio</label><textarea id="chapters" class="field font-mono" rows="6" placeholder="Capítulo 1 | 3500&#10;Capítulo 2 | 3500"></textarea></div>
+        <label class="md:col-span-2 flex items-center gap-3"><input id="published" type="checkbox" class="w-5 h-5" checked><span class="font-bold">Visible en la tienda</span></label>
       </div>
-    </div>
+      <div class="flex justify-end gap-3 mt-8"><button type="button" onclick="closeEditor()" class="px-6 py-3 rounded-xl border font-bold">Cancelar</button><button id="saveButton" class="px-7 py-3 rounded-xl bg-orange-500 text-white font-bold">Guardar cambios</button></div>
+    </form>
   </div>
 
   <script>
-    // =============================================
-    // CONFIGURACIÓN SUPABASE
-    // =============================================
-    // 🔴 REEMPLAZA ESTOS VALORES CON LOS TUYOS 🔴
-    const SUPABASE_URL = 'https://lpjuwxywvuifjqoudglp.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_rpXOqZZab_dCCRJAeUhBPQ_1b6zFBeQ';
-    
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    
+    const config = window.KIHNALLY_CONFIG;
+    const db = window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey);
     let books = [];
+    const $ = id => document.getElementById(id);
+    const money = n => '$' + Number(n || 0).toLocaleString('es-CL');
+    const escapeHtml = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 
-    // =============================================
-    // CARGAR LIBROS
-    // =============================================
+    function toast(message, error = false) {
+      document.querySelector('.toast')?.remove();
+      const el = document.createElement('div'); el.className = 'toast';
+      if (error) el.style.background = '#b91c1c'; el.textContent = message;
+      document.body.appendChild(el); setTimeout(() => el.remove(), 4000);
+    }
+
+    $('loginForm').addEventListener('submit', async event => {
+      event.preventDefault(); $('loginButton').disabled = true; $('loginError').classList.add('hidden');
+      const { error } = await db.auth.signInWithPassword({ email: $('loginEmail').value.trim(), password: $('loginPassword').value });
+      $('loginButton').disabled = false;
+      if (error) { $('loginError').textContent = 'No se pudo iniciar sesión: ' + error.message; $('loginError').classList.remove('hidden'); return; }
+      await enterAdmin();
+    });
+
+    async function enterAdmin() {
+      const { data: { user } } = await db.auth.getUser();
+      if (!user) return showLogin();
+      const { data: role } = await db.from('admin_users').select('user_id').eq('user_id', user.id).maybeSingle();
+      if (!role) { await db.auth.signOut(); $('loginError').textContent = 'Este usuario no está autorizado como administrador.'; $('loginError').classList.remove('hidden'); return showLogin(); }
+      $('loginView').classList.add('hidden'); $('adminView').classList.remove('hidden'); $('sessionEmail').textContent = user.email; await loadBooks();
+    }
+    function showLogin() { $('adminView').classList.add('hidden'); $('loginView').classList.remove('hidden'); }
+    async function logout() { await db.auth.signOut(); showLogin(); }
+
     async function loadBooks() {
-      try {
-        const { data, error } = await supabase
-          .from('books')
-          .select('*')
-          .order('title');
-        
-        if (error) throw error;
-        
-        books = data || [];
-        renderBooks();
-        updateStats();
-        showToast('✅ Libros cargados correctamente');
-      } catch (error) {
-        console.error('Error:', error);
-        showToast('❌ Error al cargar libros');
-        document.getElementById('bookList').innerHTML = `
-          <div class="col-span-full text-center py-12 bg-white rounded-xl">
-            <span class="text-6xl block mb-4">⚠️</span>
-            <p class="text-gray-500 font-medium">Error al cargar libros</p>
-            <p class="text-sm text-gray-400 mt-2">${error.message}</p>
-            <button onclick="loadBooks()" class="mt-4 bg-coral-500 text-white px-6 py-2 rounded-lg font-bold">Reintentar</button>
-          </div>
-        `;
-      }
+      $('bookList').innerHTML = '<p class="text-slate-400">Cargando catálogo…</p>';
+      const { data, error } = await db.from('books').select('*, chapters(*)').order('sort_order');
+      if (error) return toast(error.message, true);
+      books = data || []; renderBooks();
     }
 
-    // =============================================
-    // RENDER LIBROS
-    // =============================================
     function renderBooks() {
-      const container = document.getElementById('bookList');
-      
-      if (books.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-full text-center py-12 bg-white rounded-xl">
-            <span class="text-6xl block mb-4">📚</span>
-            <p class="text-gray-500 font-medium">No hay libros aún</p>
-            <p class="text-sm text-gray-400 mt-2">Haz clic en "Nuevo Libro" para comenzar</p>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = books.map(book => `
-        <div class="admin-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-4 items-start md:items-center">
-          <img src="${book.img || 'img/placeholder.png'}" alt="${book.title}" 
-               class="w-20 h-28 object-cover rounded-lg flex-shrink-0" 
-               onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%22112%22><rect width=%2280%22 height=%22112%22 fill=%22%23f0f0f0%22/><text x=%2240%22 y=%2256%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2232%22>📚</text></svg>'">
-          
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-2 flex-wrap">
-              <h3 class="font-bold text-navy-800">${book.title}</h3>
-              ${book.popular ? '<span class="text-[8px] bg-coral-500 text-white px-2 py-0.5 rounded-full font-bold">🔥 POPULAR</span>' : ''}
-            </div>
-            <p class="text-sm text-gray-500">${book.subtitle || 'Sin subtítulo'}</p>
-            <div class="flex flex-wrap gap-3 mt-1 text-xs">
-              <span class="text-grape-600 font-bold">💻 $${book.price_digital || 0}</span>
-              <span class="text-coral-600 font-bold">📖 $${book.price_physical || 0}</span>
-              <span class="text-gray-400">🏷️ ${(book.tags || []).join(', ')}</span>
-            </div>
-          </div>
-          
-          <div class="flex gap-2 flex-shrink-0">
-            <button onclick="editBook('${book.id}')" class="bg-blue-50 hover:bg-blue-100 text-blue-600 px-3 py-1.5 rounded-lg text-sm font-medium transition">✏️ Editar</button>
-            <button onclick="deleteBook('${book.id}')" class="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1.5 rounded-lg text-sm font-medium transition">🗑️</button>
-          </div>
-        </div>
-      `).join('');
+      $('statBooks').textContent = books.length;
+      $('statChapters').textContent = books.reduce((n,b) => n + (b.chapters?.length || 0), 0);
+      $('statPublished').textContent = books.filter(b => b.published).length;
+      $('statAverage').textContent = money(books.length ? Math.round(books.reduce((n,b) => n + b.price_physical, 0) / books.length) : 0);
+      if (!books.length) { $('bookList').innerHTML = '<div class="bg-white rounded-2xl p-10 text-center md:col-span-2 xl:col-span-3">No hay libros. Crea el primero.</div>'; return; }
+      $('bookList').innerHTML = books.map(book => `
+        <article class="bg-white rounded-2xl p-5 shadow-sm">
+          <div class="flex gap-4"><div class="w-24 h-32 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0">${book.image_url ? `<img src="${escapeHtml(book.image_url)}" class="w-full h-full object-cover" alt="">` : '<span class="h-full flex items-center justify-center text-4xl">📚</span>'}</div>
+          <div class="min-w-0"><div class="flex gap-2 items-center"><h2 class="font-black text-lg truncate">${escapeHtml(book.title)}</h2><span class="text-[9px] px-2 py-1 rounded-full ${book.published ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'}">${book.published ? 'VISIBLE' : 'OCULTO'}</span></div><p class="text-sm text-slate-500 line-clamp-2">${escapeHtml(book.subtitle)}</p><p class="font-black text-orange-500 mt-2">${money(book.price_physical)}</p><p class="text-xs text-slate-400">${book.chapters?.length || 0} capítulos</p></div></div>
+          <div class="flex gap-2 mt-5"><button onclick="openEditor('${book.id}')" class="flex-1 bg-blue-50 text-blue-700 rounded-xl py-2 font-bold">Editar</button><button onclick="deleteBook('${book.id}')" class="bg-red-50 text-red-600 rounded-xl px-4 font-bold">Eliminar</button></div>
+        </article>`).join('');
     }
 
-    // =============================================
-    // ACTUALIZAR ESTADÍSTICAS
-    // =============================================
-    function updateStats() {
-      document.getElementById('totalBooks').textContent = books.length;
-      document.getElementById('totalPopular').textContent = books.filter(b => b.popular).length;
-      
-      const allTags = new Set();
-      books.forEach(b => (b.tags || []).forEach(t => allTags.add(t)));
-      document.getElementById('totalTags').textContent = allTags.size;
-      
-      const totalPrices = books.reduce((sum, b) => sum + (b.price_digital || 0), 0);
-      const avg = books.length > 0 ? Math.round(totalPrices / books.length) : 0;
-      document.getElementById('avgPrice').textContent = '$' + avg.toLocaleString('es-CL');
-    }
-
-    // =============================================
-    // CRUD OPERACIONES
-    // =============================================
-    async function addBook() {
-      const id = prompt('ID único del libro (ej: nuevo-libro):');
-      if (!id) return;
-      
-      const tagsInput = prompt('Tags (separados por coma):');
-      const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
-      
-      const newBook = {
-        id: id,
-        title: prompt('Título:') || 'Nuevo Libro',
-        subtitle: prompt('Subtítulo:') || '',
-        description: prompt('Descripción:') || '',
-        img: prompt('URL de la imagen:') || 'img/placeholder.png',
-        preview_images: [],
-        badge: prompt('Etiqueta (Ej: Aventura):') || 'Nuevo',
-        badge_color: 'bg-coral-500',
-        color_key: 'coral',
-        price_digital: parseInt(prompt('Precio Digital:') || 0),
-        price_physical: parseInt(prompt('Precio Físico:') || 0),
-        popular: confirm('¿Es un libro popular? (OK=Sí, Cancelar=No)'),
-        tags: tags,
-        tag_colors: [],
-        card_bg: 'from-coral-50 to-sun-50'
-      };
-      
-      try {
-        const { error } = await supabase.from('books').insert([newBook]);
-        if (error) throw error;
-        
-        await loadBooks();
-        showToast(`✅ "${newBook.title}" agregado`);
-      } catch (error) {
-        console.error('Error:', error);
-        showToast('❌ Error al agregar libro: ' + error.message);
-      }
-    }
-
-    async function editBook(id) {
+    function openEditor(id = '') {
       const book = books.find(b => b.id === id);
-      if (!book) return;
-      
-      const tagsInput = prompt('Tags (separados por coma):', (book.tags || []).join(', '));
-      const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
-      
-      const updates = {
-        title: prompt('Título:', book.title) || book.title,
-        subtitle: prompt('Subtítulo:', book.subtitle) || book.subtitle,
-        description: prompt('Descripción:', book.description) || book.description,
-        price_digital: parseInt(prompt('Precio Digital:', book.price_digital) || book.price_digital),
-        price_physical: parseInt(prompt('Precio Físico:', book.price_physical) || book.price_physical),
-        popular: confirm('¿Es popular? (OK=Sí, Cancelar=No)'),
-        tags: tags
-      };
-      
-      try {
-        const { error } = await supabase
-          .from('books')
-          .update(updates)
-          .eq('id', id);
-        
-        if (error) throw error;
-        
-        await loadBooks();
-        showToast(`✅ "${updates.title}" actualizado`);
-      } catch (error) {
-        console.error('Error:', error);
-        showToast('❌ Error al actualizar libro: ' + error.message);
-      }
+      $('bookForm').reset(); $('bookId').value = book?.id || ''; $('editorTitle').textContent = book ? 'Editar libro' : 'Nuevo libro';
+      $('slug').value = book?.slug || ''; $('slug').disabled = Boolean(book);
+      $('title').value = book?.title || ''; $('subtitle').value = book?.subtitle || ''; $('description').value = book?.description || '';
+      $('badge').value = book?.badge || 'Libro'; $('colorKey').value = book?.color_key || 'coral'; $('pricePhysical').value = book?.price_physical || 0;
+      $('sortOrder').value = book?.sort_order || 0; $('tags').value = (book?.tags || []).join(', '); $('published').checked = book?.published ?? true;
+      $('imageUrl').value = book?.image_url || ''; $('previewUrls').value = JSON.stringify(book?.preview_images || []);
+      $('chapters').value = (book?.chapters || []).sort((a,b) => a.sort_order-b.sort_order).map(ch => `${ch.name} | ${ch.price}`).join('\n');
+      $('coverPreview').src = book?.image_url || ''; $('coverPreview').classList.toggle('hidden', !book?.image_url);
+      $('editor').classList.remove('hidden'); document.body.style.overflow = 'hidden';
     }
+    function closeEditor() { $('editor').classList.add('hidden'); document.body.style.overflow = ''; }
+
+    async function uploadFile(file, folder) {
+      const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+      const path = `${folder}/${crypto.randomUUID()}.${ext}`;
+      const { error } = await db.storage.from(config.storageBucket).upload(path, file, { contentType: file.type, upsert: false });
+      if (error) throw error;
+      return db.storage.from(config.storageBucket).getPublicUrl(path).data.publicUrl;
+    }
+
+    $('bookForm').addEventListener('submit', async event => {
+      event.preventDefault(); $('saveButton').disabled = true; $('saveButton').textContent = 'Guardando…';
+      try {
+        const currentId = $('bookId').value;
+        let imageUrl = $('imageUrl').value;
+        if ($('coverFile').files[0]) imageUrl = await uploadFile($('coverFile').files[0], 'covers');
+        let previewImages = JSON.parse($('previewUrls').value || '[]');
+        if ($('previewFiles').files.length) previewImages = await Promise.all([...$('previewFiles').files].map(file => uploadFile(file, 'previews')));
+        const payload = { slug:$('slug').value.trim(), title:$('title').value.trim(), subtitle:$('subtitle').value.trim(), description:$('description').value.trim(), image_url:imageUrl, preview_images:previewImages, badge:$('badge').value.trim() || 'Libro', color_key:$('colorKey').value, price_physical:Number($('pricePhysical').value)||0, tags:$('tags').value.split(',').map(x=>x.trim()).filter(Boolean), published:$('published').checked, sort_order:Number($('sortOrder').value)||0 };
+        let bookId = currentId;
+        if (currentId) { const { error } = await db.from('books').update(payload).eq('id', currentId); if (error) throw error; }
+        else { const { data, error } = await db.from('books').insert(payload).select('id').single(); if (error) throw error; bookId = data.id; }
+        const chapterLines = $('chapters').value.split('\n').map(x=>x.trim()).filter(Boolean);
+        const chapters = chapterLines.map((line,index) => { const [name, rawPrice] = line.split('|'); return { book_id:bookId, code:`c${index+1}`, name:(name||'').trim(), price:Number((rawPrice||'0').trim())||0, sort_order:index, published:true }; }).filter(ch=>ch.name);
+        const { error: deleteError } = await db.from('chapters').delete().eq('book_id', bookId); if (deleteError) throw deleteError;
+        if (chapters.length) { const { error } = await db.from('chapters').insert(chapters); if (error) throw error; }
+        closeEditor(); await loadBooks(); toast('✅ Libro guardado correctamente');
+      } catch (error) { console.error(error); toast('No se pudo guardar: ' + error.message, true); }
+      finally { $('saveButton').disabled = false; $('saveButton').textContent = 'Guardar cambios'; }
+    });
 
     async function deleteBook(id) {
-      const book = books.find(b => b.id === id);
-      if (!book) return;
-      
-      if (!confirm(`¿Eliminar "${book.title}" permanentemente?`)) return;
-      
-      try {
-        const { error } = await supabase
-          .from('books')
-          .delete()
-          .eq('id', id);
-        
-        if (error) throw error;
-        
-        await loadBooks();
-        showToast(`🗑️ "${book.title}" eliminado`);
-      } catch (error) {
-        console.error('Error:', error);
-        showToast('❌ Error al eliminar libro: ' + error.message);
-      }
+      const book = books.find(b => b.id === id); if (!book || !confirm(`¿Eliminar “${book.title}” y todos sus capítulos?`)) return;
+      const { error } = await db.from('books').delete().eq('id', id); if (error) return toast(error.message, true);
+      await loadBooks(); toast('Libro eliminado');
     }
 
-    // =============================================
-    // TOAST
-    // =============================================
-    function showToast(message) {
-      const existing = document.querySelector('.toast-admin');
-      if (existing) existing.remove();
-      
-      const toast = document.createElement('div');
-      toast.className = 'toast-admin';
-      toast.textContent = message;
-      document.body.appendChild(toast);
-      
-      setTimeout(() => toast.remove(), 3000);
-    }
-
-    // =============================================
-    // INICIALIZAR
-    // =============================================
-    document.addEventListener('DOMContentLoaded', loadBooks);
+    db.auth.onAuthStateChange((_event, session) => { if (!session) showLogin(); });
+    db.auth.getSession().then(({data}) => data.session ? enterAdmin() : showLogin());
   </script>
 </body>
 </html>
