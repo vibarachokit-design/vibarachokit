@@ -1,6 +1,5 @@
 -- Ejecutar una sola vez en Supabase > SQL Editor.
--- Después crea el usuario desde Authentication > Users y reemplaza
--- ADMIN@EJEMPLO.COM al final de este archivo por su correo real.
+-- Después crea el usuario ibar.araya@gmail.com desde Authentication > Users.
 
 create extension if not exists pgcrypto;
 
@@ -116,7 +115,7 @@ join (values
  ('turon','c1','Capítulo 1',3500,1),('turon','c2','Capítulo 2',3500,2),('turon','c3','Capítulo 3',3500,3),('turon','c4','Capítulo 4',3500,4)
 ) as c(slug,code,name,price,sort_order) on c.slug = b.slug;
 
--- Reemplaza el correo y ejecuta esta sentencia después de crear el usuario:
--- insert into public.admin_users (user_id, email)
--- select id, email from auth.users where lower(email) = lower('ADMIN@EJEMPLO.COM')
--- on conflict (user_id) do update set email = excluded.email;
+-- Autoriza el usuario administrador. El usuario debe existir primero en Authentication > Users.
+insert into public.admin_users (user_id, email)
+select id, email from auth.users where lower(email) = lower('ibar.araya@gmail.com')
+on conflict (user_id) do update set email = excluded.email;
