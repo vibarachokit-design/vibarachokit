@@ -10,7 +10,7 @@ create table if not exists public.admin_users (
 );
 
 create table if not exists public.books (
-  id uuid primary key default gen_random_uuid(),
+  id text primary key default gen_random_uuid()::text,
   slug text not null unique check (slug ~ '^[a-z0-9-]+$'),
   title text not null,
   subtitle text not null default '',
@@ -27,9 +27,36 @@ create table if not exists public.books (
   updated_at timestamptz not null default now()
 );
 
+-- Compatibilidad con instalaciones anteriores de Kihnally.
+alter table public.books add column if not exists slug text;
+alter table public.books add column if not exists subtitle text not null default '';
+alter table public.books add column if not exists description text not null default '';
+alter table public.books add column if not exists image_url text not null default '';
+alter table public.books add column if not exists preview_images text[] not null default '{}';
+alter table public.books add column if not exists badge text not null default 'Libro';
+alter table public.books add column if not exists color_key text not null default 'coral';
+alter table public.books add column if not exists price_physical integer not null default 0;
+alter table public.books add column if not exists tags text[] not null default '{}';
+alter table public.books add column if not exists published boolean not null default true;
+alter table public.books add column if not exists sort_order integer not null default 0;
+alter table public.books add column if not exists created_at timestamptz not null default now();
+alter table public.books add column if not exists updated_at timestamptz not null default now();
+alter table public.books alter column id set default gen_random_uuid()::text;
+update public.books
+set slug = lower(regexp_replace(coalesce(nullif(id, ''), gen_random_uuid()::text), '[^a-zA-Z0-9]+', '-', 'g'))
+where slug is null or slug = '';
+create unique index if not exists books_slug_unique_idx on public.books(slug);
+
+do $$
+begin
+  if exists (select 1 from information_schema.columns where table_schema='public' and table_name='books' and column_name='img') then
+    execute 'update public.books set image_url = img where image_url = '''' and img is not null';
+  end if;
+end $$;
+
 create table if not exists public.chapters (
-  id uuid primary key default gen_random_uuid(),
-  book_id uuid not null references public.books(id) on delete cascade,
+  id text primary key default gen_random_uuid()::text,
+  book_id text not null references public.books(id) on delete cascade,
   code text not null,
   name text not null,
   price integer not null default 0 check (price >= 0),
