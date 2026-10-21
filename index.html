@@ -3,10 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kihnally — Libros por VibaraChokiT</title>
+  <title>VibaraChokiT · Estudio Creativo — Libros y juegos desde Mejillones</title>
+  <meta name="description" content="Libros ilustrados, humor absurdo y juegos creados en Mejillones, Chile, por VibaraChokiT Estudio Creativo. Pide por WhatsApp o retira en la cafetería Kihnally.">
+  <meta name="theme-color" content="#2F3A2C">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <meta property="og:title" content="VibaraChokiT · Estudio Creativo">
+  <meta property="og:description" content="Libros para leer y juegos para jugar, hechos en Mejillones.">
+  <meta property="og:image" content="img/icono-512.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
@@ -15,17 +22,25 @@
       theme: {
         extend: {
           colors: {
-            coral: { 50: '#FFF5F0', 100: '#FFE8DB', 200: '#FFD0B5', 300: '#FFB088', 400: '#FF8C55', 500: '#FF6B35', 600: '#E5551F', 700: '#BF4018', 800: '#993318', 900: '#7A2C18' },
-            teal: { 50: '#EDFCF8', 100: '#D0F7ED', 200: '#A5EDE0', 300: '#6DDEC9', 400: '#3DC9AD', 500: '#00C9A7', 600: '#00A68C', 700: '#008572', 800: '#00695B', 900: '#00574B' },
-            sun: { 50: '#FFFDF0', 100: '#FFF9D6', 200: '#FFF3AD', 300: '#FFEB78', 400: '#FFE03E', 500: '#FFD23F', 600: '#E6B800', 700: '#BF9900', 800: '#997A00', 900: '#7A6200' },
-            grape: { 50: '#F5F0FF', 100: '#EBE0FF', 200: '#D4C0FF', 300: '#B899FF', 400: '#9B6FFF', 500: '#7B2FF7', 600: '#6A1DE6', 700: '#5814C7', 800: '#4810A3', 900: '#3C0E86' },
-            navy: { 50: '#F0F3F9', 100: '#DCE3F0', 200: '#B9C7E1', 300: '#8DA4CC', 400: '#6280B5', 500: '#3D5A99', 600: '#2D4478', 700: '#1F3359', 800: '#162544', 900: '#0F1A32' },
-            cream: '#FFFCF5', wasap: '#25D366'
+            // Paleta tomada del logo
+            ink:   { DEFAULT: '#2F3A2C', 700: '#3B4837', 600: '#4A5745' },
+            sage:  { DEFAULT: '#656F5B', 400: '#8A947F', 300: '#A9B39E' },
+            mist:  { DEFAULT: '#C9D4BE', 100: '#E6ECDF', 50: '#F1F4EC' },
+            paper: '#F7F8F3',
+            // Colores de cada libro (se eligen en el panel)
+            coral: { 50: '#FBEFF1', 100: '#F6DCE1', 500: '#D9576F', 600: '#B8435A' },
+            teal:  { 50: '#EAF4F6', 100: '#D3E9ED', 500: '#2F8C9E', 600: '#247384' },
+            sun:   { 50: '#FDF6E3', 100: '#FAEBC2', 500: '#E0A100', 600: '#A87800' },
+            grape: { 50: '#F1EFF8', 100: '#E2DEF1', 500: '#7B6BB8', 600: '#62539C' },
+            wasap: '#25D366'
           },
-          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], serif: ['Playfair Display', 'serif'] }
+          fontFamily: {
+            sans: ['Nunito', 'system-ui', 'sans-serif'],
+            display: ['Fredoka', 'Nunito', 'system-ui', 'sans-serif']
+          }
         }
       }
-    }
+    };
 
     window.handleImageError = function(img) {
       const fallback = document.createElement('div');
@@ -33,511 +48,349 @@
       if (img.id) fallback.id = img.id;
       fallback.setAttribute('role', 'img');
       fallback.setAttribute('aria-label', img.alt || 'Imagen no disponible');
-      fallback.textContent = '📚';
+      fallback.innerHTML = '<img src="img/logo-icono.png" alt="" style="width:40%;height:auto;opacity:.5">';
       img.replaceWith(fallback);
     };
   </script>
   <style>
-    /* ========== ANIMACIONES BASE ========== */
-    @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
-    @keyframes slideUp { 0% { opacity: 0; transform: translateY(40px); } 100% { opacity: 1; transform: translateY(0); } }
-    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(3deg); } }
-    @keyframes floatRev { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(-2deg); } }
-    @keyframes bounceS { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    @keyframes gradShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    @keyframes spinS { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    @keyframes modalIn { 0% { opacity: 0; transform: scale(.92) translateY(30px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-    @keyframes ovIn { 0% { opacity: 0; } 100% { opacity: 1; } }
-    @keyframes cartIn { 0% { transform: translateX(100%); } 100% { transform: translateX(0); } }
-    @keyframes cartOut { 0% { transform: translateX(0); } 100% { transform: translateX(100%); } }
-    @keyframes popIn { 0% { transform: scale(0); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
-    @keyframes shake { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-12deg); } 40% { transform: rotate(10deg); } 60% { transform: rotate(-6deg); } 80% { transform: rotate(4deg); } }
-    @keyframes flyUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-60px) scale(.5); } }
-    @keyframes toastIn { 0% { opacity: 0; transform: scale(.8) translateY(30px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-    @keyframes toastOut { 0% { opacity: 1; transform: scale(1) translateY(0); } 100% { opacity: 0; transform: scale(.8) translateY(-30px); } }
-    
-    /* ========== CARRUSEL CON MOVIMIENTO AUTOMÁTICO ========== */
-    @keyframes carouselScroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* ========== EFECTO 3D PARA LIBROS ========== */
-    .book-3d {
-      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-      transform-style: preserve-3d;
-      perspective: 800px;
-      cursor: pointer;
-      position: relative;
-      flex-shrink: 0;
-    }
-    .book-3d:hover {
-      transform: rotateY(-12deg) rotateX(4deg) scale(1.08);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-      z-index: 50;
-    }
-    .book-3d:hover .book-shadow { opacity: 0.8; transform: scale(1.1); }
-    .book-3d .book-shadow { transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); opacity: 0; position: absolute; inset: 0; background: linear-gradient(to bottom right, rgba(0,0,0,0.5), transparent); border-radius: inherit; }
-    .book-3d .book-glow { transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); opacity: 0; position: absolute; inset: 0; background: linear-gradient(to top right, rgba(255,107,53,0.3), transparent, rgba(255,210,63,0.3)); border-radius: inherit; pointer-events: none; }
-    .book-3d:hover .book-glow { opacity: 1; }
-    .book-3d .book-label { 
-      transition: all 0.4s ease; 
-      opacity: 0; 
-      transform: translateY(10px);
-      position: absolute;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%) translateY(10px);
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(8px);
-      color: white;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 50px;
-      white-space: nowrap;
-      border: 1px solid rgba(255,255,255,0.1);
-      pointer-events: none;
-    }
-    .book-3d:hover .book-label { opacity: 1; transform: translateX(-50%) translateY(0); }
-    .book-3d.selected {
-      transform: rotateY(-6deg) rotateX(3deg) scale(1.1);
-      box-shadow: 0 0 0 4px #FF6B35, 0 30px 60px rgba(255,107,53,0.35);
-      z-index: 50;
-    }
-    .book-3d .book-number {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(255,255,255,0.9);
-      backdrop-filter: blur(4px);
-      color: #162544;
-      font-size: 9px;
-      font-weight: 800;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-
-    /* ========== CARRUSEL 3D CON SCROLL AUTOMÁTICO ========== */
-    .carousel-3d {
-      display: flex;
-      gap: 30px;
-      padding: 30px 20px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      align-items: center;
-      position: relative;
-      width: 100%;
-    }
-    .carousel-3d::-webkit-scrollbar { display: none; }
-    .carousel-3d-inner {
-      display: flex;
-      gap: 30px;
-      animation: carouselScroll 25s linear infinite;
-      width: max-content;
-    }
-    .carousel-3d-inner:hover {
-      animation-play-state: paused;
-    }
-    .carousel-3d .book-3d {
-      scroll-snap-align: center;
-      min-width: 220px;
-      max-width: 280px;
-      height: 320px;
-      border-radius: 20px;
-    }
-    .carousel-3d .book-3d img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .carousel-wrapper {
-      position: relative;
-      max-width: 1000px;
-      margin: 0 auto;
-      overflow: hidden;
-      border-radius: 24px;
-    }
-    .carousel-wrapper .scroll-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.95);
-      border: 2px solid #e2e8f0;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      transition: all 0.3s ease;
-      z-index: 20;
-      color: #162544;
-      backdrop-filter: blur(8px);
-    }
-    .carousel-wrapper .scroll-btn:hover {
-      background: #162544;
-      color: white;
-      border-color: #162544;
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 8px 35px rgba(0,0,0,0.25);
-    }
-    .carousel-wrapper .scroll-btn.prev { left: 10px; }
-    .carousel-wrapper .scroll-btn.next { right: 10px; }
-    @media (max-width: 768px) {
-      .carousel-3d .book-3d { min-width: 160px; max-width: 200px; height: 240px; }
-      .carousel-wrapper .scroll-btn { width: 44px; height: 44px; font-size: 22px; }
-    }
-    @media (max-width: 480px) {
-      .carousel-3d .book-3d { min-width: 130px; max-width: 160px; height: 200px; }
-      .carousel-wrapper .scroll-btn { width: 36px; height: 36px; font-size: 18px; }
-      .carousel-wrapper .scroll-btn.prev { left: 4px; }
-      .carousel-wrapper .scroll-btn.next { right: 4px; }
-    }
-
-    .anim-fade { animation: fadeIn 1s ease-out forwards; }
-    .anim-up { animation: slideUp .8s cubic-bezier(.16,1,.3,1) forwards; }
-    .anim-float { animation: float 6s ease-in-out infinite; }
-    .anim-floatR { animation: floatRev 5s ease-in-out infinite; }
-    .anim-bounce { animation: bounceS 2s ease-in-out infinite; }
-    .anim-spin { animation: spinS 20s linear infinite; }
-    .anim-shake { animation: shake .5s ease-in-out; }
-    .anim-toast-in { animation: toastIn .5s cubic-bezier(.16,1,.3,1) forwards; }
-    .anim-toast-out { animation: toastOut .4s ease-in forwards; }
-
-    .grad-anim { background: linear-gradient(135deg, #FF6B35, #FFD23F, #00C9A7, #7B2FF7, #FF6B35); background-size: 300% 300%; animation: gradShift 8s ease infinite; }
-    .t-grad { background: linear-gradient(135deg, #FF6B35, #FFD23F); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .t-gradT { background: linear-gradient(135deg, #00C9A7, #3DC9AD); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .t-gradG { background: linear-gradient(135deg, #7B2FF7, #B899FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
-    .rv { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(.16,1,.3,1); }
-    .rv.on { opacity: 1; transform: translateY(0); }
-    .rvL { opacity: 0; transform: translateX(-40px); transition: all 1s cubic-bezier(.16,1,.3,1); }
-    .rvL.on { opacity: 1; transform: translateX(0); }
-    .rvR { opacity: 0; transform: translateX(40px); transition: all 1s cubic-bezier(.16,1,.3,1); }
-    .rvR.on { opacity: 1; transform: translateX(0); }
-    .d1 { transition-delay: .1s; }
-    .d2 { transition-delay: .2s; }
-    .d3 { transition-delay: .3s; }
-    .d4 { transition-delay: .4s; }
-
-    .bcard { cursor: pointer; transition: all .5s cubic-bezier(.16,1,.3,1); }
-    .bcard:hover { transform: translateY(-12px) scale(1.02); }
-    .bcard:hover .bsh { transform: scale(1.1); opacity: .6; }
-    .bcard:hover .bimg { transform: scale(1.05); }
-    .bcard:hover .bov { opacity: 1; }
-
-    .nav-s { background: rgba(255, 252, 245, .92) !important; backdrop-filter: blur(24px) !important; box-shadow: 0 1px 30px rgba(0, 0, 0, .08) !important; }
-    .bl1 { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
-    .bl2 { border-radius: 58% 42% 30% 70% / 55% 45% 55% 45%; }
-    .mtrack { display: flex; animation: marquee 30s linear infinite; }
-    .m-ov { animation: ovIn .3s ease-out forwards; }
-    .m-cont { animation: modalIn .4s cubic-bezier(.16,1,.3,1) forwards; }
-    .c-in { animation: cartIn .4s cubic-bezier(.16,1,.3,1) forwards; }
-    .c-out { animation: cartOut .3s ease-in forwards; }
-    .b-pop { animation: popIn .3s ease-out forwards; }
-    .fly { animation: flyUp .6s ease-out forwards; }
-
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #FFFCF5; }
-    ::-webkit-scrollbar-thumb { background: linear-gradient(#FF6B35, #FFD23F); border-radius: 4px; }
-    html { scroll-behavior: smooth; }
+    :root { --ink:#2F3A2C; --sage:#656F5B; --mist:#C9D4BE; --mist-100:#E6ECDF; --paper:#F7F8F3; --yolk:#F0B429; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body { background: var(--paper); color: var(--ink); }
     body.no-scroll { overflow: hidden; }
+    h1, h2, h3, .font-display { font-family: 'Fredoka', 'Nunito', system-ui, sans-serif; }
+    :focus-visible { outline: 3px solid var(--yolk); outline-offset: 3px; border-radius: 12px; }
+    .img-fallback { background: var(--mist-100); display: flex; align-items: center; justify-content: center; }
 
-    .img-fallback { background: linear-gradient(135deg, #f0f0f0, #e0e0e0); display: flex; align-items: center; justify-content: center; font-size: 48px; }
+    /* Botones con forma de control: la cruz y los botones redondos del logo */
+    .pad-btn {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--sage); color: var(--paper);
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: inset 0 -4px 0 rgba(0,0,0,.18);
+      transition: transform .15s ease, box-shadow .15s ease, background .2s;
+    }
+    .pad-btn:hover { background: var(--ink); }
+    .pad-btn:active { transform: translateY(2px); box-shadow: inset 0 -1px 0 rgba(0,0,0,.18); }
+    .pad-btn svg { width: 22px; height: 22px; }
 
-    /* ========== TOAST GRANDE ========== */
-    .toast-big {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      background: rgba(22, 37, 68, 0.95);
-      backdrop-filter: blur(16px);
-      color: white;
-      padding: 40px 50px;
-      border-radius: 24px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-      text-align: center;
-      max-width: 90vw;
-      width: 450px;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .toast-big .icon { font-size: 64px; margin-bottom: 16px; display: block; }
-    .toast-big .title { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-    .toast-big .sub { font-size: 16px; color: rgba(255,255,255,0.7); font-weight: 300; }
-    .toast-big .btn-close-toast { margin-top: 20px; background: rgba(255,255,255,0.15); border: none; color: white; padding: 10px 30px; border-radius: 50px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s; letter-spacing: 0.05em; }
-    .toast-big .btn-close-toast:hover { background: rgba(255,255,255,0.25); }
-    @media (max-width: 640px) { .toast-big { padding: 30px 24px; width: 92vw; } .toast-big .icon { font-size: 48px; } .toast-big .title { font-size: 20px; } .toast-big .sub { font-size: 14px; } }
+    /* Estante de portadas */
+    .shelf { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 18px 4px 26px; }
+    .shelf::-webkit-scrollbar { display: none; }
+    .shelf-item { flex: 0 0 auto; width: 210px; aspect-ratio: 2 / 3; scroll-snap-align: start; border-radius: 6px 14px 14px 6px; overflow: hidden; position: relative; cursor: pointer;
+      box-shadow: -6px 0 0 0 var(--sage) inset, 0 14px 28px -12px rgba(47,58,44,.55); transition: transform .3s cubic-bezier(.2,.8,.2,1); background: var(--mist-100); }
+    .shelf-item img { width: 100%; height: 100%; object-fit: cover; }
+    .shelf-item::after { content: ''; position: absolute; inset: 0 auto 0 0; width: 10px; background: linear-gradient(90deg, rgba(0,0,0,.28), transparent); }
+    .shelf-item:hover, .shelf-item:focus-visible { transform: translateY(-8px) rotate(-1deg); }
+    @media (max-width: 640px) { .shelf-item { width: 150px; } }
 
-    /* ========== MODAL VISTA PREVIA ========== */
-    .preview-modal .preview-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      max-height: 65vh;
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-    .preview-modal .preview-grid::-webkit-scrollbar { width: 4px; }
-    .preview-modal .preview-grid::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
-    .preview-modal .preview-grid::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-    .preview-modal .preview-img {
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-      background: #f8fafc;
-    }
-    .preview-modal .preview-img:hover {
-      transform: scale(1.01);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-    }
-    .preview-modal .preview-img img {
-      width: 100%;
-      height: auto;
-      min-height: 300px;
-      max-height: 70vh;
-      object-fit: contain;
-      background: #f8fafc;
-      display: block;
-    }
-    .preview-modal .preview-img .page-label {
-      padding: 10px 16px;
-      text-align: center;
-      font-size: 12px;
-      font-weight: 700;
-      color: #64748b;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      background: #f8fafc;
-      border-top: 1px solid #e2e8f0;
-      font-family: 'Inter', sans-serif;
-    }
-    .preview-modal .preview-img .page-label span {
-      display: inline-block;
-      background: #e2e8f0;
-      padding: 2px 12px;
-      border-radius: 50px;
-      font-size: 10px;
-      color: #475569;
-    }
-    @media (max-width: 640px) {
-      .preview-modal .preview-img img { min-height: 200px; max-height: 50vh; }
-    }
+    /* Tarjetas de libros */
+    .book-card { transition: transform .3s cubic-bezier(.2,.8,.2,1); }
+    .book-card:hover { transform: translateY(-4px); }
+    .book-card .cover { aspect-ratio: 3 / 4; }
+    .book-card:hover .cover img { transform: scale(1.03); }
+    .book-card .cover img { transition: transform .6s ease; }
 
-    /* ========== RESEÑAS CARRUSEL ========== */
-    .testimonial-card {
-      background: white;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.04);
-      transition: all 0.3s ease;
-      min-width: 280px;
-      max-width: 320px;
-      flex: 0 0 auto;
-    }
-    .testimonial-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
-    }
-    .testimonial-card .stars {
-      color: #FFD23F;
-      font-size: 18px;
-      letter-spacing: 2px;
-    }
-    .testimonial-card .avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 700;
-      color: white;
-      flex-shrink: 0;
-    }
-    .testimonial-carousel {
-      display: flex;
-      gap: 20px;
-      padding: 8px 4px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .testimonial-carousel::-webkit-scrollbar { display: none; }
-    .testimonial-carousel .testimonial-card {
-      scroll-snap-align: start;
-    }
-    .testimonial-carousel-wrapper {
-      position: relative;
-    }
-    .testimonial-carousel-wrapper .scroll-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: white;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      transition: all 0.3s ease;
-      z-index: 10;
-      color: #162544;
-    }
-    .testimonial-carousel-wrapper .scroll-btn:hover {
-      background: #162544;
-      color: white;
-      border-color: #162544;
-    }
-    .testimonial-carousel-wrapper .scroll-btn.prev { left: -12px; }
-    .testimonial-carousel-wrapper .scroll-btn.next { right: -12px; }
-    @media (max-width: 640px) {
-      .testimonial-carousel-wrapper .scroll-btn { display: none; }
-      .testimonial-card { min-width: 240px; }
-    }
+    /* Chips de filtros */
+    .chip { border: 2px solid var(--mist); color: var(--sage); background: white; padding: 7px 16px; border-radius: 999px; font-weight: 700; font-size: 14px; transition: all .2s; white-space: nowrap; }
+    .chip:hover { border-color: var(--sage); }
+    .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 
-    /* Logo imagen */
-    .logo-img {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      object-fit: cover;
-    }
-    @media (max-width: 640px) {
-      .logo-img { width: 32px; height: 32px; }
-    }
+    /* Apps: tarjeta con "pantalla" */
+    .app-screen { aspect-ratio: 16 / 10; background: var(--mist); border-radius: 18px; border: 6px solid var(--ink); position: relative; overflow: hidden; }
+    .app-screen img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* ========== SELECTOR DE CAPÍTULOS ========== */
-    .chapter-selector {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .chapter-selector .chap-btn {
-      padding: 6px 14px;
-      border-radius: 50px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      border: 2px solid #e2e8f0;
-      background: white;
-      color: #64748b;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .chapter-selector .chap-btn:hover {
-      border-color: #94a3b8;
-      transform: translateY(-2px);
-    }
-    .chapter-selector .chap-btn.active {
-      border-color: #FF6B35;
-      background: #FF6B35;
-      color: white;
-      box-shadow: 0 4px 12px rgba(255,107,53,0.3);
-    }
-    .chapter-selector .chap-btn.active:hover {
-      background: #E5551F;
-      border-color: #E5551F;
-    }
-    .chapter-selector .chap-btn .chap-price {
-      font-weight: 400;
-      opacity: 0.7;
-      font-size: 10px;
-      margin-left: 4px;
-    }
-    .chapter-selector .chap-btn.active .chap-price {
-      opacity: 1;
-    }
-    .chapter-selector-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: #94a3b8;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      width: 100%;
-      margin-bottom: 2px;
-    }
-    .chapter-price-total {
-      font-size: 13px;
-      font-weight: 700;
-      color: #162544;
-      background: #f1f5f9;
-      padding: 4px 14px;
-      border-radius: 50px;
-      display: inline-block;
+    /* Capítulos */
+    .chap-btn { padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 700; border: 2px solid var(--mist); background: white; color: var(--sage); transition: all .2s; }
+    .chap-btn:hover { border-color: var(--sage); }
+    .chap-btn.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+    .chap-btn .chap-price { font-weight: 600; opacity: .75; margin-left: 4px; }
+    .chap-btn:disabled { opacity: .45; cursor: not-allowed; border-style: dashed; }
+    .fmt-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--mist-100); border: 2px solid var(--mist); border-radius: 999px; padding: 4px; }
+    .fmt-toggle button { border-radius: 999px; padding: 9px 12px; font-weight: 800; color: var(--sage); display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .fmt-toggle button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+    .fmt-toggle button svg { width: 18px; height: 18px; }
+
+    /* Movimiento solo cuando responde a una acción */
+    @keyframes modalIn { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
+    @keyframes ovIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes cartIn { from { transform: translateX(100%); } to { transform: none; } }
+    @keyframes cartOut { from { transform: none; } to { transform: translateX(100%); } }
+    @keyframes popIn { 0% { transform: scale(0); } 60% { transform: scale(1.25); } 100% { transform: scale(1); } }
+    @keyframes bump { 0%,100% { transform: none; } 30% { transform: scale(1.12); } 60% { transform: scale(.96); } }
+    @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+    @keyframes heroIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    .m-ov { animation: ovIn .25s ease-out both; }
+    .m-cont { animation: modalIn .35s cubic-bezier(.2,.8,.2,1) both; }
+    .c-in { animation: cartIn .35s cubic-bezier(.2,.8,.2,1) forwards; }
+    .c-out { animation: cartOut .25s ease-in forwards; }
+    .b-pop { animation: popIn .3s ease-out; }
+    .bump { animation: bump .45s ease-out; }
+    .hero-in > * { animation: heroIn .7s cubic-bezier(.2,.8,.2,1) both; }
+    .hero-in > *:nth-child(2) { animation-delay: .08s; }
+    .hero-in > *:nth-child(3) { animation-delay: .16s; }
+    .hero-in > *:nth-child(4) { animation-delay: .24s; }
+
+    .toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 300; background: var(--ink); color: var(--paper);
+      padding: 14px 18px 14px 20px; border-radius: 16px; box-shadow: 0 18px 40px -12px rgba(0,0,0,.45); display: flex; gap: 14px; align-items: center;
+      max-width: calc(100vw - 32px); width: max-content; animation: toastIn .35s cubic-bezier(.2,.8,.2,1) both; font-weight: 600; }
+    .toast button { background: var(--yolk); color: var(--ink); font-weight: 800; border-radius: 999px; padding: 6px 14px; font-size: 13px; white-space: nowrap; }
+
+    .nav-s { background: rgba(247,248,243,.94); backdrop-filter: blur(16px); box-shadow: 0 1px 0 var(--mist); }
+
+    .preview-page { border-radius: 14px; overflow: hidden; background: var(--mist-100); }
+    .preview-page img { width: 100%; height: auto; max-height: 75vh; object-fit: contain; display: block; margin: 0 auto; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
     }
   </style>
 </head>
-<body class="bg-cream font-sans text-navy-800 overflow-x-hidden">
+<body class="font-sans antialiased overflow-x-hidden">
 
-  <!-- ========== MODAL LIBRO (detalle + compra) ========== -->
-  <div id="bookModal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
-    <div class="m-ov absolute inset-0 bg-navy-900/70 backdrop-blur-sm" onclick="closeBookModal()" aria-hidden="true"></div>
-    <div class="relative z-10 flex items-center justify-center min-h-screen p-4 sm:p-6">
-      <div class="m-cont bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div class="grid md:grid-cols-2">
-          <div class="relative h-72 md:h-auto md:min-h-[500px] bg-gradient-to-br from-coral-50 to-sun-50 overflow-hidden rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none">
-            <img id="mImg" src="" alt="" class="w-full h-full object-cover" onerror="handleImageError(this)">
-            <div id="mBadge" class="absolute top-4 left-4 text-[9px] font-bold tracking-[.2em] uppercase px-3 py-1.5 rounded-full text-white"></div>
+  <a href="#libros" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[400] bg-ink text-paper px-4 py-2 rounded-xl">Saltar al catálogo</a>
+
+  <!-- ========== NAV ========== -->
+  <nav id="nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-300" role="navigation" aria-label="Principal">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between gap-4">
+      <a href="#" class="flex items-center gap-3" aria-label="VibaraChokiT Estudio Creativo, inicio">
+        <img src="img/logo-icono.png" alt="" class="w-11 h-auto">
+        <span class="leading-none">
+          <span class="block font-display font-semibold text-xl tracking-wide text-sage">VIBARACHOKIT</span>
+          <span class="block font-display text-[13px] text-sage-400 mt-0.5">Estudio Creativo</span>
+        </span>
+      </a>
+      <div class="hidden md:flex items-center gap-7 font-semibold text-[15px]">
+        <a href="#libros" class="hover:text-sage">Libros</a>
+        <a href="#apps" class="hover:text-sage">Apps y juegos</a>
+        <a href="#autor" class="hover:text-sage">El estudio</a>
+        <a href="#cafeteria" class="hover:text-sage">Cafetería Kihnally</a>
+        <button onclick="openCart()" class="relative inline-flex items-center gap-2 bg-ink text-paper rounded-full pl-4 pr-5 py-2.5 hover:bg-ink-700" aria-label="Abrir carrito">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          Carrito
+          <span id="nBadge" class="hidden min-w-[22px] h-[22px] rounded-full bg-[#F0B429] text-ink text-xs font-extrabold items-center justify-center px-1">0</span>
+        </button>
+      </div>
+      <div class="flex md:hidden items-center gap-2">
+        <button onclick="openCart()" class="relative w-11 h-11 rounded-full bg-ink text-paper flex items-center justify-center" aria-label="Abrir carrito">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          <span id="mBadgeNav" class="hidden absolute -top-1 -right-1 min-w-[20px] h-5 rounded-full bg-[#F0B429] text-ink text-[11px] font-extrabold items-center justify-center px-1">0</span>
+        </button>
+        <button id="menuBtn" class="w-11 h-11 rounded-full border-2 border-mist flex items-center justify-center" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobMenu">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobMenu" class="md:hidden overflow-hidden transition-all duration-300 max-h-0">
+      <div class="px-4 pb-5 pt-1 bg-paper border-b border-mist flex flex-col font-semibold text-lg">
+        <a href="#libros" class="ml py-3 border-b border-mist-100">Libros</a>
+        <a href="#apps" class="ml py-3 border-b border-mist-100">Apps y juegos</a>
+        <a href="#autor" class="ml py-3 border-b border-mist-100">El estudio</a>
+        <a href="#cafeteria" class="ml py-3">Cafetería Kihnally</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <header class="relative pt-[104px] lg:pt-[120px] pb-10 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-14 items-center">
+      <div class="hero-in min-w-0">
+        <p class="inline-flex items-center gap-2 text-sage font-bold">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor" aria-hidden="true"><path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/></svg>
+          Hecho en Mejillones, Chile
+        </p>
+        <h1 class="mt-4 font-display font-semibold text-[2.6rem] leading-[1.02] sm:text-6xl lg:text-[4.25rem] text-ink tracking-tight">
+          Libros para leer.<br>Juegos para jugar.
+        </h1>
+        <p class="mt-6 text-lg text-ink-600 max-w-[34rem] leading-relaxed">
+          Historias ilustradas con humor absurdo, cerditos viajeros y gaviotas con actitud. Las escribimos entre tazas de café en la cafetería Kihnally, y ahora también las llevamos a la pantalla.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#libros" class="inline-flex items-center gap-2 bg-ink text-paper font-bold rounded-full px-7 py-4 hover:bg-ink-700">Ver los libros</a>
+          <a href="#apps" class="inline-flex items-center gap-2 bg-white border-2 border-mist text-ink font-bold rounded-full px-7 py-[14px] hover:border-sage">Conocer las apps</a>
+        </div>
+      </div>
+
+      <div class="relative min-w-0">
+        <div class="rounded-[28px] bg-mist-100 border-2 border-mist px-4 sm:px-6 pt-5 pb-4">
+          <div class="flex items-center justify-between gap-4">
+            <p class="font-display font-medium text-lg text-sage" id="shelfCount">Nuestro estante</p>
+            <div class="flex gap-2">
+              <button class="pad-btn" onclick="scrollShelf(-1)" aria-label="Libro anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+              <button class="pad-btn" onclick="scrollShelf(1)" aria-label="Libro siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+            </div>
           </div>
-          <div class="p-6 sm:p-8 lg:p-10 flex flex-col">
-            <button onclick="closeBookModal()" class="self-end w-10 h-10 rounded-full bg-navy-50 hover:bg-navy-100 flex items-center justify-center transition-colors -mt-2 -mr-2 mb-4 text-xl" aria-label="Cerrar modal">✕</button>
-            <div class="flex-1">
-              <h3 id="mTitle" class="text-2xl sm:text-3xl font-black tracking-tight text-navy-800"></h3>
-              <p id="mSub" class="mt-1 text-sm font-semibold tracking-wide"></p>
-              <p id="mDesc" class="mt-4 text-sm text-navy-500 font-light leading-relaxed"></p>
-              
-              <!-- SELECTOR DE CAPÍTULOS -->
-              <div class="mt-4" id="chapterSelectorContainer">
-                <div class="chapter-selector-label">📖 Selecciona el capítulo:</div>
-                <div id="chapterSelector" class="chapter-selector"></div>
-                <div class="mt-3 flex items-center gap-3">
-                  <span class="text-xs text-navy-400">Total:</span>
-                  <span id="mSelectedPrice" class="chapter-price-total">$0</span>
-                  <span id="mChapterLabel" class="text-xs text-navy-400"></span>
-                </div>
+          <div class="shelf" id="shelf" aria-label="Portadas de los libros" tabindex="0"></div>
+          <div class="h-3 -mx-4 sm:-mx-6 bg-sage rounded-b-[26px]" aria-hidden="true"></div>
+        </div>
+        <p class="mt-3 text-sm text-sage text-center">Toca una portada para ver páginas del interior.</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== LIBROS ========== -->
+  <section id="libros" class="py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div class="max-w-xl">
+          <h2 class="font-display font-semibold text-4xl sm:text-5xl text-ink">Libros</h2>
+          <p class="mt-3 text-ink-600 text-lg">Elige un libro, mira el interior y agrega los capítulos que quieras, en papel o en PDF. El pedido se confirma por WhatsApp.</p>
+        </div>
+        <label class="relative block w-full lg:w-80">
+          <span class="sr-only">Buscar libros</span>
+          <svg viewBox="0 0 24 24" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-sage" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="bookSearch" type="search" placeholder="Buscar por título o tema" class="w-full bg-white border-2 border-mist rounded-full pl-11 pr-4 py-3 font-semibold placeholder:text-sage-400 placeholder:font-normal focus:outline-none focus:border-sage">
+        </label>
+      </div>
+      <div id="bookFilters" class="mt-8 flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap" role="group" aria-label="Filtrar por categoría"></div>
+      <div id="booksGrid" class="mt-8 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-10 sm:gap-x-8"></div>
+      <div id="booksEmpty" class="hidden mt-10 rounded-3xl border-2 border-dashed border-mist p-10 text-center">
+        <p class="font-display text-2xl text-ink">No encontramos libros con esa búsqueda.</p>
+        <button onclick="resetBookFilters()" class="mt-4 font-bold underline underline-offset-4 text-sage">Ver todos los libros</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== APPS Y JUEGOS ========== -->
+  <section id="apps" class="py-16 lg:py-24 bg-mist-100 border-y-2 border-mist">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid lg:grid-cols-[1fr_2fr] gap-10 lg:gap-16 items-start">
+        <div class="lg:sticky lg:top-28">
+          <svg viewBox="0 0 64 40" class="w-20 text-sage" aria-hidden="true"><rect x="0" y="0" width="64" height="40" rx="20" fill="currentColor"/><path d="M16 12h5v5h5v5h-5v5h-5v-5h-5v-5h5z" fill="#E6ECDF"/><circle cx="46" cy="14" r="3.2" fill="#E6ECDF"/><circle cx="40" cy="20" r="3.2" fill="#E6ECDF"/><circle cx="52" cy="20" r="3.2" fill="#E6ECDF"/><circle cx="46" cy="26" r="3.2" fill="#E6ECDF"/></svg>
+          <h2 class="mt-5 font-display font-semibold text-4xl sm:text-5xl text-ink">Apps y juegos</h2>
+          <p class="mt-3 text-ink-600 text-lg">Los personajes de nuestros libros saltan a la pantalla: juegos para aprender, reír y recorrer Chile.</p>
+          <a id="appsNotify" href="https://wa.me/56995436140?text=Hola!%20Quiero%20saber%20cu%C3%A1ndo%20salen%20las%20apps%20de%20VibaraChokiT" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 bg-ink text-paper font-bold rounded-full px-6 py-3.5 hover:bg-ink-700">Avísenme cuando salgan</a>
+        </div>
+        <div id="appsGrid" class="grid sm:grid-cols-2 gap-6"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EL ESTUDIO / AUTOR ========== -->
+  <section id="autor" class="py-16 lg:py-24 bg-ink text-paper">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div class="order-2 lg:order-1">
+        <h2 class="font-display font-semibold text-4xl sm:text-5xl">Detrás de las historias</h2>
+        <p class="mt-6 text-lg text-paper/75 leading-relaxed max-w-[36rem]">VibaraChokiT es un estudio creativo del norte de Chile. Inventamos mundos donde los cerditos viajan, los diccionarios mienten y los perros tienen carita de ratón.</p>
+        <p class="mt-4 text-lg text-paper/75 leading-relaxed max-w-[36rem]">Cada libro nace en la cafetería Kihnally, en Mejillones. Desde ahí también estamos creando juegos y aplicaciones con los mismos personajes.</p>
+        <dl class="mt-10 grid grid-cols-[auto_auto_1fr] gap-x-6 gap-y-4 max-w-md">
+          <div class="border-t-2 border-paper/20 pt-3"><dt class="text-paper/60 text-sm">Libros</dt><dd class="font-display text-3xl mt-1" id="statBooks">4</dd></div>
+          <div class="border-t-2 border-paper/20 pt-3"><dt class="text-paper/60 text-sm">Apps</dt><dd class="font-display text-3xl mt-1" id="statApps">—</dd></div>
+          <div class="border-t-2 border-paper/20 pt-3"><dt class="text-paper/60 text-sm">Desde</dt><dd class="font-display text-2xl sm:text-3xl mt-1">Mejillones</dd></div>
+        </dl>
+      </div>
+      <div class="order-1 lg:order-2 flex justify-center">
+        <img src="img/logo-vibarachokit-claro.png" alt="Logo de VibaraChokiT Estudio Creativo" class="w-full max-w-md h-auto">
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CAFETERÍA ========== -->
+  <section id="cafeteria" class="py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-16 items-center">
+      <figure class="relative max-w-md mx-auto lg:mx-0 w-full">
+        <img src="img/portada-kihnally.webp" alt="Afiche de Barista Kihnally, temporada 1, ambientado en Mejillones" class="w-full rounded-[22px] border-[6px] border-white shadow-[0_24px_48px_-20px_rgba(47,58,44,.6)] -rotate-2" onerror="handleImageError(this)">
+      </figure>
+      <div>
+        <h2 class="font-display font-semibold text-4xl sm:text-5xl text-ink">Cafetería Kihnally</h2>
+        <p class="mt-5 text-lg text-ink-600 leading-relaxed max-w-[36rem]">Aquí nacieron los libros. Pasa por un café, hojea los ejemplares físicos y retira tu pedido sin pagar envío.</p>
+        <ul class="mt-8 space-y-4 max-w-[36rem]">
+          <li class="flex gap-4"><span class="w-11 h-11 rounded-full bg-mist-100 border-2 border-mist flex items-center justify-center shrink-0 text-sage"><svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><div><p class="font-bold">Mejillones, Región de Antofagasta</p><p class="text-ink-600">Retiro de pedidos y venta de libros físicos.</p></div></li>
+          <li class="flex gap-4"><span class="w-11 h-11 rounded-full bg-mist-100 border-2 border-mist flex items-center justify-center shrink-0 text-sage"><svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13v5a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v2M12 3v2"/></svg></span><div><p class="font-bold">Café y lectura</p><p class="text-ink-600">Todos los títulos están disponibles para hojear.</p></div></li>
+          <li class="flex gap-4"><span class="w-11 h-11 rounded-full bg-mist-100 border-2 border-mist flex items-center justify-center shrink-0 text-sage"><svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18M12 8c-2-4-6-4-6-1.5S10 8 12 8zm0 0c2-4 6-4 6-1.5S14 8 12 8z"/></svg></span><div><p class="font-bold">Para regalar</p><p class="text-ink-600">Incluimos dedicatoria personalizada si la pides. Envío gratis dentro de Mejillones.</p></div></li>
+        </ul>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a href="https://maps.google.com/?q=Cafeter%C3%ADa+Kihnally+Mejillones+Chile" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-ink text-paper font-bold rounded-full px-7 py-4 hover:bg-ink-700">Cómo llegar</a>
+          <a href="https://wa.me/56995436140?text=Hola!%20Quiero%20regalar%20un%20libro%20con%20dedicatoria" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-wasap text-white font-bold rounded-full px-7 py-4 hover:brightness-95">Pedir un regalo por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RESEÑAS (solo se muestra si hay reseñas publicadas) ========== -->
+  <section id="resenas" class="hidden py-16 lg:py-24 bg-mist-50 border-t-2 border-mist">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <h2 class="font-display font-semibold text-4xl sm:text-5xl text-ink">Lo que dicen los lectores</h2>
+      <div id="reviewsGrid" class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-ink text-paper pt-14 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-[1.4fr_1fr_1fr] gap-10 pb-10 border-b border-paper/15">
+        <div>
+          <img src="img/logo-vibarachokit-claro.png" alt="VibaraChokiT Estudio Creativo" class="w-56 h-auto">
+          <p class="mt-5 text-paper/65 max-w-xs">Libros y juegos creados en Mejillones, Chile. Editorial independiente junto a la cafetería Kihnally.</p>
+        </div>
+        <div>
+          <h3 class="font-display text-lg">Explora</h3>
+          <ul class="mt-4 space-y-2.5 text-paper/70">
+            <li><a href="#libros" class="hover:text-paper">Libros</a></li>
+            <li><a href="#apps" class="hover:text-paper">Apps y juegos</a></li>
+            <li><a href="#autor" class="hover:text-paper">El estudio</a></li>
+            <li><a href="#cafeteria" class="hover:text-paper">Cafetería Kihnally</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display text-lg">Contacto</h3>
+          <ul class="mt-4 space-y-2.5 text-paper/70">
+            <li><a href="https://wa.me/56995436140" target="_blank" rel="noopener" class="hover:text-paper">WhatsApp +56 9 9543 6140</a></li>
+            <li><a href="https://instagram.com/kihnally" target="_blank" rel="noopener" class="hover:text-paper">Instagram @kihnally</a></li>
+            <li>Mejillones, Chile</li>
+          </ul>
+        </div>
+      </div>
+      <p class="pt-6 text-sm text-paper/45">© <span id="year">2026</span> VibaraChokiT Estudio Creativo · Hecho con café en Mejillones</p>
+    </div>
+  </footer>
+
+  <!-- ========== BOTÓN FLOTANTE CARRITO (móvil y al bajar) ========== -->
+  <button id="cartFab" onclick="openCart()" class="hidden fixed bottom-5 right-5 z-[90] w-16 h-16 rounded-full bg-ink text-paper shadow-[0_14px_30px_-10px_rgba(0,0,0,.5)] items-center justify-center hover:bg-ink-700" aria-label="Abrir carrito">
+    <svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+    <span id="cBadge" class="absolute -top-1 -right-1 min-w-[24px] h-6 rounded-full bg-[#F0B429] text-ink text-xs font-extrabold flex items-center justify-center px-1">0</span>
+  </button>
+
+  <!-- ========== MODAL LIBRO ========== -->
+  <div id="bookModal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="m-ov absolute inset-0 bg-ink/70 backdrop-blur-sm" onclick="closeBookModal()"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-full p-3 sm:p-6">
+      <div class="m-cont bg-paper rounded-[28px] shadow-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto">
+        <div class="grid md:grid-cols-[0.9fr_1.1fr]">
+          <div class="relative bg-mist-100 p-6 sm:p-8 flex items-center justify-center md:rounded-l-[28px]">
+            <img id="mImg" src="" alt="" class="w-full max-w-[260px] md:max-w-none rounded-[6px_14px_14px_6px] shadow-[0_20px_40px_-18px_rgba(47,58,44,.7)]" onerror="handleImageError(this)">
+          </div>
+          <div class="p-6 sm:p-8 flex flex-col">
+            <div class="flex items-start justify-between gap-4">
+              <span id="mBadge" class="text-xs font-extrabold px-3 py-1.5 rounded-full text-white"></span>
+              <button onclick="closeBookModal()" class="w-10 h-10 -mt-1 -mr-1 rounded-full border-2 border-mist flex items-center justify-center shrink-0 hover:border-sage" aria-label="Cerrar"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+            </div>
+            <h3 id="mTitle" class="mt-4 font-display font-semibold text-3xl text-ink leading-tight"></h3>
+            <p id="mSub" class="mt-1 font-bold"></p>
+            <p id="mDesc" class="mt-4 text-ink-600 leading-relaxed"></p>
+            <button id="mPreviewBtn" class="mt-4 self-start font-bold text-sage underline underline-offset-4 hover:text-ink">Ver páginas del interior</button>
+
+            <div class="mt-6" id="formatContainer">
+              <p class="font-bold">Formato</p>
+              <div class="fmt-toggle mt-3" role="group" aria-label="Formato del libro">
+                <button type="button" data-format="fisico" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7"/></svg>Físico</button>
+                <button type="button" data-format="digital" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><path d="M12 7v7m-3-3 3 3 3-3"/></svg>Digital (PDF)</button>
               </div>
             </div>
-            <div class="mt-4 space-y-3">
-              <button id="btnFisico" onclick="" class="w-full flex items-center justify-between bg-coral-50 hover:bg-coral-100 rounded-2xl px-5 py-4 transition-all duration-300 hover:shadow-md active:scale-[.98]">
-                <div class="flex items-center gap-3">
-                  <div class="w-11 h-11 rounded-xl bg-coral-100 flex items-center justify-center text-2xl">📖</div>
-                  <div class="text-left"><div class="text-xs text-navy-400 font-medium">Físico (retiro en cafetería o envío por pagar)</div><div class="text-lg font-black text-navy-800" id="mPriceF"></div></div>
-                </div>
-                <span class="flex items-center gap-2 bg-coral-500 hover:bg-coral-600 text-white text-[10px] font-bold tracking-wider uppercase px-4 py-2.5 rounded-full transition-colors">🛒 Agregar</span>
-              </button>
+
+            <div class="mt-6" id="chapterSelectorContainer">
+              <p class="font-bold">Elige los capítulos</p>
+              <div id="chapterSelector" class="mt-3 flex flex-wrap gap-2"></div>
             </div>
-            <div class="mt-4 flex items-start gap-2 text-xs text-navy-400 bg-sun-50 rounded-xl px-4 py-3">
-              <span class="text-base flex-shrink-0 mt-0.5">ℹ️</span>
-              <span>Se agrega a tu <strong class="text-navy-700">carrito</strong>. Al finalizar, se envía todo por WhatsApp.</span>
+
+            <div class="mt-6 rounded-2xl bg-white border-2 border-mist p-4 flex items-center justify-between gap-4">
+              <div>
+                <p class="text-sm text-sage" id="mDelivery">Libro físico · retiro en la cafetería o envío por pagar</p>
+                <p class="font-display text-2xl font-semibold" id="mPriceF">$0</p>
+                <p class="text-sm text-sage" id="mChapterLabel"></p>
+              </div>
+              <button id="btnFisico" class="shrink-0 bg-ink text-paper font-bold rounded-full px-5 py-3 hover:bg-ink-700 disabled:bg-mist disabled:text-sage disabled:cursor-not-allowed">Agregar al carrito</button>
             </div>
-            <div id="mTags" class="mt-3 flex flex-wrap gap-2"></div>
+            <div id="mTags" class="mt-5 flex flex-wrap gap-2"></div>
           </div>
         </div>
       </div>
@@ -545,1231 +398,567 @@
   </div>
 
   <!-- ========== MODAL VISTA PREVIA ========== -->
-  <div id="previewModal" class="fixed inset-0 z-[105] hidden" role="dialog" aria-modal="true">
-    <div class="m-ov absolute inset-0 bg-navy-900/85 backdrop-blur-md" onclick="closePreviewModal()" aria-hidden="true"></div>
-    <div class="relative z-10 flex items-center justify-center min-h-screen p-4 sm:p-6">
-      <div class="m-cont bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[95vh] overflow-hidden preview-modal">
-        <div class="p-6 sm:p-8 pb-4 border-b border-navy-100 flex items-center justify-between">
+  <div id="previewModal" class="fixed inset-0 z-[105] hidden" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
+    <div class="m-ov absolute inset-0 bg-ink/80 backdrop-blur-sm" onclick="closePreviewModal()"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-full p-3 sm:p-6">
+      <div class="m-cont bg-paper rounded-[28px] shadow-2xl max-w-2xl w-full max-h-[94vh] flex flex-col overflow-hidden">
+        <div class="p-5 sm:p-6 border-b-2 border-mist flex items-center justify-between gap-4">
           <div>
-            <h3 id="previewTitle" class="text-2xl font-black text-navy-800"></h3>
-            <p class="text-sm text-navy-400 font-light">📖 Vista previa del interior — haz clic en las imágenes para comprar</p>
+            <h3 id="previewTitle" class="font-display font-semibold text-2xl text-ink"></h3>
+            <p class="text-sage">Páginas del interior</p>
           </div>
-          <button onclick="closePreviewModal()" class="w-10 h-10 rounded-full bg-navy-50 hover:bg-navy-100 flex items-center justify-center transition-colors text-xl flex-shrink-0" aria-label="Cerrar vista previa">✕</button>
+          <button onclick="closePreviewModal()" class="w-10 h-10 rounded-full border-2 border-mist flex items-center justify-center shrink-0 hover:border-sage" aria-label="Cerrar"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
         </div>
-        <div class="p-6 sm:p-8 overflow-y-auto" style="max-height: calc(95vh - 120px);">
-          <div id="previewGrid" class="preview-grid"></div>
-          <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center pt-4 border-t border-navy-100">
-            <button onclick="closePreviewModal(); openBookModal(window.currentPreviewBook)" class="inline-flex items-center justify-center gap-2 bg-navy-800 hover:bg-navy-700 text-white text-[11px] font-bold tracking-[.15em] uppercase px-8 py-3.5 rounded-full transition-all duration-300 hover:shadow-lg">🛒 Ver detalles y comprar</button>
-            <button onclick="closePreviewModal()" class="inline-flex items-center justify-center gap-2 bg-navy-50 hover:bg-navy-100 text-navy-700 text-[11px] font-bold tracking-[.15em] uppercase px-8 py-3.5 rounded-full transition-all duration-300">← Seguir viendo</button>
-          </div>
+        <div id="previewGrid" class="p-5 sm:p-6 overflow-y-auto space-y-5"></div>
+        <div class="p-5 sm:p-6 border-t-2 border-mist flex flex-col sm:flex-row gap-3">
+          <button onclick="closePreviewModal(); openBookModal(window.currentPreviewBook)" class="flex-1 bg-ink text-paper font-bold rounded-full px-6 py-3.5 hover:bg-ink-700">Elegir capítulos y comprar</button>
+          <button onclick="closePreviewModal()" class="flex-1 bg-white border-2 border-mist font-bold rounded-full px-6 py-3 hover:border-sage">Seguir mirando</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ========== CARRITO DRAWER ========== -->
-  <div id="cartOv" class="fixed inset-0 z-[110] hidden">
-    <div class="m-ov absolute inset-0 bg-navy-900/60 backdrop-blur-sm" onclick="closeCart()" aria-hidden="true"></div>
-  </div>
-  <div id="cartDr" class="fixed top-0 right-0 h-full w-full sm:w-[420px] z-[120] hidden" role="dialog" aria-modal="true" aria-label="Carrito de compras">
-    <div class="h-full bg-white shadow-2xl flex flex-col">
-      <div class="flex items-center justify-between px-6 py-5 border-b border-navy-100">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl grad-anim flex items-center justify-center text-white text-lg">🛒</div>
-          <div><h3 class="font-bold text-navy-800 text-lg">Tu carrito</h3><p id="cLabel" class="text-[10px] text-navy-400 tracking-wider uppercase">0 productos</p></div>
-        </div>
-        <button onclick="closeCart()" class="w-10 h-10 rounded-full bg-navy-50 hover:bg-navy-100 flex items-center justify-center transition-colors text-xl" aria-label="Cerrar carrito">✕</button>
+  <!-- ========== CARRITO ========== -->
+  <div id="cartOv" class="fixed inset-0 z-[110] hidden"><div class="m-ov absolute inset-0 bg-ink/60 backdrop-blur-sm" onclick="closeCart()"></div></div>
+  <aside id="cartDr" class="fixed top-0 right-0 h-full w-full sm:w-[420px] z-[120] hidden" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <div class="h-full bg-paper shadow-2xl flex flex-col">
+      <div class="flex items-center justify-between px-6 py-5 border-b-2 border-mist">
+        <div><h3 id="cartTitle" class="font-display font-semibold text-2xl">Tu carrito</h3><p id="cLabel" class="text-sage text-sm">0 productos</p></div>
+        <button onclick="closeCart()" class="w-10 h-10 rounded-full border-2 border-mist flex items-center justify-center hover:border-sage" aria-label="Cerrar carrito"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
       </div>
-      <div class="flex-1 overflow-y-auto px-6 py-4">
+      <div class="flex-1 overflow-y-auto px-6 py-5">
         <div id="cEmpty" class="flex flex-col items-center justify-center h-full text-center">
-          <div class="w-20 h-20 rounded-full bg-navy-50 flex items-center justify-center mb-4 text-4xl">🛒</div>
-          <p class="text-navy-400 font-medium">Tu carrito está vacío</p>
-          <p class="text-navy-300 text-xs mt-1">Pincha en un libro para agregarlo</p>
-          <button onclick="closeCart()" class="mt-6 text-[10px] font-bold tracking-widest uppercase text-coral-500 hover:text-coral-600 transition-colors">Ver libros →</button>
+          <img src="img/logo-icono.png" alt="" class="w-24 opacity-60">
+          <p class="mt-5 font-display text-xl">Tu carrito está vacío</p>
+          <p class="text-sage mt-1">Elige un libro y agrega los capítulos que quieras.</p>
+          <button onclick="closeCart(); location.hash='#libros'" class="mt-6 bg-ink text-paper font-bold rounded-full px-6 py-3 hover:bg-ink-700">Ver los libros</button>
         </div>
         <div id="cList" class="space-y-3 hidden"></div>
       </div>
-      <div id="cFoot" class="border-t border-navy-100 px-6 py-5 hidden">
-        <div class="flex items-center justify-between mb-4"><span class="text-base font-bold text-navy-800">Total</span><span id="cTotal" class="text-2xl font-black t-grad"></span></div>
-        <button onclick="sendWhatsApp()" class="w-full flex items-center justify-center gap-2 bg-wasap hover:bg-green-600 text-white text-[11px] font-bold tracking-[.15em] uppercase px-6 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-wasap/30 hover:-translate-y-0.5 active:scale-[.98]">💬 Finalizar compra por WhatsApp</button>
-        <button onclick="clearCart()" class="w-full mt-2 text-[10px] font-semibold tracking-wider uppercase text-navy-300 hover:text-red-400 transition-colors py-2">Vaciar carrito</button>
+      <div id="cFoot" class="border-t-2 border-mist px-6 py-5 hidden">
+        <div class="flex items-center justify-between mb-4"><span class="font-bold text-lg">Total</span><span id="cTotal" class="font-display font-semibold text-3xl"></span></div>
+        <button onclick="sendWhatsApp()" class="w-full bg-wasap text-white font-extrabold rounded-full px-6 py-4 hover:brightness-95">Enviar pedido por WhatsApp</button>
+        <button onclick="clearCart()" class="w-full mt-2 text-sm font-bold text-sage hover:text-coral-600 py-2">Vaciar carrito</button>
       </div>
     </div>
-  </div>
+  </aside>
 
-  <!-- ========== BOTÓN FLOTANTE CARRITO ========== -->
-  <button id="cartFab" onclick="openCart()" class="fixed bottom-6 right-6 z-[90] w-16 h-16 rounded-full bg-navy-800 hover:bg-navy-700 text-white shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-navy-800/40 text-2xl" aria-label="Abrir carrito">
-    🛒
-    <span id="cBadge" class="absolute -top-1 -right-1 min-w-[22px] h-[22px] rounded-full bg-coral-500 text-white text-[10px] font-bold flex items-center justify-center shadow-lg hidden px-1">0</span>
-  </button>
-
-  <!-- ========== FLYING DOT ========== -->
-  <div id="flyDot" class="fixed z-[200] w-4 h-4 rounded-full bg-coral-500 shadow-lg pointer-events-none hidden"></div>
-
-  <!-- ========== NAV ========== -->
-  <nav id="nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-500" style="background:transparent" role="navigation">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-3 group" aria-label="Kihnally - Inicio">
-        <img src="img/logo.jpg" alt="Kihnally" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-        <div class="w-10 h-10 rounded-xl grad-anim items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 text-white font-black text-lg hidden">K</div>
-        <span class="text-xl font-bold tracking-tight text-navy-800">Kihnally</span>
-      </a>
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#libros" class="text-[11px] font-semibold tracking-[.15em] uppercase text-navy-600 hover:text-coral-500 transition-colors">Libros</a>
-        <a href="#autor" class="text-[11px] font-semibold tracking-[.15em] uppercase text-navy-600 hover:text-coral-500 transition-colors">Autor</a>
-        <a href="#cafeteria" class="text-[11px] font-semibold tracking-[.15em] uppercase text-navy-600 hover:text-coral-500 transition-colors">Cafetería</a>
-        <button onclick="openCart()" class="relative w-10 h-10 rounded-full bg-navy-50 hover:bg-navy-100 flex items-center justify-center transition-colors text-xl" aria-label="Abrir carrito">🛒<span id="nBadge" class="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 rounded-full bg-coral-500 text-white text-[8px] font-bold flex items-center justify-center hidden px-0.5">0</span></button>
-      </div>
-      <button id="menuBtn" class="md:hidden w-10 h-10 flex items-center justify-center text-navy-800 text-2xl" aria-label="Abrir menú" aria-expanded="false">☰</button>
-    </div>
-    <div id="mobMenu" class="md:hidden overflow-hidden transition-all duration-500 max-h-0 opacity-0" role="menu">
-      <div class="px-6 pb-6 pt-2 bg-white/95 backdrop-blur-xl border-t border-navy-100 flex flex-col gap-4">
-        <a href="#libros" class="text-sm font-medium text-navy-700 py-2 hover:text-coral-500 transition-colors" role="menuitem">Libros</a>
-        <a href="#autor" class="text-sm font-medium text-navy-700 py-2 hover:text-coral-500 transition-colors" role="menuitem">Autor</a>
-        <a href="#cafeteria" class="text-sm font-medium text-navy-700 py-2 hover:text-coral-500 transition-colors" role="menuitem">Cafetería</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ========== HERO ========== -->
-  <section class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-20">
-    <div class="absolute inset-0 pointer-events-none overflow-hidden">
-      <div class="absolute -top-20 -right-20 w-[500px] h-[500px] bg-coral-200/40 bl1 anim-float"></div>
-      <div class="absolute top-1/3 -left-32 w-[400px] h-[400px] bg-teal-200/40 bl2 anim-floatR"></div>
-      <div class="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-sun-200/30 bl1 anim-float" style="animation-delay:-2s"></div>
-      <div class="absolute top-20 left-1/3 w-[200px] h-[200px] bg-grape-200/20 bl2 anim-floatR" style="animation-delay:-3s"></div>
-    </div>
-    <div class="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-      <div class="text-center lg:text-left">
-        <div class="anim-fade" style="animation-delay:.1s;opacity:0">
-          <span class="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-coral-200 text-coral-600 text-[10px] font-bold tracking-[.2em] uppercase px-4 py-2 rounded-full mb-6">
-            <span class="w-2 h-2 rounded-full bg-coral-500 animate-pulse"></span>Mejillones, Chile
-          </span>
-        </div>
-        <h1 class="anim-up" style="animation-delay:.2s;opacity:0">
-          <span class="block text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[.9] tracking-tight text-navy-800">Historias</span>
-          <span class="block text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[.9] tracking-tight mt-2"><span class="t-grad">que dan</span></span>
-          <span class="block text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[.9] tracking-tight text-navy-800 mt-2">sabor<span class="text-coral-500">.</span></span>
-        </h1>
-        <p class="mt-6 text-base sm:text-lg text-navy-500 font-light leading-relaxed max-w-md mx-auto lg:mx-0 anim-up" style="animation-delay:.4s;opacity:0">
-          Descubre los libros de <strong class="font-semibold text-navy-700">VibaraChokiT</strong>: humor absurdo, aventuras y mucha imaginación. Nacidos en la cafatería <strong class="font-semibold text-navy-700">Kihnally</strong>, hechos para ti.
-        </p>
-        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start anim-up" style="animation-delay:.5s;opacity:0">
-          <a href="#libros" class="group inline-flex items-center justify-center gap-2 bg-navy-800 hover:bg-navy-700 text-white text-[11px] font-bold tracking-[.15em] uppercase px-8 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1">Ver libros ↓</a>
-          <button onclick="openCart()" class="group inline-flex items-center justify-center gap-2 bg-white/70 hover:bg-white border border-navy-200 text-navy-700 text-[11px] font-bold tracking-[.15em] uppercase px-8 py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">🛒 Mi carrito</button>
-        </div>
-        <div class="mt-10 flex gap-8 justify-center lg:justify-start anim-up" style="animation-delay:.6s;opacity:0">
-          <div><div class="text-3xl font-black t-grad">4</div><div class="text-[10px] font-semibold tracking-[.15em] uppercase text-navy-400 mt-1">Títulos</div></div>
-          <div class="w-px bg-navy-200"></div>
-          <div><div class="text-3xl font-black t-gradT">100%</div><div class="text-[10px] font-semibold tracking-[.15em] uppercase text-navy-400 mt-1">Local</div></div>
-          <div class="w-px bg-navy-200"></div>
-          <div><div class="text-3xl font-black t-gradG">∞</div><div class="text-[10px] font-semibold tracking-[.15em] uppercase text-navy-400 mt-1">Diversión</div></div>
-        </div>
-      </div>
-      <!-- ========== CARRUSEL 3D CON MOVIMIENTO AUTOMÁTICO ========== -->
-      <div class="anim-fade w-full" style="animation-delay:.3s;opacity:0">
-        <div class="carousel-wrapper">
-          <button class="scroll-btn prev" onclick="scrollBookCarousel(-1)" aria-label="Anterior">‹</button>
-          <div class="carousel-3d" id="bookCarousel">
-            <div class="carousel-3d-inner" id="carouselInner">
-              <!-- Libros insertados por JS -->
-            </div>
-          </div>
-          <button class="scroll-btn next" onclick="scrollBookCarousel(1)" aria-label="Siguiente">›</button>
-        </div>
-        <div class="flex justify-center gap-2 mt-3">
-          <span class="inline-flex items-center gap-1.5 bg-coral-50 text-coral-700 text-[10px] font-bold tracking-wider uppercase px-4 py-1.5 rounded-full border border-coral-200">
-            🔄 Desliza o usa las flechas · Pausa al pasar el mouse
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 anim-bounce">
-      <span class="text-[9px] font-bold tracking-[.2em] uppercase text-navy-300">Scroll</span>
-      <span class="text-navy-300 text-xl">↓</span>
-    </div>
-  </section>
-
-  <!-- ========== MARQUEE ========== -->
-  <div class="py-6 border-y border-navy-100 overflow-hidden bg-white/50">
-    <div class="mtrack whitespace-nowrap">
-      <span class="inline-flex items-center gap-8 mx-4 text-navy-300">
-        <span class="text-sm font-bold tracking-widest uppercase">¿Dónde está Chanchini?</span><span class="text-coral-400">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">Chinowon</span><span class="text-teal-400">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">Barista Kihnally</span><span class="text-sun-500">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">Turón</span><span class="text-grape-400">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">VibaraChokiT</span><span class="text-coral-400">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">Kihnally</span><span class="text-teal-400">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">Mejillones</span><span class="text-sun-500">✦</span>
-      </span>
-      <span class="inline-flex items-center gap-8 mx-4 text-navy-300">
-        <span class="text-sm font-bold tracking-widest uppercase">¿Dónde está Chanchini?</span><span class="text-coral-400">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">Chinowon</span><span class="text-teal-400">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">Barista Kihnally</span><span class="text-sun-500">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">Turón</span><span class="text-grape-400">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">VibaraChokiT</span><span class="text-coral-400">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">Kihnally</span><span class="text-teal-400">✦</span>
-        <span class="text-sm font-bold tracking-widest uppercase">Mejillones</span><span class="text-sun-500">✦</span>
-      </span>
-    </div>
-  </div>
-
-  <!-- ========== LIBROS (grid principal) ========== -->
-  <section id="libros" class="py-20 lg:py-32 relative">
-    <div class="absolute top-0 right-0 w-96 h-96 bg-coral-100/30 bl1 pointer-events-none"></div>
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="text-center mb-16 lg:mb-24">
-        <span class="rv inline-block text-[10px] font-bold tracking-[.25em] uppercase text-coral-500 mb-4">Colección completa</span>
-        <h2 class="rv d1 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-navy-800 leading-[.95]">Nuestros <span class="t-grad">libros</span></h2>
-        <p class="rv d2 mt-6 text-navy-500 font-light max-w-lg mx-auto">Pincha en cualquier libro para ver el detalle y agregarlo a tu carrito.</p>
-      </div>
-      <div class="grid md:grid-cols-2 gap-8 lg:gap-12" id="booksGrid"></div>
-    </div>
-  </section>
-
-  <!-- ========== AUTOR ========== -->
-  <section id="autor" class="py-20 lg:py-32 bg-navy-800 relative overflow-hidden">
-    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-coral-500/10 bl1 pointer-events-none"></div>
-    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-500/10 bl2 pointer-events-none"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rounded-full anim-spin pointer-events-none"></div>
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <span class="rv inline-block text-[10px] font-bold tracking-[.25em] uppercase text-coral-400 mb-4">El creador</span>
-          <h2 class="rv d1 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[.95]">Vibara<span class="t-grad">ChokiT</span></h2>
-          <p class="rv d2 mt-8 text-base text-white/60 font-light leading-relaxed">Creador, soñador y barista de las historias más absurdas del norte de Chile. Desde Mejillones, VibaraChokiT conjuga mundos donde los cerditos viajan, los diccionarios mienten y los perros tienen cara de ratón.</p>
-          <p class="rv d3 mt-4 text-base text-white/60 font-light leading-relaxed">Cada libro nace entre tazas de café en <strong class="text-white font-medium">Kihnally</strong>, la cafetería que es mucho más que un lugar: es el laboratorio donde la imaginación se mezcla con el aroma del mejor café de puerto.</p>
-          <div class="rv d4 mt-10 flex flex-wrap gap-4">
-            <div class="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-3"><span class="text-coral-400 text-xl">📖</span><div><div class="text-white font-bold text-lg">4</div><div class="text-white/40 text-[10px] tracking-wider uppercase">Libros</div></div></div>
-            <div class="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-3"><span class="text-teal-400 text-xl">📍</span><div><div class="text-white font-bold text-sm">Mejillones</div><div class="text-white/40 text-[10px] tracking-wider uppercase">Chile 🇨🇱</div></div></div>
-            <div class="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-3"><span class="text-sun-400 text-xl">☕</span><div><div class="text-white font-bold text-sm">Kihnally</div><div class="text-white/40 text-[10px] tracking-wider uppercase">Cafetería</div></div></div>
-          </div>
-        </div>
-        <div class="rvR relative flex justify-center">
-          <div class="relative w-80 h-96 rounded-3xl overflow-hidden shadow-2xl border-2 border-white/10">
-            <div class="absolute inset-0 grad-anim opacity-20"></div>
-            <div class="absolute inset-0 bg-navy-700 flex flex-col items-center justify-center p-8 text-center">
-              <div class="w-24 h-24 rounded-full grad-anim flex items-center justify-center mb-6 shadow-xl text-white text-3xl font-black">VC</div>
-              <h3 class="text-white text-2xl font-bold">VibaraChokiT</h3>
-              <p class="text-white/50 text-sm mt-2">Autor & Creador</p>
-              <div class="mt-6 w-12 h-px bg-gradient-to-r from-coral-500 to-sun-500"></div>
-              <p class="text-white/40 text-xs mt-6 font-light leading-relaxed italic">"Escribo lo que el café me dicta. Y el café tiene buen humor."</p>
-            </div>
-          </div>
-          <div class="absolute -top-4 -right-4 w-16 h-16 rounded-2xl bg-coral-500 flex items-center justify-center shadow-lg anim-float text-2xl">🐷</div>
-          <div class="absolute -bottom-4 -left-4 w-16 h-16 rounded-2xl bg-teal-500 flex items-center justify-center shadow-lg anim-floatR text-2xl">☕</div>
-          <div class="absolute top-1/2 -right-8 w-12 h-12 rounded-xl bg-sun-400 flex items-center justify-center shadow-lg anim-float text-xl" style="animation-delay:-2s">📖</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== CAFETERÍA ========== -->
-  <section id="cafeteria" class="py-20 lg:py-32 relative overflow-hidden">
-    <div class="absolute bottom-0 left-0 w-96 h-96 bg-teal-100/30 bl2 pointer-events-none"></div>
-    <div class="absolute top-20 right-0 w-72 h-72 bg-sun-100/30 bl1 pointer-events-none"></div>
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-        <div class="rvL relative order-2 lg:order-1">
-          <div class="relative rounded-3xl overflow-hidden shadow-2xl">
-            <img src="img/cafeteria.jpg" alt="Cafetería Kihnally" class="w-full h-80 sm:h-96 lg:h-[500px] object-cover" onerror="handleImageError(this)">
-            <div class="absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent"></div>
-            <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-              <div class="flex items-center gap-3 mb-3"><div class="w-3 h-3 rounded-full bg-teal-400 animate-pulse"></div><span class="text-white/80 text-[10px] font-bold tracking-[.2em] uppercase">Abierto ahora</span></div>
-              <h3 class="text-white text-2xl sm:text-3xl font-bold">Cafetería Kihnally</h3>
-              <p class="text-white/60 text-sm mt-1">Mejillones, Antofagasta, Chile</p>
-            </div>
-          </div>
-          <div class="absolute -bottom-6 -right-4 sm:right-8 bg-white rounded-2xl shadow-xl p-5 border border-navy-100 max-w-[220px]">
-            <div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center text-xl">📚</div><div><div class="text-sm font-bold text-navy-800">Libros físicos</div><div class="text-[10px] text-navy-400">En tienda</div></div></div>
-            <p class="text-xs text-navy-500 font-light">Ven, tómate un café y hojea los libros.</p>
-          </div>
-        </div>
-        <div class="order-1 lg:order-2">
-          <span class="rv inline-block text-[10px] font-bold tracking-[.25em] uppercase text-teal-600 mb-4">Visítanos</span>
-          <h2 class="rv d1 text-4xl sm:text-5xl font-black tracking-tight text-navy-800 leading-[.95]">Más que una <span class="t-gradT">cafetería</span></h2>
-          <p class="rv d2 mt-8 text-base text-navy-500 font-light leading-relaxed">Kihnally es el punto de encuentro donde el café, la cultura y las historias se fusionan. Aquí nacieron los libros de VibaraChokiT.</p>
-          <div class="rv d3 mt-10 space-y-5">
-            <div class="flex items-start gap-4 group"><div class="w-12 h-12 rounded-2xl bg-coral-50 group-hover:bg-coral-100 flex items-center justify-center flex-shrink-0 transition-colors text-xl">📍</div><div><div class="font-semibold text-navy-800">Ubicación</div><div class="text-sm text-navy-500 font-light mt-0.5">Mejillones, Región de Antofagasta, Chile</div></div></div>
-            <div class="flex items-start gap-4 group"><div class="w-12 h-12 rounded-2xl bg-teal-50 group-hover:bg-teal-100 flex items-center justify-center flex-shrink-0 transition-colors text-xl">📖</div><div><div class="font-semibold text-navy-800">Libros físicos</div><div class="text-sm text-navy-500 font-light mt-0.5">Todos los títulos disponibles</div></div></div>
-            <div class="flex items-start gap-4 group"><div class="w-12 h-12 rounded-2xl bg-sun-50 group-hover:bg-sun-100 flex items-center justify-center flex-shrink-0 transition-colors text-xl">☕</div><div><div class="font-semibold text-navy-800">Café + Lectura</div><div class="text-sm text-navy-500 font-light mt-0.5">El combo perfecto</div></div></div>
-          </div>
-          <a href="https://maps.google.com/?q=Mejillones+Chile" target="_blank" class="rv d4 mt-10 inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-white text-[11px] font-bold tracking-[.15em] uppercase px-8 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-teal-500/30 hover:-translate-y-1">📍 Cómo llegar</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== REGALA UN LIBRO ========== -->
-  <section class="py-16 lg:py-20 bg-gradient-to-r from-coral-50 via-sun-50 to-teal-50 relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10">
-      <div class="absolute top-0 left-0 w-64 h-64 bg-coral-300 rounded-full blur-3xl"></div>
-      <div class="absolute bottom-0 right-0 w-64 h-64 bg-teal-300 rounded-full blur-3xl"></div>
-    </div>
-    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-      <div class="rv flex justify-center mb-4">
-        <span class="text-6xl animate-bounce">🎁</span>
-      </div>
-      <h2 class="rv d1 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-navy-800 leading-tight">
-        ¿Buscas un <span class="t-grad">regalo especial</span>?
-      </h2>
-      <p class="rv d2 mt-4 text-base sm:text-lg text-navy-500 font-light max-w-xl mx-auto">
-        Sorprende a alguien especial con un libro de VibaraChokiT. 
-        <br class="hidden sm:block">
-        <span class="font-semibold text-navy-700">¡Incluye dedicatoria personalizada!</span>
-      </p>
-      <div class="rv d3 mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a href="https://wa.me/56995436140?text=Hola!%20Quiero%20regalar%20un%20libro%20de%20Kihnally%20%F0%9F%8E%81" 
-           target="_blank" 
-           class="inline-flex items-center gap-3 bg-wasap hover:bg-green-600 text-white text-[11px] font-bold tracking-[.15em] uppercase px-8 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-wasap/30 hover:-translate-y-1">
-          <span class="text-xl">💬</span>
-          Regalar por WhatsApp
-        </a>
-        <a href="#libros" class="inline-flex items-center gap-2 bg-white hover:bg-navy-50 border border-navy-200 text-navy-700 text-[11px] font-bold tracking-[.15em] uppercase px-8 py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-          📚 Ver todos los libros
-        </a>
-      </div>
-      <div class="rv d4 mt-6 flex items-center justify-center gap-6 text-xs text-navy-400">
-        <span class="flex items-center gap-1">✍️ <span class="font-medium text-navy-600">Dedicatoria incluida</span></span>
-        <span class="w-px h-4 bg-navy-300"></span>
-        <span class="flex items-center gap-1">🎁 <span class="font-medium text-navy-600">Envío gratis en Mejillones</span></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== RESEÑAS (Carrusel) ========== -->
-  <section class="py-16 lg:py-24 bg-white relative">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-12">
-        <span class="rv inline-block text-[10px] font-bold tracking-[.25em] uppercase text-grape-500 mb-4">Testimonios</span>
-        <h2 class="rv d1 text-3xl sm:text-4xl font-black tracking-tight text-navy-800">Lo que dicen <span class="t-gradG">nuestros lectores</span></h2>
-        <p class="rv d2 mt-3 text-navy-500 font-light max-w-md mx-auto">⭐ 4.9 de promedio basado en 127 reseñas</p>
-      </div>
-      
-      <div class="rv d3 testimonial-carousel-wrapper">
-        <button class="scroll-btn prev" onclick="scrollTestimonials(-1)" aria-label="Anterior">‹</button>
-        <div class="testimonial-carousel" id="testimonialCarousel">
-          <!-- Reseña 1 -->
-          <div class="testimonial-card">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="avatar" style="background: linear-gradient(135deg, #FF6B35, #FF8C55);">MA</div>
-              <div>
-                <div class="font-bold text-navy-800 text-sm">María A.</div>
-                <div class="stars">★★★★★</div>
-              </div>
-            </div>
-            <p class="text-sm text-navy-600 font-light leading-relaxed">"Mi hijo de 7 años ama a Chanchini. Se ríe a carcajadas con las aventuras de este cerdito viajero. ¡Ya queremos el próximo libro!"</p>
-            <div class="mt-3 text-[10px] font-semibold text-navy-400 tracking-wider uppercase flex items-center gap-2">
-              <span class="inline-block w-1.5 h-1.5 rounded-full bg-teal-500"></span>
-              Verificado · Mejillones
-            </div>
-          </div>
-          
-          <!-- Reseña 2 -->
-          <div class="testimonial-card">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="avatar" style="background: linear-gradient(135deg, #7B2FF7, #B899FF);">CR</div>
-              <div>
-                <div class="font-bold text-navy-800 text-sm">Carlos R.</div>
-                <div class="stars">★★★★★</div>
-              </div>
-            </div>
-            <p class="text-sm text-navy-600 font-light leading-relaxed">"Chinowon es genial. Lo compré para mi sobrino y terminé leyéndolo yo también. El humor absurdo es perfecto para todas las edades."</p>
-            <div class="mt-3 text-[10px] font-semibold text-navy-400 tracking-wider uppercase flex items-center gap-2">
-              <span class="inline-block w-1.5 h-1.5 rounded-full bg-teal-500"></span>
-              Verificado · Antofagasta
-            </div>
-          </div>
-          
-          <!-- Reseña 3 -->
-          <div class="testimonial-card">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="avatar" style="background: linear-gradient(135deg, #00C9A7, #3DC9AD);">FV</div>
-              <div>
-                <div class="font-bold text-navy-800 text-sm">Francisca V.</div>
-                <div class="stars">★★★★★</div>
-              </div>
-            </div>
-            <p class="text-sm text-navy-600 font-light leading-relaxed">"Los libros de Barista Kihnally nos transportan a Mejillones de una manera mágica. Mi hija se aprende los personajes de memoria."</p>
-            <div class="mt-3 text-[10px] font-semibold text-navy-400 tracking-wider uppercase flex items-center gap-2">
-              <span class="inline-block w-1.5 h-1.5 rounded-full bg-teal-500"></span>
-              Verificado · Santiago
-            </div>
-          </div>
-          
-          <!-- Reseña 4 -->
-          <div class="testimonial-card">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="avatar" style="background: linear-gradient(135deg, #FFD23F, #FFE03E); color: #7A6200;">JP</div>
-              <div>
-                <div class="font-bold text-navy-800 text-sm">Jorge P.</div>
-                <div class="stars">★★★★★</div>
-              </div>
-            </div>
-            <p class="text-sm text-navy-600 font-light leading-relaxed">"Turón es el libro favorito de mi hijo. La historia de amistad es hermosa y el camarón es todo un personaje. ¡100% recomendado!"</p>
-            <div class="mt-3 text-[10px] font-semibold text-navy-400 tracking-wider uppercase flex items-center gap-2">
-              <span class="inline-block w-1.5 h-1.5 rounded-full bg-teal-500"></span>
-              Verificado · Calama
-            </div>
-          </div>
-          
-          <!-- Reseña 5 -->
-          <div class="testimonial-card">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="avatar" style="background: linear-gradient(135deg, #FF6B35, #FFD23F);">LC</div>
-              <div>
-                <div class="font-bold text-navy-800 text-sm">Laura C.</div>
-                <div class="stars">★★★★★</div>
-              </div>
-            </div>
-            <p class="text-sm text-navy-600 font-light leading-relaxed">"Compré los 4 libros para mi clase de 2do básico y fue un éxito. Los niños se pelean por quién se lleva cada título a la casa."</p>
-            <div class="mt-3 text-[10px] font-semibold text-navy-400 tracking-wider uppercase flex items-center gap-2">
-              <span class="inline-block w-1.5 h-1.5 rounded-full bg-teal-500"></span>
-              Verificado · Profesora
-            </div>
-          </div>
-        </div>
-        <button class="scroll-btn next" onclick="scrollTestimonials(1)" aria-label="Siguiente">›</button>
-      </div>
-      
-      <div class="rv d4 mt-8 flex justify-center gap-2">
-        <span class="inline-flex items-center gap-1.5 bg-grape-50 text-grape-700 text-[10px] font-bold tracking-wider uppercase px-4 py-2 rounded-full border border-grape-200">
-          ⭐ 4.9 · 127 reseñas
-        </span>
-        <span class="inline-flex items-center gap-1.5 bg-teal-50 text-teal-700 text-[10px] font-bold tracking-wider uppercase px-4 py-2 rounded-full border border-teal-200">
-          ❤️ 98% recomienda
-        </span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== CTA ========== -->
-  <section class="py-20 lg:py-28 relative overflow-hidden">
-    <div class="absolute inset-0 grad-anim opacity-10 pointer-events-none"></div>
-    <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
-      <div class="rv"><span class="text-5xl text-coral-400 mb-6 block">🛒</span></div>
-      <h2 class="rv d1 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-navy-800 leading-tight">¿Cuál libro te <span class="t-grad">llevas</span>?</h2>
-      <p class="rv d2 mt-6 text-navy-500 font-light max-w-md mx-auto">Agrega los que quieras a tu carrito y al finalizar te conectamos por WhatsApp.</p>
-      <div class="rv d3 mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-        <button onclick="openCart()" class="group inline-flex items-center justify-center gap-2 bg-navy-800 hover:bg-navy-700 text-white text-[11px] font-bold tracking-[.15em] uppercase px-10 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1">🛒 Ver mi carrito →</button>
-        <a href="#libros" class="group inline-flex items-center justify-center gap-2 bg-white hover:bg-coral-50 border border-navy-200 text-navy-700 text-[11px] font-bold tracking-[.15em] uppercase px-10 py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">Ver libros</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== FOOTER ========== -->
-  <footer class="bg-navy-800 pt-16 pb-8 relative overflow-hidden">
-    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-coral-500/50 to-transparent"></div>
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-3 gap-12 pb-12 border-b border-white/10">
-        <div><div class="flex items-center gap-3 mb-6"><div class="w-10 h-10 rounded-xl grad-anim flex items-center justify-center text-white font-black text-lg">K</div><span class="text-xl font-bold text-white tracking-tight">Kihnally</span></div><p class="text-white/40 text-sm font-light leading-relaxed">Cafetería y editorial independiente en Mejillones, Chile.</p></div>
-        <div><h4 class="text-[10px] font-bold tracking-[.25em] uppercase text-white/30 mb-6">Navegación</h4><div class="space-y-3"><a href="#libros" class="block text-sm text-white/50 hover:text-coral-400 transition-colors">Libros</a><a href="#autor" class="block text-sm text-white/50 hover:text-coral-400 transition-colors">Autor</a><a href="#cafeteria" class="block text-sm text-white/50 hover:text-coral-400 transition-colors">Cafetería</a></div></div>
-        <div><h4 class="text-[10px] font-bold tracking-[.25em] uppercase text-white/30 mb-6">Contacto</h4><div class="space-y-3"><a href="https://wa.me/56995436140" target="_blank" class="flex items-center gap-3 text-sm text-white/50 hover:text-wasap transition-colors">💬 +56 9 9543 6140</a><div class="flex items-center gap-3 text-sm text-white/50">📍 Mejillones, Chile</div><div class="flex items-center gap-3 text-sm text-white/50">📸 @kihnally</div></div></div>
-      </div>
-      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-[10px] text-white/20 tracking-wider">© 2025 Kihnally · por VibaraChokiT · Hecho con ☕ en Mejillones</p>
-        <div class="flex items-center gap-4">
-          <a href="#" class="w-9 h-9 rounded-full bg-white/5 hover:bg-coral-500/20 flex items-center justify-center transition-colors" aria-label="Instagram">📸</a>
-          <a href="https://wa.me/56995436140" target="_blank" class="w-9 h-9 rounded-full bg-white/5 hover:bg-wasap/20 flex items-center justify-center transition-colors" aria-label="WhatsApp">💬</a>
-          <a href="#" class="w-9 h-9 rounded-full bg-white/5 hover:bg-teal-500/20 flex items-center justify-center transition-colors" aria-label="Facebook">👍</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ========== JAVASCRIPT ========== -->
   <script>
-    (function() {
-      'use strict';
+  (function() {
+    'use strict';
 
-      const WA = '56995436140';
+    const WA = '56995436140';
+    const $ = id => document.getElementById(id);
+    const esc = v => String(v ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+    const formatPrice = n => '$' + Number(n || 0).toLocaleString('es-CL');
+    // Formatos: 'fisico' usa price / pricePhysical; 'digital' usa priceDigital (0 = no disponible en digital)
+    const FORMAT_LABEL = { fisico: 'Físico', digital: 'Digital (PDF)' };
+    const chapterPrice = (ch, fmt) => fmt === 'digital' ? (ch.priceDigital || 0) : ch.price;
+    const hasFormat = (b, fmt) => fmt === 'fisico' ? true
+      : b.chapters.length ? b.chapters.some(ch => ch.priceDigital > 0) : b.priceDigital > 0;
+    // Las imágenes locales ahora son .webp (mucho más livianas). Esto mantiene
+    // funcionando las rutas antiguas guardadas en Supabase (img/xxx.png / .jpg).
+    const imgPath = p => {
+      if (!p) return '';
+      const m = /^img\/(.+)\.(png|jpe?g)$/i.exec(p);
+      return m ? 'img/' + m[1].toLowerCase().replace(/\s+/g, '-') + '.webp' : p;
+    };
 
-      // =============================================
-      // DATOS DE LIBROS CON PRECIOS CORREGIDOS
-      // =============================================
-      let BOOKS = {
-        chanchini: {
-          id: 'chanchini',
-          title: '¿Dónde está Chanchini?',
-          subtitle: 'Aventura · Viajes · Infantil',
-          description: 'Conoce a Chanchini, la viajera más pequeña de Chile. Este cerdito soñador vive en la cafetería Kihnally y quiere recorrer cada rincón del país, desde Arica hasta Punta Arenas.',
-          img: 'img/chanchini.png',
-          previewImages: ['img/chanchini-pagina1.png', 'img/chanchini-pagina2.png'],
-          badge: 'Aventura',
-          badgeColor: 'bg-coral-500',
-          colorKey: 'coral',
-          pricePhysical: 5990,
-          tags: ['Viajes', 'Infantil', 'Chile', 'Aventura'],
-          tagColors: ['bg-coral-50 text-coral-600', 'bg-sun-50 text-sun-700', 'bg-teal-50 text-teal-700', 'bg-grape-50 text-grape-600'],
-          cardBg: 'from-coral-50 to-sun-50',
-          chapters: [
-            { id: 'c1', name: 'Capítulo 1', price: 5990 },
-            { id: 'c2', name: 'Capítulo 2', price: 5990 }
-          ]
-        },
-        chinowon: {
-          id: 'chinowon',
-          title: 'Chinowon',
-          subtitle: 'El diccionario menos confiable del mundo',
-          description: 'Traducciones que jamás encontrarás en una academia. Humor absurdo 100% garantizado. Si no tiene sentido… ¡es Chinowon!',
-          img: 'img/chinowon.png',
-          previewImages: ['img/chinowon-pagina1.png', 'img/chinowon-pagina2.png'],
-          badge: 'Humor',
-          badgeColor: 'bg-sun-500',
-          colorKey: 'sun',
-          pricePhysical: 5990,
-          tags: ['Humor', 'Absurdo', 'Diccionario', 'Risa'],
-          tagColors: ['bg-sun-50 text-sun-700', 'bg-coral-50 text-coral-600', 'bg-grape-50 text-grape-600', 'bg-teal-50 text-teal-700'],
-          cardBg: 'from-sun-50 to-coral-50',
-          chapters: [
-            { id: 'c1', name: 'Capítulo 1', price: 5990 },
-            { id: 'c2', name: 'Capítulo 2', price: 5990 },
-            { id: 'c3', name: 'Capítulo 3', price: 5990 },
-            { id: 'c4', name: 'Capítulo 4', price: 5990 }
-          ]
-        },
-        barista: {
-          id: 'barista',
-          title: 'Barista Kihnally',
-          subtitle: 'Temporada 1 — Café · Cultura · Aventura',
-          description: '6 aventuras en Mejillones como nunca antes las viste. Gaviotas con actitud, fantasmas en el faro y el mejor café del puerto.',
-          img: 'img/barista.png',
-          previewImages: ['img/barista-pagina1.png', 'img/barista-pagina2.png'],
-          badge: 'Serie',
-          badgeColor: 'bg-teal-500',
-          colorKey: 'teal',
-          pricePhysical: 4990,
-          tags: ['Aventura', 'Mejillones', 'Café', '6 episodios'],
-          tagColors: ['bg-teal-50 text-teal-700', 'bg-coral-50 text-coral-600', 'bg-sun-50 text-sun-700', 'bg-grape-50 text-grape-600'],
-          cardBg: 'from-teal-50 to-grape-50',
-          chapters: [
-            { id: 'c1', name: 'Capítulo 1', price: 3500 },
-            { id: 'c2', name: 'Capítulo 2', price: 3500 },
-            { id: 'c3', name: 'Capítulo 3', price: 3500 },
-            { id: 'c4', name: 'Capítulo 4', price: 3500 },
-            { id: 'c5', name: 'Capítulo 5', price: 3500 },
-            { id: 'c6', name: 'Capítulo 6', price: 3500 }
-          ]
-        },
-        turon: {
-          id: 'turon',
-          title: 'Turón: El perro con carita de ratón',
-          subtitle: 'Amistad · Sueños · Un camarón muy especial',
-          description: 'Una historia sobre amistad, sueños y un camarón muy especial. Turón te robará el corazón con esa carita imposible.',
-          img: 'img/turon.jpg',
-          previewImages: ['img/turon-pagina1.png', 'img/turon-pagina2.png'],
-          badge: 'Infantil',
-          badgeColor: 'bg-grape-500',
-          colorKey: 'grape',
-          pricePhysical: 4990,
-          tags: ['Infantil', 'Amistad', 'Sueños', 'Emoción'],
-          tagColors: ['bg-grape-50 text-grape-600', 'bg-pink-50 text-pink-600', 'bg-sun-50 text-sun-700', 'bg-coral-50 text-coral-600'],
-          cardBg: 'from-grape-50 to-pink-50',
-          chapters: [
-            { id: 'c1', name: 'Capítulo 1', price: 3500 },
-            { id: 'c2', name: 'Capítulo 2', price: 3500 },
-            { id: 'c3', name: 'Capítulo 3', price: 3500 },
-            { id: 'c4', name: 'Capítulo 4', price: 3500 }
-          ]
-        }
-      };
+    const COLOR = {
+      coral: { badge: 'bg-coral-500', text: 'text-coral-600', tint: 'bg-coral-50' },
+      teal:  { badge: 'bg-teal-500',  text: 'text-teal-600',  tint: 'bg-teal-50' },
+      sun:   { badge: 'bg-sun-500',   text: 'text-sun-600',   tint: 'bg-sun-50' },
+      grape: { badge: 'bg-grape-500', text: 'text-grape-600', tint: 'bg-grape-50' }
+    };
 
-      // Orden de libros para el carrusel
-      let CAROUSEL_ORDER = ['chanchini', 'chinowon', 'barista', 'turon'];
+    // Catálogo de respaldo (se usa si Supabase no responde)
+    let BOOKS = {
+      chanchini: { id:'chanchini', title:'¿Dónde está Chanchini?', subtitle:'Aventura, viajes e infancia', description:'Conoce a Chanchini, la viajera más pequeña de Chile. Este cerdito soñador vive en la cafetería Kihnally y quiere recorrer cada rincón del país, desde Arica hasta Punta Arenas.', img:'img/chanchini.webp', previewImages:['img/chanchini-pagina1.webp','img/chanchini-pagina2.webp'], badge:'Aventura', colorKey:'coral', pricePhysical:5990, tags:['Viajes','Infantil','Chile','Aventura'], chapters:[{id:'c1',name:'Capítulo 1',price:5990},{id:'c2',name:'Capítulo 2',price:5990}] },
+      chinowon:  { id:'chinowon', title:'Chinowon', subtitle:'El diccionario menos confiable del mundo', description:'Traducciones que jamás encontrarás en una academia. Humor absurdo 100% garantizado. Si no tiene sentido… ¡es Chinowon!', img:'img/chinowon.webp', previewImages:['img/chinowon-pagina1.webp','img/chinowon-pagina2.webp'], badge:'Humor', colorKey:'sun', pricePhysical:5990, tags:['Humor','Absurdo','Diccionario','Risa'], chapters:[{id:'c1',name:'Capítulo 1',price:5990},{id:'c2',name:'Capítulo 2',price:5990},{id:'c3',name:'Capítulo 3',price:5990},{id:'c4',name:'Capítulo 4',price:5990}] },
+      barista:   { id:'barista', title:'Barista Kihnally', subtitle:'Temporada 1: café, cultura y aventura', description:'6 aventuras en Mejillones como nunca antes las viste. Gaviotas con actitud, fantasmas en el faro y el mejor café del puerto.', img:'img/barista.webp', previewImages:['img/barista-pagina1.webp','img/barista-pagina2.webp'], badge:'Serie', colorKey:'teal', pricePhysical:4990, tags:['Aventura','Mejillones','Café','6 episodios'], chapters:[1,2,3,4,5,6].map(n=>({id:'c'+n,name:'Capítulo '+n,price:3500})) },
+      turon:     { id:'turon', title:'Turón: El perro con carita de ratón', subtitle:'Amistad, sueños y un camarón muy especial', description:'Una historia sobre amistad, sueños y un camarón muy especial. Turón te robará el corazón con esa carita imposible.', img:'img/turon.webp', previewImages:['img/turon-pagina1.webp','img/turon-pagina2.webp'], badge:'Infantil', colorKey:'grape', pricePhysical:4990, tags:['Infantil','Amistad','Sueños','Emoción'], chapters:[1,2,3,4].map(n=>({id:'c'+n,name:'Capítulo '+n,price:3500})) }
+    };
+    let APPS = [];      // se llenan desde Supabase (tabla apps)
+    let REVIEWS = [];   // se llenan desde Supabase (tabla reviews)
 
-      let currentPreviewBook = null;
-      let cart = [];
-      let currentBookId = null;
-      let selectedChapters = new Set();
-      let closeCartTimer = null;
-      
-      const formatPrice = (n) => '$' + n.toLocaleString('es-CL');
+    let cart = [];
+    let selectedChapters = new Set();
+    let format = 'fisico';
+    let currentBookId = null;
+    let activeTag = 'Todos';
+    let searchTerm = '';
+    let closeCartTimer = null;
+    let lastFocus = null;
 
-      async function loadCatalogFromSupabase() {
-        const config = window.KIHNALLY_CONFIG;
-        if (!config || !window.supabase) return;
-        try {
-          const db = window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey);
-          const { data, error } = await db
-            .from('books')
-            .select('*, chapters(*)')
-            .eq('published', true)
-            .order('sort_order', { ascending: true });
-          if (error) throw error;
-          if (!data || data.length === 0) return;
+    // =============================================
+    // DATOS DESDE SUPABASE
+    // =============================================
+    async function loadFromSupabase() {
+      const config = window.KIHNALLY_CONFIG;
+      if (!config || !window.supabase) return;
+      const db = window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey);
+      const [books, apps, reviews] = await Promise.allSettled([
+        db.from('books').select('*, chapters(*)').eq('published', true).order('sort_order'),
+        db.from('apps').select('*').eq('published', true).order('sort_order'),
+        db.from('reviews').select('*').eq('published', true).order('sort_order')
+      ]);
+      const ok = r => r.status === 'fulfilled' && !r.value.error ? r.value.data : null;
 
-          const colorStyles = {
-            coral: { badge: 'bg-coral-500', card: 'from-coral-50 to-sun-50' },
-            teal: { badge: 'bg-teal-500', card: 'from-teal-50 to-grape-50' },
-            sun: { badge: 'bg-sun-500', card: 'from-sun-50 to-coral-50' },
-            grape: { badge: 'bg-grape-500', card: 'from-grape-50 to-pink-50' }
-          };
-          const tagPalette = [
-            'bg-coral-50 text-coral-600', 'bg-sun-50 text-sun-700',
-            'bg-teal-50 text-teal-700', 'bg-grape-50 text-grape-600'
-          ];
-          BOOKS = Object.fromEntries(data.map(row => {
-            const color = colorStyles[row.color_key] || colorStyles.coral;
-            const chapters = (row.chapters || [])
-              .filter(ch => ch.published)
-              .sort((a, b) => a.sort_order - b.sort_order)
-              .map(ch => ({ id: ch.id, name: ch.name, price: ch.price }));
-            return [row.slug, {
-              id: row.slug,
-              title: row.title,
-              subtitle: row.subtitle || '',
-              description: row.description || '',
-              img: row.image_url || '',
-              previewImages: row.preview_images || [],
-              badge: row.badge || 'Libro',
-              badgeColor: color.badge,
-              colorKey: row.color_key || 'coral',
-              pricePhysical: row.price_physical || 0,
-              tags: row.tags || [],
-              tagColors: (row.tags || []).map((_, i) => tagPalette[i % tagPalette.length]),
-              cardBg: color.card,
-              chapters
-            }];
-          }));
-          CAROUSEL_ORDER = Object.keys(BOOKS);
-        } catch (error) {
-          console.warn('Supabase no disponible; se usa el catálogo incluido.', error.message);
-        }
+      const bookRows = ok(books);
+      if (bookRows && bookRows.length) {
+        BOOKS = Object.fromEntries(bookRows.map(row => [row.slug, {
+          id: row.slug, title: row.title, subtitle: row.subtitle || '', description: row.description || '',
+          img: imgPath(row.image_url), previewImages: (row.preview_images || []).map(imgPath),
+          badge: row.badge || 'Libro', colorKey: COLOR[row.color_key] ? row.color_key : 'coral',
+          pricePhysical: row.price_physical || 0, priceDigital: row.price_digital || 0, tags: row.tags || [],
+          chapters: (row.chapters || []).filter(ch => ch.published).sort((a, b) => a.sort_order - b.sort_order).map(ch => ({ id: ch.id, name: ch.name, price: ch.price, priceDigital: ch.price_digital || 0 }))
+        }]));
+      } else if (books.status === 'rejected' || books.value?.error) {
+        console.warn('Supabase no disponible; se usa el catálogo incluido.');
       }
+      APPS = ok(apps) || [];
+      REVIEWS = ok(reviews) || [];
+    }
 
-      // =============================================
-      // CARRUSEL 3D CON MOVIMIENTO AUTOMÁTICO
-      // =============================================
-      function renderBookCarousel() {
-        const inner = document.getElementById('carouselInner');
-        const booksHtml = CAROUSEL_ORDER.concat(CAROUSEL_ORDER).map(key => {
-          const b = BOOKS[key];
-          return `
-            <div class="book-3d rounded-2xl overflow-hidden shadow-2xl border-2 border-white" 
-                 data-book="${key}"
-                 onmouseenter="selectBook(this)" 
-                 onmouseleave="deselectBook(this)"
-                 onclick="openPreviewModal('${key}')">
-              <div class="book-shadow"></div>
-              <div class="book-glow"></div>
-              <img src="${b.img}" alt="${b.title}" class="w-full h-full object-cover" onerror="handleImageError(this)">
-              <div class="book-number">${CAROUSEL_ORDER.indexOf(key) + 1}</div>
-              <div class="book-label">👆 Ver interior</div>
-            </div>
-          `;
-        }).join('');
-        inner.innerHTML = booksHtml;
+    // =============================================
+    // ESTANTE (HERO)
+    // =============================================
+    let shelfTimer = null;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function renderShelf() {
+      const keys = Object.keys(BOOKS);
+      $('shelfCount').textContent = keys.length === 1 ? '1 libro en el estante' : `${keys.length} libros en el estante`;
+      $('shelf').innerHTML = keys.map(key => {
+        const b = BOOKS[key];
+        return `<button class="shelf-item" onclick="openPreviewModal('${esc(key)}')" aria-label="Ver interior de ${esc(b.title)}">
+          <img src="${esc(b.img)}" alt="" onerror="handleImageError(this)"></button>`;
+      }).join('');
+    }
+
+    window.scrollShelf = function(dir) {
+      const shelf = $('shelf');
+      const item = shelf.querySelector('.shelf-item');
+      const step = (item?.offsetWidth || 200) + 22;
+      const atEnd = shelf.scrollLeft + shelf.clientWidth >= shelf.scrollWidth - 8;
+      if (dir > 0 && atEnd) shelf.scrollTo({ left: 0, behavior: 'smooth' });
+      else if (dir < 0 && shelf.scrollLeft <= 4) shelf.scrollTo({ left: shelf.scrollWidth, behavior: 'smooth' });
+      else shelf.scrollBy({ left: dir * step, behavior: 'smooth' });
+    };
+
+    function startShelfAuto() {
+      if (reduceMotion) return;
+      const shelf = $('shelf');
+      const stop = () => { clearInterval(shelfTimer); shelfTimer = null; };
+      const start = () => { if (!shelfTimer) shelfTimer = setInterval(() => scrollShelf(1), 3800); };
+      ['mouseenter', 'focusin', 'touchstart'].forEach(e => shelf.addEventListener(e, stop, { passive: true }));
+      ['mouseleave', 'focusout'].forEach(e => shelf.addEventListener(e, start));
+      start();
+    }
+
+    // =============================================
+    // LIBROS: FILTROS, BÚSQUEDA Y GRILLA
+    // =============================================
+    function normalize(s) { return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+
+    function renderFilters() {
+      const counts = {};
+      Object.values(BOOKS).forEach(b => b.tags.forEach(t => counts[t] = (counts[t] || 0) + 1));
+      // Mostrar categorías que agrupan al menos 2 libros (o todas si el catálogo es chico)
+      let tags = Object.keys(counts).sort((a, b) => counts[b] - counts[a] || a.localeCompare(b));
+      const shared = tags.filter(t => counts[t] > 1);
+      if (shared.length >= 4) tags = shared;
+      tags = ['Todos', ...tags.slice(0, 8)];
+      if (!tags.includes(activeTag)) activeTag = 'Todos';
+      $('bookFilters').innerHTML = tags.map(t =>
+        `<button class="chip" aria-pressed="${t === activeTag}" data-tag="${esc(t)}">${esc(t)}</button>`).join('');
+      $('bookFilters').querySelectorAll('.chip').forEach(btn => btn.addEventListener('click', () => {
+        activeTag = btn.dataset.tag; renderFilters(); renderBooks();
+      }));
+    }
+
+    function renderBooks() {
+      const q = normalize(searchTerm.trim());
+      const keys = Object.keys(BOOKS).filter(key => {
+        const b = BOOKS[key];
+        if (activeTag !== 'Todos' && !b.tags.includes(activeTag)) return false;
+        if (!q) return true;
+        return normalize([b.title, b.subtitle, b.description, ...b.tags].join(' ')).includes(q);
+      });
+      $('booksEmpty').classList.toggle('hidden', keys.length > 0);
+      $('booksGrid').innerHTML = keys.map(key => {
+        const b = BOOKS[key]; const c = COLOR[b.colorKey];
+        const digital = hasFormat(b, 'digital');
+        const prices = b.chapters.length
+          ? b.chapters.flatMap(ch => [ch.price, ch.priceDigital]).filter(p => p > 0)
+          : [b.pricePhysical, b.priceDigital].filter(p => p > 0);
+        const fromPrice = prices.length ? Math.min(...prices) : 0;
+        const multi = prices.length > 1;
+        return `
+          <article class="book-card group">
+            <button class="block w-full text-left" onclick="openBookModal('${esc(key)}')" aria-label="Ver ${esc(b.title)}">
+              <div class="cover relative rounded-[6px_16px_16px_6px] overflow-hidden ${c.tint} shadow-[-5px_0_0_0_rgba(47,58,44,.35)_inset,0_16px_30px_-16px_rgba(47,58,44,.6)]">
+                <img src="${esc(b.img)}" alt="" class="w-full h-full object-cover" loading="lazy" onerror="handleImageError(this)">
+                <span class="absolute top-3 left-3 ${c.badge} text-white text-xs font-extrabold px-2.5 py-1 rounded-full">${esc(b.badge)}</span>
+                ${digital ? '<span class="absolute bottom-3 left-3 bg-white/95 text-ink text-xs font-extrabold px-2.5 py-1 rounded-full">También en digital</span>' : ''}
+              </div>
+              <h3 class="mt-4 font-display font-semibold text-xl sm:text-2xl leading-tight text-ink group-hover:${c.text}">${esc(b.title)}</h3>
+              <p class="mt-1 text-sm sm:text-base text-ink-600 line-clamp-2">${esc(b.subtitle || b.description)}</p>
+              <p class="mt-2 font-extrabold">${multi ? 'Desde ' : ''}${formatPrice(fromPrice)}
+                <span class="font-semibold text-sage">${b.chapters.length ? `· ${b.chapters.length} ${b.chapters.length === 1 ? 'capítulo' : 'capítulos'}` : ''}</span></p>
+            </button>
+          </article>`;
+      }).join('');
+    }
+
+    window.resetBookFilters = function() {
+      activeTag = 'Todos'; searchTerm = ''; $('bookSearch').value = '';
+      renderFilters(); renderBooks();
+    };
+
+    // =============================================
+    // APPS Y JUEGOS
+    // =============================================
+    const STORE = {
+      android: { label: 'Google Play', icon: '<path d="M4 3.5v17l9-8.5z" fill="currentColor"/><path d="M4 3.5l12 7-3 2zM4 20.5l12-7-3-2z" fill="currentColor" opacity=".6"/><path d="M16 10.5 20 12.8l-4 2.2-3-2.5z" fill="currentColor"/>' },
+      ios:     { label: 'App Store',   icon: '<rect x="6" y="2.5" width="12" height="19" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' },
+      web:     { label: 'Jugar en la web', icon: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" fill="none" stroke="currentColor" stroke-width="2"/>' }
+    };
+    const STATUS = { disponible: 'Disponible', beta: 'En prueba', proximamente: 'Próximamente' };
+
+    function renderApps() {
+      const grid = $('appsGrid');
+      $('statApps').textContent = APPS.length ? APPS.length : 'Pronto';
+      if (!APPS.length) {
+        // Sin apps aún: mostramos lo que viene, con los personajes de los libros
+        const ideas = [
+          { name: 'Chanchini por Chile', text: 'Ayuda a Chanchini a encontrar su camino desde Arica hasta Punta Arenas.', img: 'img/chanchini.webp' },
+          { name: 'Chinowon: el juego', text: 'Adivina qué significan las palabras más absurdas del diccionario.', img: 'img/chinowon.webp' }
+        ];
+        grid.innerHTML = ideas.map(i => `
+          <article class="bg-paper rounded-[24px] border-2 border-mist p-5">
+            <div class="app-screen"><img src="${i.img}" alt="" class="opacity-35 grayscale" loading="lazy">
+              <span class="absolute inset-0 flex items-center justify-center"><span class="bg-ink text-paper font-extrabold rounded-full px-4 py-2">En desarrollo</span></span></div>
+            <h3 class="mt-5 font-display font-semibold text-2xl">${i.name}</h3>
+            <p class="mt-1 text-ink-600">${i.text}</p>
+          </article>`).join('');
+        return;
       }
-
-      window.scrollBookCarousel = function(direction) {
-        const carousel = document.getElementById('bookCarousel');
-        const inner = document.getElementById('carouselInner');
-        const bookWidth = inner.querySelector('.book-3d')?.offsetWidth || 220;
-        const gap = 30;
-        const scrollAmount = (bookWidth + gap) * direction;
-
-        inner.style.animationPlayState = 'paused';
-        carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        setTimeout(() => {
-          inner.style.animationPlayState = 'running';
-        }, 2000);
-      };
-
-      // =============================================
-      // EFECTOS 3D EN HERO
-      // =============================================
-      window.selectBook = function(el) {
-        document.querySelectorAll('.book-3d').forEach(b => b.classList.remove('selected'));
-        el.classList.add('selected');
-      };
-
-      window.deselectBook = function(el) {
-        el.classList.remove('selected');
-      };
-
-      // =============================================
-      // MODAL VISTA PREVIA
-      // =============================================
-      window.openPreviewModal = function(bookId) {
-        const book = BOOKS[bookId];
-        if (!book) return;
-        currentPreviewBook = bookId;
-        window.currentPreviewBook = bookId;
-        document.getElementById('previewTitle').textContent = book.title;
-
-        const grid = document.getElementById('previewGrid');
-        const images = book.previewImages || [];
-
-        if (images.length === 0) {
-          grid.innerHTML = `
-            <div class="text-center py-12 text-navy-400">
-              <span class="text-5xl block mb-4">📖</span>
-              <p class="text-lg font-medium">Vista previa no disponible</p>
-              <p class="text-sm mt-2">Pronto añadiremos imágenes del interior</p>
+      $('appsNotify').classList.toggle('hidden', !APPS.some(a => a.status === 'proximamente'));
+      grid.innerHTML = APPS.map(app => {
+        const links = app.links || {};
+        const shots = (app.screenshots || []).map(imgPath);
+        const c = COLOR[app.color_key] || COLOR.teal;
+        const buttons = Object.keys(STORE).filter(k => links[k]).map(k => `
+          <a href="${esc(links[k])}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-ink text-paper font-bold rounded-full pl-3 pr-4 py-2.5 hover:bg-ink-700">
+            <svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true">${STORE[k].icon}</svg>${STORE[k].label}</a>`).join('');
+        return `
+          <article class="bg-paper rounded-[24px] border-2 border-mist p-5 flex flex-col">
+            <div class="app-screen">${shots[0] ? `<img src="${esc(shots[0])}" alt="Captura de ${esc(app.name)}" loading="lazy" onerror="handleImageError(this)">` : ''}</div>
+            <div class="mt-5 flex items-start gap-4">
+              ${app.icon_url ? `<img src="${esc(imgPath(app.icon_url))}" alt="" class="w-14 h-14 rounded-2xl object-cover shrink-0 border-2 border-mist" onerror="this.remove()">` : ''}
+              <div class="min-w-0">
+                <h3 class="font-display font-semibold text-2xl leading-tight">${esc(app.name)}</h3>
+                <p class="mt-1 text-sm font-extrabold ${c.text}">${STATUS[app.status] || ''}${app.tagline ? ` · ${esc(app.tagline)}` : ''}</p>
+              </div>
             </div>
-          `;
-        } else {
-          grid.innerHTML = images.map((img, i) => `
-            <div class="preview-img" onclick="window.closePreviewModal(); window.openBookModal('${bookId}')">
-              <img src="${img}" alt="${book.title} - página ${i+1}" onerror="this.parentElement.innerHTML='<div class=\\'min-h-[300px] flex items-center justify-center bg-navy-50 text-navy-400 text-lg\\'>📄 Página ${i+1}</div>'">
-              <div class="page-label"><span>📄 Página ${i+1}</span></div>
-            </div>
-          `).join('');
-        }
+            <p class="mt-3 text-ink-600">${esc(app.description)}</p>
+            <div class="mt-auto pt-5 flex flex-wrap gap-2">${buttons || '<span class="text-sage font-semibold">Muy pronto en tiendas</span>'}</div>
+          </article>`;
+      }).join('');
+    }
 
-        document.getElementById('previewModal').classList.remove('hidden');
-        document.body.classList.add('no-scroll');
-      };
+    // =============================================
+    // RESEÑAS (solo reales, cargadas desde el panel)
+    // =============================================
+    function renderReviews() {
+      if (!REVIEWS.length) return;
+      $('resenas').classList.remove('hidden');
+      $('reviewsGrid').innerHTML = REVIEWS.map(r => {
+        const stars = Math.max(0, Math.min(5, Number(r.rating) || 0));
+        const book = r.book_slug && BOOKS[r.book_slug] ? BOOKS[r.book_slug].title : '';
+        return `
+          <figure class="bg-white rounded-[22px] border-2 border-mist p-6 flex flex-col">
+            ${stars ? `<p class="text-sun-500 text-lg tracking-widest" aria-label="${stars} de 5 estrellas">${'★'.repeat(stars)}<span class="text-mist">${'★'.repeat(5 - stars)}</span></p>` : ''}
+            <blockquote class="mt-3 text-lg leading-relaxed text-ink">“${esc(r.body)}”</blockquote>
+            <figcaption class="mt-auto pt-5 text-sage"><span class="font-extrabold text-ink">${esc(r.author_name)}</span>${r.location ? `, ${esc(r.location)}` : ''}${book ? `<br><span class="text-sm">Sobre ${esc(book)}</span>` : ''}</figcaption>
+          </figure>`;
+      }).join('');
+    }
 
-      window.closePreviewModal = function() {
-        document.getElementById('previewModal').classList.add('hidden');
-        document.body.classList.remove('no-scroll');
-      };
+    // =============================================
+    // VISTA PREVIA
+    // =============================================
+    window.openPreviewModal = function(bookId) {
+      const book = BOOKS[bookId]; if (!book) return;
+      window.currentPreviewBook = bookId;
+      $('previewTitle').textContent = book.title;
+      const images = book.previewImages || [];
+      $('previewGrid').innerHTML = images.length ? images.map((img, i) => `
+        <figure class="preview-page">
+          <img src="${esc(img)}" alt="${esc(book.title)}, página ${i + 1}" loading="lazy" onerror="handleImageError(this)">
+          <figcaption class="text-center text-sm font-bold text-sage py-2">Página ${i + 1}</figcaption>
+        </figure>`).join('')
+        : '<p class="text-center py-12 text-sage">Aún no hay páginas de muestra para este libro.</p>';
+      openLayer('previewModal');
+    };
+    window.closePreviewModal = function() { closeLayer('previewModal'); };
 
-      // =============================================
-      // SELECTOR DE CAPÍTULOS
-      // =============================================
-      function renderChapterSelector(bookId) {
-        const book = BOOKS[bookId];
-        if (!book) return;
-        
-        const container = document.getElementById('chapterSelector');
-        if (!container) return;
-        
-        if (!book.chapters || book.chapters.length === 0) {
-          container.innerHTML = '<span class="text-xs text-navy-400">Libro completo disponible</span>';
-          const priceEl = document.getElementById('mSelectedPrice');
-          if (priceEl) priceEl.textContent = formatPrice(book.pricePhysical || 0);
-          const labelEl = document.getElementById('mChapterLabel');
-          if (labelEl) labelEl.textContent = '';
-          selectedChapters.clear();
-          updateAddButton(bookId);
-          return;
-        }
+    // =============================================
+    // MODAL LIBRO + CAPÍTULOS
+    // =============================================
+    function openBookModal(bookId) {
+      const book = BOOKS[bookId]; if (!book) return;
+      const c = COLOR[book.colorKey];
+      selectedChapters.clear();
+      let modalImage = $('mImg');
+      if (!(modalImage instanceof HTMLImageElement)) {
+        const img = document.createElement('img'); img.id = 'mImg';
+        img.className = 'w-full max-w-[260px] md:max-w-none rounded-[6px_14px_14px_6px] shadow-[0_20px_40px_-18px_rgba(47,58,44,.7)]';
+        img.onerror = function() { handleImageError(this); };
+        modalImage.replaceWith(img); modalImage = img;
+      }
+      modalImage.src = book.img; modalImage.alt = 'Portada de ' + book.title;
+      $('mTitle').textContent = book.title;
+      $('mSub').textContent = book.subtitle; $('mSub').className = 'mt-1 font-bold ' + c.text;
+      $('mDesc').textContent = book.description;
+      $('mBadge').textContent = book.badge; $('mBadge').className = 'text-xs font-extrabold px-3 py-1.5 rounded-full text-white ' + c.badge;
+      $('mTags').innerHTML = book.tags.map(t => `<span class="text-sm font-bold ${c.tint} ${c.text} px-3 py-1 rounded-full">${esc(t)}</span>`).join('');
+      $('mPreviewBtn').classList.toggle('hidden', !book.previewImages?.length);
+      $('mPreviewBtn').onclick = () => { closeBookModal(); openPreviewModal(bookId); };
+      $('btnFisico').onclick = () => addToCart(bookId);
+      currentBookId = bookId;
+      const digital = hasFormat(book, 'digital');
+      $('formatContainer').classList.toggle('hidden', !digital);
+      setFormat('fisico');
+      openLayer('bookModal');
+    }
+    function closeBookModal() { closeLayer('bookModal'); selectedChapters.clear(); currentBookId = null; }
 
-        selectedChapters.clear();
-        container.innerHTML = book.chapters.map(ch => `
-          <button class="chap-btn" 
-                  data-chapter="${ch.id}" 
-                  data-price="${ch.price}"
-                  aria-pressed="false"
-                  onclick="selectChapter('${bookId}', '${ch.id}', this)">
-            ${ch.name} <span class="chap-price">${formatPrice(ch.price)}</span>
-          </button>
-        `).join('');
+    function setFormat(fmt) {
+      format = fmt;
+      document.querySelectorAll('.fmt-toggle button').forEach(b => b.setAttribute('aria-pressed', b.dataset.format === fmt));
+      $('mDelivery').textContent = fmt === 'digital'
+        ? 'Digital en PDF · te lo enviamos por WhatsApp o correo apenas confirmemos el pago'
+        : 'Libro físico · retiro en la cafetería o envío por pagar';
+      if (currentBookId) renderChapterSelector(currentBookId);
+    }
 
-        const priceEl = document.getElementById('mSelectedPrice');
-        if (priceEl) priceEl.textContent = formatPrice(0);
-        const labelEl = document.getElementById('mChapterLabel');
-        if (labelEl) labelEl.textContent = 'Selecciona uno o más capítulos';
+    function renderChapterSelector(bookId) {
+      const book = BOOKS[bookId];
+      const hasChapters = book.chapters.length > 0;
+      // Mantener solo las selecciones disponibles en el formato elegido
+      book.chapters.forEach(ch => { if (!chapterPrice(ch, format)) selectedChapters.delete(ch.id); });
+      $('chapterSelectorContainer').classList.toggle('hidden', !hasChapters);
+      $('chapterSelector').innerHTML = book.chapters.map(ch => {
+        const price = chapterPrice(ch, format);
+        const on = selectedChapters.has(ch.id);
+        return `<button class="chap-btn${on ? ' active' : ''}" aria-pressed="${on}" data-chapter="${esc(ch.id)}" ${price ? '' : 'disabled title="No disponible en digital"'}>${esc(ch.name)}<span class="chap-price">${price ? formatPrice(price) : 'solo físico'}</span></button>`;
+      }).join('');
+      $('chapterSelector').querySelectorAll('.chap-btn:not([disabled])').forEach(btn => btn.addEventListener('click', () => {
+        const id = btn.dataset.chapter;
+        selectedChapters.has(id) ? selectedChapters.delete(id) : selectedChapters.add(id);
+        btn.classList.toggle('active', selectedChapters.has(id));
+        btn.setAttribute('aria-pressed', selectedChapters.has(id));
         updateAddButton(bookId);
-      }
+      }));
+      updateAddButton(bookId);
+    }
 
-      window.selectChapter = function(bookId, chapterId, btn) {
-        const book = BOOKS[bookId];
-        if (!book) return;
+    function updateAddButton(bookId) {
+      const book = BOOKS[bookId];
+      const hasChapters = book.chapters.length > 0;
+      const selected = book.chapters.filter(ch => selectedChapters.has(ch.id));
+      const price = hasChapters ? selected.reduce((s, ch) => s + chapterPrice(ch, format), 0)
+        : (format === 'digital' ? book.priceDigital : book.pricePhysical);
+      const canAdd = !hasChapters || selected.length > 0;
+      $('mPriceF').textContent = formatPrice(price);
+      $('mChapterLabel').textContent = !hasChapters ? 'Libro completo'
+        : selected.length ? `${selected.length} ${selected.length === 1 ? 'capítulo elegido' : 'capítulos elegidos'}` : 'Elige al menos un capítulo';
+      $('btnFisico').disabled = !canAdd;
+    }
 
-        if (selectedChapters.has(chapterId)) {
-          selectedChapters.delete(chapterId);
-          btn.classList.remove('active');
-          btn.setAttribute('aria-pressed', 'false');
-        } else {
-          selectedChapters.add(chapterId);
-          btn.classList.add('active');
-          btn.setAttribute('aria-pressed', 'true');
-        }
+    // =============================================
+    // CARRITO
+    // =============================================
+    function addToCart(bookId) {
+      const book = BOOKS[bookId]; if (!book) return;
+      const choices = book.chapters.length
+        ? book.chapters.filter(ch => selectedChapters.has(ch.id) && chapterPrice(ch, format) > 0)
+            .map(ch => ({ id: ch.id, name: ch.name, price: chapterPrice(ch, format) }))
+        : [{ id: null, name: 'Libro completo', price: format === 'digital' ? book.priceDigital : book.pricePhysical }];
+      if (!choices.length) return;
+      choices.forEach(ch => {
+        const found = cart.find(i => i.bookId === bookId && i.chapterId === ch.id && i.format === format);
+        // Una copia digital basta: no se suma cantidad
+        if (found) { if (format === 'fisico') found.quantity++; }
+        else cart.push({ bookId, chapterId: ch.id, format, title: book.title, chapterName: ch.name, price: ch.price, img: book.img, quantity: 1 });
+      });
+      saveCart(); renderCart(); bumpCart();
+      closeBookModal();
+      showToast(`Agregado al carrito: ${book.title}, ${format === 'digital' ? 'digital' : 'físico'}${choices.length > 1 ? ` (${choices.length} capítulos)` : ''}`, 'Ver carrito', openCart);
+    }
+    window.removeFromCart = i => { cart.splice(i, 1); saveCart(); renderCart(); };
+    window.changeQuantity = (i, d) => { if (!cart[i]) return; cart[i].quantity += d; if (cart[i].quantity <= 0) cart.splice(i, 1); saveCart(); renderCart(); };
+    window.clearCart = () => { if (cart.length && confirm('¿Vaciar el carrito?')) { cart = []; saveCart(); renderCart(); showToast('Carrito vaciado'); } };
+    const cartTotal = () => cart.reduce((s, i) => s + i.price * i.quantity, 0);
+    const cartCount = () => cart.reduce((s, i) => s + i.quantity, 0);
 
-        const selected = book.chapters.filter(ch => selectedChapters.has(ch.id));
-        document.getElementById('mSelectedPrice').textContent = formatPrice(
-          selected.reduce((sum, ch) => sum + ch.price, 0)
-        );
-        document.getElementById('mChapterLabel').textContent = selected.length
-          ? `· ${selected.length} ${selected.length === 1 ? 'capítulo' : 'capítulos'}`
-          : 'Selecciona uno o más capítulos';
-        updateAddButton(bookId);
-      };
+    function saveCart() { try { localStorage.setItem('vbk-cart', JSON.stringify(cart)); } catch (e) {} }
+    function loadCart() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('vbk-cart') || '[]');
+        cart = Array.isArray(saved) ? saved.filter(i => i && BOOKS[i.bookId]).map(i => ({ ...i, format: i.format === 'digital' ? 'digital' : 'fisico', img: imgPath(i.img) })) : [];
+      } catch (e) { cart = []; }
+    }
 
-      function updateAddButton(bookId) {
-        const book = BOOKS[bookId];
-        if (!book) return;
-        
-        const priceEl = document.getElementById('mPriceF');
-        const btnEl = document.getElementById('btnFisico');
-        if (!priceEl || !btnEl) return;
-        
-        const hasChapters = Array.isArray(book.chapters) && book.chapters.length > 0;
-        const selected = hasChapters ? book.chapters.filter(ch => selectedChapters.has(ch.id)) : [];
-        const price = hasChapters
-          ? selected.reduce((sum, ch) => sum + ch.price, 0)
-          : (book.pricePhysical || 0);
-        const canAdd = !hasChapters || selected.length > 0;
-        const label = hasChapters
-          ? `${selected.length} ${selected.length === 1 ? 'capítulo seleccionado' : 'capítulos seleccionados'}`
-          : 'Libro completo';
-        
-        priceEl.textContent = formatPrice(price);
-        btnEl.innerHTML = `
-          <div class="flex items-center gap-3">
-            <div class="w-11 h-11 rounded-xl bg-coral-100 flex items-center justify-center text-2xl">📖</div>
-            <div class="text-left">
-              <div class="text-xs text-navy-400 font-medium">Físico (retiro en cafetería o envío por pagar)</div>
-              <div class="text-lg font-black text-navy-800" id="mPriceF">${formatPrice(price)}</div>
-              <div class="text-[9px] text-navy-400">${label}</div>
-            </div>
-          </div>
-          <span class="flex items-center gap-2 ${canAdd ? 'bg-coral-500 hover:bg-coral-600' : 'bg-navy-200'} text-white text-[10px] font-bold tracking-wider uppercase px-4 py-2.5 rounded-full transition-colors">🛒 ${canAdd ? 'Agregar' : 'Selecciona'}</span>
-        `;
-
-        btnEl.disabled = !canAdd;
-        btnEl.classList.toggle('cursor-not-allowed', !canAdd);
-        btnEl.classList.toggle('opacity-70', !canAdd);
-        btnEl.setAttribute('onclick', canAdd ? `window.addToCart('${bookId}')` : '');
-      }
-
-      // =============================================
-      // CARRITO - CORREGIDO
-      // =============================================
-      function addToCart(bookId) {
-        const book = BOOKS[bookId];
-        if (!book) return;
-
-        const choices = book.chapters && book.chapters.length
-          ? book.chapters.filter(ch => selectedChapters.has(ch.id))
-          : [{ id: null, name: 'Libro completo', price: book.pricePhysical || 0 }];
-        if (choices.length === 0) return;
-
-        choices.forEach(chapter => {
-          const existingIndex = cart.findIndex(item =>
-            item.bookId === bookId && item.chapterId === chapter.id
-          );
-          if (existingIndex !== -1) {
-            cart[existingIndex].quantity += 1;
-          } else {
-            cart.push({
-              bookId: bookId,
-              chapterId: chapter.id,
-              title: book.title,
-              chapterName: chapter.name,
-              price: chapter.price,
-              img: book.img,
-              colorKey: book.colorKey,
-              quantity: 1
-            });
-          }
-        });
-
-        // Actualizar carrito
-        renderCart();
-        shakeFab();
-        flyDot();
-        const selectionLabel = choices.length === 1 ? choices[0].name : `${choices.length} capítulos`;
-        showToast(`✅ "${book.title} - ${selectionLabel}" agregado al carrito!`);
-        closeBookModal();
-        closePreviewModal();
-      }
-
-      function removeFromCart(index) { 
-        cart.splice(index, 1); 
-        renderCart(); 
-      }
-      
-      function changeQuantity(index, delta) { 
-        if (cart[index]) {
-          cart[index].quantity += delta; 
-          if (cart[index].quantity <= 0) {
-            cart.splice(index, 1);
-          }
-          renderCart();
-        }
-      }
-      
-      function clearCart() { 
-        if (cart.length === 0) return; 
-        if (confirm('¿Seguro que quieres vaciar tu carrito?')) { 
-          cart = []; 
-          renderCart(); 
-          showToast('🗑️ Carrito vaciado'); 
-        } 
-      }
-      
-      function getCartTotal() { 
-        return cart.reduce((sum, item) => sum + item.price * item.quantity, 0); 
-      }
-      
-      function getCartCount() { 
-        return cart.reduce((sum, item) => sum + item.quantity, 0); 
-      }
-
-      function renderCart() {
-        const count = getCartCount();
-        const total = getCartTotal();
-        const cBadge = document.getElementById('cBadge');
-        const nBadge = document.getElementById('nBadge');
-        const badge = document.getElementById('cLabel');
-        const empty = document.getElementById('cEmpty');
-        const list = document.getElementById('cList');
-        const foot = document.getElementById('cFoot');
-
-        // Actualizar badges
-        if (count > 0) {
-          cBadge.classList.remove('hidden');
-          cBadge.textContent = count;
-          cBadge.classList.remove('b-pop');
-          void cBadge.offsetWidth;
-          cBadge.classList.add('b-pop');
-          nBadge.classList.remove('hidden');
-          nBadge.textContent = count;
-        } else {
-          cBadge.classList.add('hidden');
-          nBadge.classList.add('hidden');
-        }
-
-        badge.textContent = count + (count === 1 ? ' producto' : ' productos');
-
-        // Mostrar/ocultar secciones
-        if (cart.length === 0) {
-          empty.classList.remove('hidden');
-          list.classList.add('hidden');
-          foot.classList.add('hidden');
-          return;
-        }
-
-        empty.classList.add('hidden');
-        list.classList.remove('hidden');
-        foot.classList.remove('hidden');
-        document.getElementById('cTotal').textContent = formatPrice(total);
-
-        // Renderizar items del carrito
-        list.innerHTML = cart.map((item, index) => `
-          <div class="flex gap-3 bg-navy-50/50 rounded-2xl p-3 group/it hover:bg-navy-50 transition-colors">
-            <div class="w-16 h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-sm">
-              <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover" onerror="handleImageError(this)">
-            </div>
-            <div class="flex-1 min-w-0">
-              <h4 class="text-sm font-bold text-navy-800 truncate">${item.title}</h4>
-              <span class="inline-flex items-center gap-1 text-[9px] font-semibold tracking-wider uppercase bg-coral-50 text-coral-600 px-2 py-0.5 rounded-full mt-1">📖 ${item.chapterName}</span>
-              <div class="flex items-center justify-between mt-2">
-                <div class="flex items-center gap-0">
-                  <button onclick="window.changeQuantity(${index}, -1)" class="w-7 h-7 rounded-lg bg-white hover:bg-navy-100 flex items-center justify-center text-navy-600 text-sm transition-colors shadow-sm">−</button>
-                  <span class="w-8 text-center text-sm font-bold text-navy-800">${item.quantity}</span>
-                  <button onclick="window.changeQuantity(${index}, 1)" class="w-7 h-7 rounded-lg bg-white hover:bg-navy-100 flex items-center justify-center text-navy-600 text-sm transition-colors shadow-sm">+</button>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-sm font-black text-navy-800">${formatPrice(item.price * item.quantity)}</span>
-                  <button onclick="window.removeFromCart(${index})" class="w-7 h-7 rounded-lg hover:bg-red-50 flex items-center justify-center text-navy-300 hover:text-red-400 transition-colors opacity-0 group-hover/it:opacity-100">✕</button>
-                </div>
+    function renderCart() {
+      const count = cartCount();
+      [$('cBadge'), $('nBadge'), $('mBadgeNav')].forEach(b => {
+        b.textContent = count;
+        b.classList.toggle('hidden', count === 0);
+        b.classList.toggle('flex', count > 0);
+      });
+      $('cBadge').classList.remove('b-pop'); void $('cBadge').offsetWidth; if (count) $('cBadge').classList.add('b-pop');
+      $('cLabel').textContent = count + (count === 1 ? ' producto' : ' productos');
+      const empty = cart.length === 0;
+      $('cEmpty').classList.toggle('hidden', !empty);
+      $('cList').classList.toggle('hidden', empty);
+      $('cFoot').classList.toggle('hidden', empty);
+      if (empty) return;
+      $('cTotal').textContent = formatPrice(cartTotal());
+      $('cList').innerHTML = cart.map((item, i) => `
+        <div class="flex gap-3 bg-white border-2 border-mist rounded-2xl p-3">
+          <img src="${esc(item.img)}" alt="" class="w-14 h-20 rounded-lg object-cover shrink-0" onerror="handleImageError(this)">
+          <div class="flex-1 min-w-0">
+            <p class="font-bold leading-snug truncate">${esc(item.title)}</p>
+            <p class="text-sm text-sage">${esc(item.chapterName)} · <span class="font-bold ${item.format === 'digital' ? 'text-teal-600' : ''}">${FORMAT_LABEL[item.format]}</span></p>
+            <div class="mt-2 flex items-center justify-between">
+              ${item.format === 'digital' ? '<span class="text-sm text-sage">Se envía en PDF</span>' : `<div class="flex items-center border-2 border-mist rounded-full">
+                <button onclick="changeQuantity(${i},-1)" class="w-8 h-8 font-bold" aria-label="Quitar uno">−</button>
+                <span class="w-6 text-center font-extrabold">${item.quantity}</span>
+                <button onclick="changeQuantity(${i},1)" class="w-8 h-8 font-bold" aria-label="Agregar uno">+</button>
+              </div>`}
+              <div class="flex items-center gap-2">
+                <span class="font-extrabold">${formatPrice(item.price * item.quantity)}</span>
+                <button onclick="removeFromCart(${i})" class="text-sm font-bold text-sage hover:text-coral-600 underline underline-offset-2">Quitar</button>
               </div>
             </div>
           </div>
-        `).join('');
-      }
+        </div>`).join('');
+    }
 
-      // =============================================
-      // TOAST
-      // =============================================
-      function showToast(message) {
-        const oldToasts = document.querySelectorAll('.toast-big');
-        oldToasts.forEach(t => t.remove());
+    function bumpCart() {
+      ['cartFab'].forEach(id => { const el = $(id); el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); });
+    }
 
-        const toast = document.createElement('div');
-        toast.className = 'toast-big anim-toast-in';
-        toast.innerHTML = `
-          <span class="icon">🎉</span>
-          <div class="title">${message}</div>
-          <div class="sub">Puedes seguir agregando o revisar tu carrito</div>
-          <button class="btn-close-toast" onclick="this.closest('.toast-big').remove()">✅ Entendido</button>
-        `;
-        document.body.appendChild(toast);
+    function sendWhatsApp() {
+      if (!cart.length) return;
+      const line = (item, n) => `${n}. *${item.title}*\n   ${item.chapterName}${item.quantity > 1 ? ` × ${item.quantity}` : ''} = ${formatPrice(item.price * item.quantity)}\n`;
+      const fisico = cart.filter(i => i.format !== 'digital');
+      const digital = cart.filter(i => i.format === 'digital');
+      let msg = '📚 *Pedido VibaraChokiT*\n\n';
+      if (fisico.length) msg += '📖 *Libros físicos*\n' + fisico.map((it, i) => line(it, i + 1)).join('') + '\n';
+      if (digital.length) msg += '📱 *Libros digitales (PDF)*\n' + digital.map((it, i) => line(it, i + 1)).join('') + '\n';
+      msg += `*Total: ${formatPrice(cartTotal())}*\n\n`;
+      if (fisico.length) msg += '¿Retiro en la cafetería Kihnally o envío? ';
+      if (digital.length) msg += '¿A qué correo o número envío los PDF?';
+      window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg.trim()), '_blank');
+      cart = []; saveCart(); renderCart(); closeCart();
+      showToast('Pedido enviado a WhatsApp. Te responderemos ahí.');
+    }
 
-        setTimeout(() => {
-          if (toast.parentNode) {
-            toast.classList.remove('anim-toast-in');
-            toast.classList.add('anim-toast-out');
-            setTimeout(() => toast.remove(), 400);
-          }
-        }, 4000);
+    function openCart() {
+      clearTimeout(closeCartTimer);
+      lastFocus = document.activeElement;
+      $('cartOv').classList.remove('hidden');
+      $('cartDr').classList.remove('hidden', 'c-out'); $('cartDr').classList.add('c-in');
+      document.body.classList.add('no-scroll');
+      $('cartDr').querySelector('button')?.focus();
+    }
+    function closeCart() {
+      if ($('cartDr').classList.contains('hidden')) return;
+      $('cartDr').classList.remove('c-in'); $('cartDr').classList.add('c-out');
+      document.body.classList.remove('no-scroll');
+      closeCartTimer = setTimeout(() => { $('cartOv').classList.add('hidden'); $('cartDr').classList.add('hidden'); }, 250);
+      lastFocus?.focus?.();
+    }
 
-        toast.addEventListener('click', (e) => {
-          if (e.target === toast) {
-            toast.classList.remove('anim-toast-in');
-            toast.classList.add('anim-toast-out');
-            setTimeout(() => toast.remove(), 400);
-          }
-        });
-      }
-
-      // =============================================
-      // EFECTOS VISUALES
-      // =============================================
-      function shakeFab() {
-        const fab = document.getElementById('cartFab');
-        fab.classList.remove('anim-shake');
-        void fab.offsetWidth;
-        fab.classList.add('anim-shake');
-      }
-
-      function flyDot() {
-        const dot = document.getElementById('flyDot');
-        const fab = document.getElementById('cartFab');
-        const rect = fab.getBoundingClientRect();
-        dot.style.left = (rect.left + rect.width / 2 - 8) + 'px';
-        dot.style.top = (rect.top + rect.height / 2 - 8) + 'px';
-        dot.classList.remove('hidden', 'fly');
-        void dot.offsetWidth;
-        dot.classList.add('fly');
-        setTimeout(() => dot.classList.add('hidden'), 600);
-      }
-
-      // =============================================
-      // WHATSAPP - Vacía carrito después de enviar
-      // =============================================
-      function sendWhatsApp() {
-        if (cart.length === 0) return;
-        let msg = '📚 *Pedido desde Kihnally*\n\n';
-        cart.forEach((item, i) => {
-          msg += `${i + 1}. *${item.title}*\n   📖 ${item.chapterName} × ${item.quantity} = ${formatPrice(item.price * item.quantity)}\n\n`;
-        });
-        msg += `━━━━━━━━━━━━━━━\n💰 *Total: ${formatPrice(getCartTotal())}*\n\n¡Gracias por tu compra! 💚`;
-        window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank');
-        
-        cart = [];
-        renderCart();
-        closeCart();
-        showToast('✅ ¡Pedido enviado! Carrito vaciado.');
-      }
-
-      // =============================================
-      // MODAL LIBRO (detalle)
-      // =============================================
-      function openBookModal(bookId) {
-        const book = BOOKS[bookId];
-        if (!book) return;
-        
-        currentBookId = bookId;
-        selectedChapters.clear();
-
-        let modalImage = document.getElementById('mImg');
-        if (!(modalImage instanceof HTMLImageElement)) {
-          const replacement = document.createElement('img');
-          replacement.id = 'mImg';
-          replacement.className = 'w-full h-full object-cover';
-          replacement.onerror = function() { handleImageError(this); };
-          modalImage.replaceWith(replacement);
-          modalImage = replacement;
-        }
-        modalImage.src = book.img;
-        modalImage.alt = book.title;
-        document.getElementById('mTitle').textContent = book.title;
-
-        const sub = document.getElementById('mSub');
-        sub.textContent = book.subtitle;
-        sub.className = 'mt-1 text-sm font-semibold tracking-wide text-' + book.colorKey + '-600';
-
-        document.getElementById('mDesc').textContent = book.description;
-
-        const badge = document.getElementById('mBadge');
-        badge.textContent = book.badge;
-        badge.className = 'absolute top-4 left-4 text-[9px] font-bold tracking-[.2em] uppercase px-3 py-1.5 rounded-full text-white ' + book.badgeColor;
-
-        document.getElementById('mTags').innerHTML = book.tags.map((tag, i) =>
-          '<span class="text-[9px] font-semibold tracking-wider uppercase ' + book.tagColors[i] + ' px-3 py-1 rounded-full">' + tag + '</span>'
-        ).join('');
-
-        renderChapterSelector(bookId);
-
-        document.getElementById('bookModal').classList.remove('hidden');
-        document.body.classList.add('no-scroll');
-      }
-
-      function closeBookModal() {
-        document.getElementById('bookModal').classList.add('hidden');
+    // Capas (modales)
+    function openLayer(id) {
+      lastFocus = document.activeElement;
+      $(id).classList.remove('hidden'); document.body.classList.add('no-scroll');
+      $(id).querySelector('button[aria-label="Cerrar"]')?.focus();
+    }
+    function closeLayer(id) {
+      if ($(id).classList.contains('hidden')) return;
+      $(id).classList.add('hidden');
+      if ($('bookModal').classList.contains('hidden') && $('previewModal').classList.contains('hidden') && $('cartDr').classList.contains('hidden'))
         document.body.classList.remove('no-scroll');
-        currentBookId = null;
-        selectedChapters.clear();
-      }
+      lastFocus?.focus?.();
+    }
 
-      // =============================================
-      // CARRITO DRAWER
-      // =============================================
-      function openCart() {
-        const ov = document.getElementById('cartOv');
-        const dr = document.getElementById('cartDr');
-        if (closeCartTimer) {
-          clearTimeout(closeCartTimer);
-          closeCartTimer = null;
-        }
-        ov.classList.remove('hidden');
-        dr.classList.remove('hidden', 'c-out');
-        dr.classList.add('c-in');
-        document.body.classList.add('no-scroll');
+    function showToast(message, actionLabel, action) {
+      document.querySelectorAll('.toast').forEach(t => t.remove());
+      const t = document.createElement('div');
+      t.className = 'toast'; t.setAttribute('role', 'status');
+      t.innerHTML = `<span>${esc(message)}</span>`;
+      if (actionLabel) {
+        const b = document.createElement('button'); b.textContent = actionLabel;
+        b.onclick = () => { t.remove(); action(); }; t.appendChild(b);
       }
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 4500);
+    }
 
-      function closeCart() {
-        const ov = document.getElementById('cartOv');
-        const dr = document.getElementById('cartDr');
-        dr.classList.remove('c-in');
-        dr.classList.add('c-out');
-        document.body.classList.remove('no-scroll');
-        closeCartTimer = setTimeout(() => {
-          ov.classList.add('hidden');
-          dr.classList.add('hidden');
-          closeCartTimer = null;
-        }, 300);
-      }
-
-      // =============================================
-      // RESEÑAS - CARRUSEL
-      // =============================================
-      window.scrollTestimonials = function(direction) {
-        const container = document.getElementById('testimonialCarousel');
-        const cardWidth = container.querySelector('.testimonial-card')?.offsetWidth || 300;
-        const scrollAmount = cardWidth + 20;
-        container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    // =============================================
+    // NAV, MENÚ, ATAJOS
+    // =============================================
+    function initNav() {
+      const onScroll = () => {
+        $('nav').classList.toggle('nav-s', window.scrollY > 20);
+        const fab = $('cartFab');
+        const show = window.scrollY > 500 || window.innerWidth < 768 && window.scrollY > 200;
+        fab.classList.toggle('hidden', !show); fab.classList.toggle('flex', show);
       };
+      window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-      // =============================================
-      // GENERAR LIBROS Y TABLA
-      // =============================================
-      function renderBooks() {
-        const grid = document.getElementById('booksGrid');
-        grid.innerHTML = Object.keys(BOOKS).map((key, index) => {
-          const b = BOOKS[key];
-          const delay = index % 2 === 0 ? '' : ' d1';
-          const chapterCount = b.chapters ? b.chapters.length : 0;
-          return `
-            <div class="rv${delay} bcard group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl border border-navy-100/50" onclick="window.openBookModal('${key}')">
-              <div class="relative h-72 sm:h-80 overflow-hidden bg-gradient-to-br ${b.cardBg}">
-                <div class="bsh absolute inset-0 bg-coral-200/20 transition-all duration-700"></div>
-                <img src="${b.img}" alt="${b.title}" class="bimg w-full h-full object-cover transition-transform duration-700" onerror="handleImageError(this)">
-                <div class="bov absolute inset-0 bg-navy-900/30 flex items-center justify-center opacity-0 transition-opacity duration-300">
-                  <span class="bg-white text-navy-800 text-[10px] font-bold tracking-[.15em] uppercase px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2">🛒 Ver detalle</span>
-                </div>
-                <div class="absolute top-4 left-4 ${b.badgeColor} text-white text-[9px] font-bold tracking-[.2em] uppercase px-3 py-1.5 rounded-full">${b.badge}</div>
-                <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-navy-800 text-xs font-bold px-3 py-1.5 rounded-full shadow">${formatPrice(b.pricePhysical)}</div>
-              </div>
-              <div class="p-6 sm:p-8">
-                <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-navy-800 group-hover:text-${b.colorKey}-600 transition-colors">${b.title}</h3>
-                <p class="mt-3 text-sm text-navy-500 font-light leading-relaxed">${b.description.length > 100 ? b.description.substring(0, 100) + '…' : b.description}</p>
-                <div class="mt-5 flex items-center justify-between">
-                  <div class="flex gap-2">${b.tags.slice(0, 2).map((tag, i) => `<span class="text-[9px] font-semibold tracking-wider uppercase ${b.tagColors[i]} px-3 py-1 rounded-full">${tag}</span>`).join('')}</div>
-                  <span class="text-navy-300 text-xl group-hover:text-${b.colorKey}-500 group-hover:translate-x-1 transition-all">→</span>
-                </div>
-              </div>
-            </div>
-          `;
-        }).join('');
+      let open = false;
+      const btn = $('menuBtn'), menu = $('mobMenu');
+      const toggle = force => {
+        open = force ?? !open;
+        menu.style.maxHeight = open ? menu.scrollHeight + 'px' : '0';
+        btn.setAttribute('aria-expanded', open);
+        if (open) $('nav').classList.add('nav-s');
+      };
+      btn.addEventListener('click', () => toggle());
+      menu.querySelectorAll('.ml').forEach(a => a.addEventListener('click', () => toggle(false)));
 
-        setTimeout(() => {
-          document.querySelectorAll('.rv, .rvL, .rvR').forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('on');
-          });
-        }, 100);
-      }
+      document.addEventListener('keydown', e => {
+        if (e.key !== 'Escape') return;
+        if (!$('previewModal').classList.contains('hidden')) closePreviewModal();
+        else if (!$('bookModal').classList.contains('hidden')) closeBookModal();
+        else closeCart();
+      });
 
-      // =============================================
-      // NAV, MENU, REVEAL
-      // =============================================
-      function initNav() {
-        window.addEventListener('scroll', () => {
-          document.getElementById('nav').classList.toggle('nav-s', window.scrollY > 60);
-        });
-      }
+      $('bookSearch').addEventListener('input', e => { searchTerm = e.target.value; renderBooks(); });
+      document.querySelectorAll('.fmt-toggle button').forEach(b => b.addEventListener('click', () => setFormat(b.dataset.format)));
+    }
 
-      function initMobileMenu() {
-        let isOpen = false;
-        const menuBtn = document.getElementById('menuBtn');
-        const mobMenu = document.getElementById('mobMenu');
+    Object.assign(window, { openBookModal, closeBookModal, openCart, closeCart, sendWhatsApp, addToCart });
 
-        function toggleMenu(force) {
-          isOpen = force !== undefined ? force : !isOpen;
-          if (isOpen) {
-            mobMenu.style.maxHeight = mobMenu.scrollHeight + 'px';
-            mobMenu.style.opacity = '1';
-            menuBtn.innerHTML = '✕';
-            menuBtn.setAttribute('aria-expanded', 'true');
-          } else {
-            mobMenu.style.maxHeight = '0';
-            mobMenu.style.opacity = '0';
-            menuBtn.innerHTML = '☰';
-            menuBtn.setAttribute('aria-expanded', 'false');
-          }
-        }
-
-        menuBtn.addEventListener('click', () => toggleMenu());
-        document.querySelectorAll('.ml').forEach(link => link.addEventListener('click', () => toggleMenu(false)));
-        window.addEventListener('scroll', () => { if (isOpen) toggleMenu(false); });
-        document.addEventListener('click', (e) => {
-          if (isOpen && !mobMenu.contains(e.target) && !menuBtn.contains(e.target)) toggleMenu(false);
-        });
-      }
-
-      function initReveal() {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('on'); });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        document.querySelectorAll('.rv, .rvL, .rvR').forEach(el => observer.observe(el));
-      }
-
-      function initSmoothScroll() {
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-          a.addEventListener('click', function(e) {
-            const hash = this.getAttribute('href');
-            if (!hash || hash === '#') return;
-            const target = document.querySelector(hash);
-            if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-          });
-        });
-      }
-
-      function initKeyboardShortcuts() {
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') {
-            if (!document.getElementById('bookModal').classList.contains('hidden')) closeBookModal();
-            else if (!document.getElementById('cartDr').classList.contains('hidden')) closeCart();
-            else if (!document.getElementById('previewModal').classList.contains('hidden')) closePreviewModal();
-          }
-        });
-      }
-
-      // =============================================
-      // EXPONER FUNCIONES GLOBALES
-      // =============================================
-      window.addToCart = addToCart;
-      window.removeFromCart = removeFromCart;
-      window.changeQuantity = changeQuantity;
-      window.clearCart = clearCart;
-      window.sendWhatsApp = sendWhatsApp;
-      window.openBookModal = openBookModal;
-      window.closeBookModal = closeBookModal;
-      window.openCart = openCart;
-      window.closeCart = closeCart;
-      window.openPreviewModal = openPreviewModal;
-      window.closePreviewModal = closePreviewModal;
-      window.selectChapter = selectChapter;
-
-      // =============================================
-      // INICIALIZACIÓN
-      // =============================================
-      async function init() {
-        await loadCatalogFromSupabase();
-        renderBookCarousel();
-        renderBooks();
-        renderCart();
-        initNav();
-        initMobileMenu();
-        initReveal();
-        initSmoothScroll();
-        initKeyboardShortcuts();
-        setTimeout(initReveal, 500);
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
-
-    })();
+    async function init() {
+      $('year').textContent = new Date().getFullYear();
+      renderShelf(); renderFilters(); renderBooks(); renderApps();
+      initNav();
+      await loadFromSupabase();
+      $('statBooks').textContent = Object.keys(BOOKS).length;
+      renderShelf(); renderFilters(); renderBooks(); renderApps(); renderReviews();
+      loadCart(); renderCart();
+      startShelfAuto();
+    }
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+  })();
   </script>
 </body>
 </html>

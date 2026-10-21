@@ -3,91 +3,179 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Administración · Kihnally</title>
+  <title>Panel · VibaraChokiT</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <style>
-    body { background: #f5f6fa; color: #162544; }
-    .field { width:100%; border:1px solid #dce3f0; border-radius:12px; padding:10px 12px; background:white; }
-    .field:focus { outline:none; border-color:#ff6b35; box-shadow:0 0 0 3px rgba(255,107,53,.12); }
-    .label { display:block; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px; color:#6280b5; }
-    .toast { position:fixed; right:20px; bottom:20px; z-index:100; padding:14px 18px; border-radius:14px; color:white; background:#162544; box-shadow:0 15px 40px #0003; max-width:360px; }
+    body { background: #F1F4EC; color: #2F3A2C; font-family: Nunito, system-ui, sans-serif; }
+    h1, h2, .fd { font-family: Fredoka, Nunito, sans-serif; }
+    .field { width:100%; border:2px solid #C9D4BE; border-radius:12px; padding:10px 12px; background:white; }
+    .field:focus { outline:none; border-color:#656F5B; }
+    .label { display:block; font-size:14px; font-weight:800; margin-bottom:6px; color:#4A5745; }
+    .hint { font-size:13px; color:#656F5B; margin-top:6px; }
+    .btn { border-radius: 999px; font-weight: 800; padding: 10px 20px; }
+    .btn-dark { background:#2F3A2C; color:#F7F8F3; } .btn-dark:hover { background:#3B4837; }
+    .btn-line { background:white; border:2px solid #C9D4BE; } .btn-line:hover { border-color:#656F5B; }
+    .tab { padding: 10px 18px; border-radius: 999px; font-weight: 800; color:#656F5B; }
+    .tab[aria-selected="true"] { background:#2F3A2C; color:#F7F8F3; }
+    .card { background:white; border:2px solid #E6ECDF; border-radius:20px; padding:18px; }
+    .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:20px; z-index:100; padding:14px 18px; border-radius:14px; color:white; background:#2F3A2C; box-shadow:0 15px 40px #0003; max-width:calc(100vw - 32px); font-weight:700; }
+    :focus-visible { outline: 3px solid #F0B429; outline-offset: 2px; }
   </style>
 </head>
 <body class="min-h-screen">
   <section id="loginView" class="min-h-screen flex items-center justify-center p-5">
-    <form id="loginForm" class="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md">
-      <div class="text-5xl mb-5">📚</div>
-      <h1 class="text-3xl font-black">Panel Kihnally</h1>
-      <p class="text-sm text-slate-500 mt-2 mb-7">Acceso exclusivo para administradores.</p>
+    <form id="loginForm" class="bg-white rounded-3xl border-2 border-[#E6ECDF] p-8 w-full max-w-md">
+      <img src="img/logo-vibarachokit.png" alt="VibaraChokiT Estudio Creativo" class="w-48 mb-6">
+      <h1 class="text-3xl font-semibold">Panel de administración</h1>
+      <p class="text-[#656F5B] mt-2 mb-7">Acceso solo para administradores.</p>
       <label class="label" for="loginEmail">Correo</label>
       <input id="loginEmail" class="field mb-4" type="email" autocomplete="username" required>
       <label class="label" for="loginPassword">Contraseña</label>
       <input id="loginPassword" class="field mb-6" type="password" autocomplete="current-password" required>
-      <button id="loginButton" class="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-xl py-3 font-bold">Ingresar</button>
-      <p id="loginError" class="text-red-500 text-sm mt-4 hidden"></p>
-      <a href="index.html" class="block text-center text-sm text-slate-400 mt-6 hover:text-orange-500">← Volver a la tienda</a>
+      <button id="loginButton" class="btn btn-dark w-full py-3">Ingresar</button>
+      <p id="loginError" class="text-red-600 text-sm mt-4 hidden"></p>
+      <a href="index.html" class="block text-center text-[#656F5B] mt-6 underline underline-offset-4">Volver a la tienda</a>
     </form>
   </section>
 
   <main id="adminView" class="hidden max-w-7xl mx-auto p-4 md:p-8">
-    <header class="flex flex-col md:flex-row gap-4 md:items-center justify-between mb-8">
-      <div><h1 class="text-3xl font-black">Administrar catálogo</h1><p id="sessionEmail" class="text-sm text-slate-500"></p></div>
+    <header class="flex flex-col md:flex-row gap-4 md:items-center justify-between mb-6">
+      <div class="flex items-center gap-4">
+        <img src="img/logo-icono.png" alt="" class="w-12">
+        <div><h1 class="text-3xl font-semibold">Panel VibaraChokiT</h1><p id="sessionEmail" class="text-[#656F5B]"></p></div>
+      </div>
       <div class="flex flex-wrap gap-2">
-        <button onclick="openEditor()" class="bg-orange-500 text-white px-5 py-2.5 rounded-xl font-bold">＋ Nuevo libro</button>
-        <button onclick="loadBooks()" class="bg-teal-500 text-white px-5 py-2.5 rounded-xl font-bold">↻ Actualizar</button>
-        <a href="index.html" target="_blank" class="bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold">Ver tienda</a>
-        <button onclick="logout()" class="bg-white border px-5 py-2.5 rounded-xl font-bold">Salir</button>
+        <a href="index.html" target="_blank" class="btn btn-line">Ver tienda</a>
+        <button onclick="logout()" class="btn btn-line">Cerrar sesión</button>
       </div>
     </header>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-7">
-      <div class="bg-white rounded-2xl p-5"><b id="statBooks" class="text-3xl">0</b><p class="text-xs text-slate-400 uppercase">Libros</p></div>
-      <div class="bg-white rounded-2xl p-5"><b id="statChapters" class="text-3xl">0</b><p class="text-xs text-slate-400 uppercase">Capítulos</p></div>
-      <div class="bg-white rounded-2xl p-5"><b id="statPublished" class="text-3xl">0</b><p class="text-xs text-slate-400 uppercase">Publicados</p></div>
-      <div class="bg-white rounded-2xl p-5"><b id="statAverage" class="text-3xl">$0</b><p class="text-xs text-slate-400 uppercase">Precio promedio</p></div>
+
+    <div class="flex flex-wrap gap-2 mb-6" role="tablist">
+      <button class="tab" role="tab" data-tab="books" aria-selected="true">Libros <span id="countBooks"></span></button>
+      <button class="tab" role="tab" data-tab="apps" aria-selected="false">Apps y juegos <span id="countApps"></span></button>
+      <button class="tab" role="tab" data-tab="reviews" aria-selected="false">Reseñas <span id="countReviews"></span></button>
     </div>
-    <div id="bookList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+
+    <!-- LIBROS -->
+    <section data-panel="books">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <p class="text-[#4A5745]"><b id="statChapters">0</b> capítulos · <b id="statPublished">0</b> libros visibles</p>
+        <button onclick="openBookEditor()" class="btn btn-dark">Agregar libro</button>
+      </div>
+      <div id="bookList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- APPS -->
+    <section data-panel="apps" class="hidden">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <p class="text-[#4A5745] max-w-xl">Mientras no haya apps publicadas, la tienda muestra dos ideas "En desarrollo" con tus personajes.</p>
+        <button onclick="openAppEditor()" class="btn btn-dark">Agregar app</button>
+      </div>
+      <div id="appList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- RESEÑAS -->
+    <section data-panel="reviews" class="hidden">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <p class="text-[#4A5745] max-w-xl">Agrega solo reseñas reales, con permiso de quien la escribió. La sección no aparece en la tienda si no hay reseñas visibles.</p>
+        <button onclick="openReviewEditor()" class="btn btn-dark">Agregar reseña</button>
+      </div>
+      <div id="reviewList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+    </section>
   </main>
 
-  <div id="editor" class="hidden fixed inset-0 z-50 bg-slate-900/70 p-3 md:p-8 overflow-y-auto">
-    <form id="bookForm" class="bg-white max-w-4xl mx-auto rounded-3xl p-6 md:p-8 shadow-2xl">
-      <div class="flex justify-between items-center mb-7"><h2 id="editorTitle" class="text-2xl font-black">Nuevo libro</h2><button type="button" onclick="closeEditor()" class="text-2xl">✕</button></div>
+  <!-- EDITOR LIBRO -->
+  <div id="bookEditor" class="editor hidden fixed inset-0 z-50 bg-[#2F3A2C]/70 p-3 md:p-8 overflow-y-auto">
+    <form id="bookForm" class="bg-[#F7F8F3] max-w-4xl mx-auto rounded-3xl p-6 md:p-8">
+      <div class="flex justify-between items-center mb-7"><h2 id="bookEditorTitle" class="text-2xl font-semibold">Agregar libro</h2><button type="button" onclick="closeEditors()" class="btn btn-line">Cerrar</button></div>
       <input id="bookId" type="hidden">
       <div class="grid md:grid-cols-2 gap-5">
-        <div><label class="label" for="slug">Identificador (slug)</label><input id="slug" class="field" pattern="[a-z0-9-]+" required placeholder="mi-nuevo-libro"></div>
         <div><label class="label" for="title">Título</label><input id="title" class="field" required></div>
+        <div><label class="label" for="slug">Identificador</label><input id="slug" class="field" pattern="[a-z0-9-]+" required placeholder="mi-nuevo-libro"><p class="hint">Solo minúsculas, números y guiones. Se completa solo con el título.</p></div>
         <div class="md:col-span-2"><label class="label" for="subtitle">Subtítulo</label><input id="subtitle" class="field"></div>
         <div class="md:col-span-2"><label class="label" for="description">Descripción</label><textarea id="description" class="field" rows="4"></textarea></div>
-        <div><label class="label" for="badge">Etiqueta</label><input id="badge" class="field" placeholder="Aventura"></div>
-        <div><label class="label" for="colorKey">Color</label><select id="colorKey" class="field"><option value="coral">Coral</option><option value="teal">Turquesa</option><option value="sun">Amarillo</option><option value="grape">Morado</option></select></div>
-        <div><label class="label" for="pricePhysical">Precio del libro completo</label><input id="pricePhysical" class="field" type="number" min="0" step="1" value="0"></div>
-        <div><label class="label" for="sortOrder">Orden</label><input id="sortOrder" class="field" type="number" step="1" value="0"></div>
-        <div class="md:col-span-2"><label class="label" for="tags">Categorías, separadas por coma</label><input id="tags" class="field" placeholder="Infantil, Aventura, Chile"></div>
+        <div><label class="label" for="badge">Etiqueta sobre la portada</label><input id="badge" class="field" placeholder="Aventura"></div>
+        <div><label class="label" for="colorKey">Color</label><select id="colorKey" class="field"><option value="coral">Frambuesa</option><option value="teal">Mar</option><option value="sun">Yema</option><option value="grape">Lavanda</option></select></div>
+        <div><label class="label" for="pricePhysical">Precio físico del libro completo</label><input id="pricePhysical" class="field" type="number" min="0" step="1" value="0"><p class="hint">Se usa cuando el libro no tiene capítulos.</p></div>
+        <div><label class="label" for="priceDigital">Precio digital del libro completo</label><input id="priceDigital" class="field" type="number" min="0" step="1" placeholder="Vacío = no se vende en digital"><p class="hint">Se usa cuando el libro no tiene capítulos.</p></div>
+        <div class="md:col-span-2"><label class="label" for="sortOrder">Orden en la tienda</label><input id="sortOrder" class="field" type="number" step="1" value="0"></div>
+        <div class="md:col-span-2"><label class="label" for="tags">Categorías, separadas por coma</label><input id="tags" class="field" placeholder="Infantil, Aventura, Chile"><p class="hint">Se convierten en los filtros de la tienda. Repite las mismas palabras entre libros para agruparlos.</p></div>
         <div><label class="label" for="coverFile">Portada</label><input id="coverFile" class="field" type="file" accept="image/jpeg,image/png,image/webp"><input id="imageUrl" type="hidden"><img id="coverPreview" class="hidden mt-3 w-28 h-36 object-cover rounded-xl" alt="Portada actual"></div>
-        <div><label class="label" for="previewFiles">Páginas interiores</label><input id="previewFiles" class="field" type="file" accept="image/jpeg,image/png,image/webp" multiple><p class="text-xs text-slate-400 mt-2">Las nuevas imágenes reemplazan las anteriores.</p><input id="previewUrls" type="hidden"></div>
-        <div class="md:col-span-2"><label class="label" for="chapters">Capítulos: uno por línea, con formato Nombre | Precio</label><textarea id="chapters" class="field font-mono" rows="6" placeholder="Capítulo 1 | 3500&#10;Capítulo 2 | 3500"></textarea></div>
+        <div><label class="label" for="previewFiles">Páginas del interior</label><input id="previewFiles" class="field" type="file" accept="image/jpeg,image/png,image/webp" multiple><p class="hint">Las nuevas imágenes reemplazan las anteriores. Se optimizan automáticamente.</p><input id="previewUrls" type="hidden"></div>
+        <div class="md:col-span-2"><label class="label" for="chapters">Capítulos: uno por línea, con formato Nombre | Precio físico | Precio digital</label><textarea id="chapters" class="field font-mono" rows="6" placeholder="Capítulo 1 | 3500 | 1990&#10;Capítulo 2 | 3500 | 1990"></textarea><p class="hint">Si dejas el precio digital vacío, ese capítulo se vende solo en físico.</p></div>
         <label class="md:col-span-2 flex items-center gap-3"><input id="published" type="checkbox" class="w-5 h-5" checked><span class="font-bold">Visible en la tienda</span></label>
       </div>
-      <div class="flex justify-end gap-3 mt-8"><button type="button" onclick="closeEditor()" class="px-6 py-3 rounded-xl border font-bold">Cancelar</button><button id="saveButton" class="px-7 py-3 rounded-xl bg-orange-500 text-white font-bold">Guardar cambios</button></div>
+      <div class="flex justify-end gap-3 mt-8"><button type="button" onclick="closeEditors()" class="btn btn-line">Cancelar</button><button id="saveBook" class="btn btn-dark">Guardar libro</button></div>
+    </form>
+  </div>
+
+  <!-- EDITOR APP -->
+  <div id="appEditor" class="editor hidden fixed inset-0 z-50 bg-[#2F3A2C]/70 p-3 md:p-8 overflow-y-auto">
+    <form id="appForm" class="bg-[#F7F8F3] max-w-4xl mx-auto rounded-3xl p-6 md:p-8">
+      <div class="flex justify-between items-center mb-7"><h2 id="appEditorTitle" class="text-2xl font-semibold">Agregar app</h2><button type="button" onclick="closeEditors()" class="btn btn-line">Cerrar</button></div>
+      <input id="appId" type="hidden">
+      <div class="grid md:grid-cols-2 gap-5">
+        <div><label class="label" for="appName">Nombre</label><input id="appName" class="field" required></div>
+        <div><label class="label" for="appSlug">Identificador</label><input id="appSlug" class="field" pattern="[a-z0-9-]+" required></div>
+        <div class="md:col-span-2"><label class="label" for="appTagline">Frase corta</label><input id="appTagline" class="field" placeholder="Juego de preguntas para niños"></div>
+        <div class="md:col-span-2"><label class="label" for="appDescription">Descripción</label><textarea id="appDescription" class="field" rows="3"></textarea></div>
+        <div><label class="label" for="appStatus">Estado</label><select id="appStatus" class="field"><option value="proximamente">Próximamente</option><option value="beta">En prueba</option><option value="disponible">Disponible</option></select></div>
+        <div><label class="label" for="appColor">Color</label><select id="appColor" class="field"><option value="teal">Mar</option><option value="coral">Frambuesa</option><option value="sun">Yema</option><option value="grape">Lavanda</option></select></div>
+        <div><label class="label" for="linkAndroid">Enlace Google Play</label><input id="linkAndroid" class="field" type="url" placeholder="https://play.google.com/..."></div>
+        <div><label class="label" for="linkIos">Enlace App Store</label><input id="linkIos" class="field" type="url" placeholder="https://apps.apple.com/..."></div>
+        <div class="md:col-span-2"><label class="label" for="linkWeb">Enlace para jugar en la web</label><input id="linkWeb" class="field" type="url" placeholder="https://..."></div>
+        <div><label class="label" for="appIconFile">Ícono (cuadrado)</label><input id="appIconFile" class="field" type="file" accept="image/jpeg,image/png,image/webp"><input id="appIconUrl" type="hidden"><img id="appIconPreview" class="hidden mt-3 w-16 h-16 rounded-2xl object-cover" alt="Ícono actual"></div>
+        <div><label class="label" for="appShotFiles">Capturas de pantalla</label><input id="appShotFiles" class="field" type="file" accept="image/jpeg,image/png,image/webp" multiple><p class="hint">La primera captura se muestra en la tarjeta. Reemplazan las anteriores.</p><input id="appShotUrls" type="hidden"></div>
+        <div><label class="label" for="appOrder">Orden</label><input id="appOrder" class="field" type="number" step="1" value="0"></div>
+        <label class="flex items-center gap-3 self-end pb-3"><input id="appPublished" type="checkbox" class="w-5 h-5" checked><span class="font-bold">Visible en la tienda</span></label>
+      </div>
+      <div class="flex justify-end gap-3 mt-8"><button type="button" onclick="closeEditors()" class="btn btn-line">Cancelar</button><button id="saveApp" class="btn btn-dark">Guardar app</button></div>
+    </form>
+  </div>
+
+  <!-- EDITOR RESEÑA -->
+  <div id="reviewEditor" class="editor hidden fixed inset-0 z-50 bg-[#2F3A2C]/70 p-3 md:p-8 overflow-y-auto">
+    <form id="reviewForm" class="bg-[#F7F8F3] max-w-2xl mx-auto rounded-3xl p-6 md:p-8">
+      <div class="flex justify-between items-center mb-7"><h2 id="reviewEditorTitle" class="text-2xl font-semibold">Agregar reseña</h2><button type="button" onclick="closeEditors()" class="btn btn-line">Cerrar</button></div>
+      <input id="reviewId" type="hidden">
+      <div class="grid md:grid-cols-2 gap-5">
+        <div><label class="label" for="revName">Nombre</label><input id="revName" class="field" required placeholder="María A."></div>
+        <div><label class="label" for="revLocation">Ciudad o detalle</label><input id="revLocation" class="field" placeholder="Mejillones"></div>
+        <div><label class="label" for="revBook">Libro</label><select id="revBook" class="field"></select></div>
+        <div><label class="label" for="revRating">Estrellas</label><select id="revRating" class="field"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>
+        <div class="md:col-span-2"><label class="label" for="revBody">Reseña</label><textarea id="revBody" class="field" rows="4" required></textarea></div>
+        <div><label class="label" for="revOrder">Orden</label><input id="revOrder" class="field" type="number" step="1" value="0"></div>
+        <label class="flex items-center gap-3 self-end pb-3"><input id="revPublished" type="checkbox" class="w-5 h-5" checked><span class="font-bold">Visible en la tienda</span></label>
+      </div>
+      <div class="flex justify-end gap-3 mt-8"><button type="button" onclick="closeEditors()" class="btn btn-line">Cancelar</button><button id="saveReview" class="btn btn-dark">Guardar reseña</button></div>
     </form>
   </div>
 
   <script>
     const config = window.KIHNALLY_CONFIG;
     const db = window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey);
-    let books = [];
+    let books = [], apps = [], reviews = [];
     const $ = id => document.getElementById(id);
     const money = n => '$' + Number(n || 0).toLocaleString('es-CL');
-    const escapeHtml = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+    const esc = v => String(v ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+    const slugify = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const imgPath = p => { const m = /^img\/(.+)\.(png|jpe?g)$/i.exec(p || ''); return m ? 'img/' + m[1].toLowerCase().replace(/\s+/g, '-') + '.webp' : (p || ''); };
 
     function toast(message, error = false) {
       document.querySelector('.toast')?.remove();
-      const el = document.createElement('div'); el.className = 'toast';
-      if (error) el.style.background = '#b91c1c'; el.textContent = message;
-      document.body.appendChild(el); setTimeout(() => el.remove(), 4000);
+      const el = document.createElement('div'); el.className = 'toast'; el.setAttribute('role', 'status');
+      if (error) el.style.background = '#B42318'; el.textContent = message;
+      document.body.appendChild(el); setTimeout(() => el.remove(), 4500);
     }
 
+    // ---------- Sesión ----------
     $('loginForm').addEventListener('submit', async event => {
       event.preventDefault(); $('loginButton').disabled = true; $('loginError').classList.add('hidden');
       const { error } = await db.auth.signInWithPassword({ email: $('loginEmail').value.trim(), password: $('loginPassword').value });
@@ -95,89 +183,188 @@
       if (error) { $('loginError').textContent = 'No se pudo iniciar sesión: ' + error.message; $('loginError').classList.remove('hidden'); return; }
       await enterAdmin();
     });
-
     async function enterAdmin() {
       const { data: { user } } = await db.auth.getUser();
       if (!user) return showLogin();
       const { data: role } = await db.from('admin_users').select('user_id').eq('user_id', user.id).maybeSingle();
-      if (!role) { await db.auth.signOut(); $('loginError').textContent = 'Este usuario no está autorizado como administrador.'; $('loginError').classList.remove('hidden'); return showLogin(); }
-      $('loginView').classList.add('hidden'); $('adminView').classList.remove('hidden'); $('sessionEmail').textContent = user.email; await loadBooks();
+      if (!role) { await db.auth.signOut(); $('loginError').textContent = 'Este usuario no tiene permiso de administrador.'; $('loginError').classList.remove('hidden'); return showLogin(); }
+      $('loginView').classList.add('hidden'); $('adminView').classList.remove('hidden'); $('sessionEmail').textContent = user.email;
+      await Promise.all([loadBooks(), loadApps(), loadReviews()]);
     }
     function showLogin() { $('adminView').classList.add('hidden'); $('loginView').classList.remove('hidden'); }
     async function logout() { await db.auth.signOut(); showLogin(); }
 
-    async function loadBooks() {
-      $('bookList').innerHTML = '<p class="text-slate-400">Cargando catálogo…</p>';
-      const { data, error } = await db.from('books').select('*, chapters(*)').order('sort_order');
-      if (error) return toast(error.message, true);
-      books = data || []; renderBooks();
-    }
+    // ---------- Pestañas ----------
+    document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', t === tab));
+      document.querySelectorAll('[data-panel]').forEach(p => p.classList.toggle('hidden', p.dataset.panel !== tab.dataset.tab));
+    }));
 
-    function renderBooks() {
-      $('statBooks').textContent = books.length;
-      $('statChapters').textContent = books.reduce((n,b) => n + (b.chapters?.length || 0), 0);
-      $('statPublished').textContent = books.filter(b => b.published).length;
-      $('statAverage').textContent = money(books.length ? Math.round(books.reduce((n,b) => n + b.price_physical, 0) / books.length) : 0);
-      if (!books.length) { $('bookList').innerHTML = '<div class="bg-white rounded-2xl p-10 text-center md:col-span-2 xl:col-span-3">No hay libros. Crea el primero.</div>'; return; }
-      $('bookList').innerHTML = books.map(book => `
-        <article class="bg-white rounded-2xl p-5 shadow-sm">
-          <div class="flex gap-4"><div class="w-24 h-32 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0">${book.image_url ? `<img src="${escapeHtml(book.image_url)}" class="w-full h-full object-cover" alt="">` : '<span class="h-full flex items-center justify-center text-4xl">📚</span>'}</div>
-          <div class="min-w-0"><div class="flex gap-2 items-center"><h2 class="font-black text-lg truncate">${escapeHtml(book.title)}</h2><span class="text-[9px] px-2 py-1 rounded-full ${book.published ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'}">${book.published ? 'VISIBLE' : 'OCULTO'}</span></div><p class="text-sm text-slate-500 line-clamp-2">${escapeHtml(book.subtitle)}</p><p class="font-black text-orange-500 mt-2">${money(book.price_physical)}</p><p class="text-xs text-slate-400">${book.chapters?.length || 0} capítulos</p></div></div>
-          <div class="flex gap-2 mt-5"><button onclick="openEditor('${book.id}')" class="flex-1 bg-blue-50 text-blue-700 rounded-xl py-2 font-bold">Editar</button><button onclick="deleteBook('${book.id}')" class="bg-red-50 text-red-600 rounded-xl px-4 font-bold">Eliminar</button></div>
-        </article>`).join('');
-    }
+    function closeEditors() { document.querySelectorAll('.editor').forEach(e => e.classList.add('hidden')); document.body.style.overflow = ''; }
+    function showEditor(id) { $(id).classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeEditors(); });
 
-    function openEditor(id = '') {
-      const book = books.find(b => b.id === id);
-      $('bookForm').reset(); $('bookId').value = book?.id || ''; $('editorTitle').textContent = book ? 'Editar libro' : 'Nuevo libro';
-      $('slug').value = book?.slug || ''; $('slug').disabled = Boolean(book);
-      $('title').value = book?.title || ''; $('subtitle').value = book?.subtitle || ''; $('description').value = book?.description || '';
-      $('badge').value = book?.badge || 'Libro'; $('colorKey').value = book?.color_key || 'coral'; $('pricePhysical').value = book?.price_physical || 0;
-      $('sortOrder').value = book?.sort_order || 0; $('tags').value = (book?.tags || []).join(', '); $('published').checked = book?.published ?? true;
-      $('imageUrl').value = book?.image_url || ''; $('previewUrls').value = JSON.stringify(book?.preview_images || []);
-      $('chapters').value = (book?.chapters || []).sort((a,b) => a.sort_order-b.sort_order).map(ch => `${ch.name} | ${ch.price}`).join('\n');
-      $('coverPreview').src = book?.image_url || ''; $('coverPreview').classList.toggle('hidden', !book?.image_url);
-      $('editor').classList.remove('hidden'); document.body.style.overflow = 'hidden';
+    // ---------- Imágenes: se reducen y convierten a WebP antes de subir ----------
+    async function optimize(file, maxDim) {
+      try {
+        const bmp = await createImageBitmap(file);
+        const scale = Math.min(1, maxDim / Math.max(bmp.width, bmp.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(bmp.width * scale); canvas.height = Math.round(bmp.height * scale);
+        canvas.getContext('2d').drawImage(bmp, 0, 0, canvas.width, canvas.height);
+        const blob = await new Promise(r => canvas.toBlob(r, 'image/webp', 0.82));
+        return blob && blob.size < file.size ? { blob, ext: 'webp', type: 'image/webp' } : { blob: file, ext: (file.name.split('.').pop() || 'jpg').toLowerCase(), type: file.type };
+      } catch (e) { return { blob: file, ext: (file.name.split('.').pop() || 'jpg').toLowerCase(), type: file.type }; }
     }
-    function closeEditor() { $('editor').classList.add('hidden'); document.body.style.overflow = ''; }
-
-    async function uploadFile(file, folder) {
-      const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+    async function uploadFile(file, folder, maxDim = 1600) {
+      const { blob, ext, type } = await optimize(file, maxDim);
       const path = `${folder}/${crypto.randomUUID()}.${ext}`;
-      const { error } = await db.storage.from(config.storageBucket).upload(path, file, { contentType: file.type, upsert: false });
+      const { error } = await db.storage.from(config.storageBucket).upload(path, blob, { contentType: type, upsert: false });
       if (error) throw error;
       return db.storage.from(config.storageBucket).getPublicUrl(path).data.publicUrl;
     }
+    async function withSaving(btn, label, fn) {
+      btn.disabled = true; btn.textContent = 'Guardando…';
+      try { await fn(); } catch (error) { console.error(error); toast('No se pudo guardar: ' + error.message, true); }
+      finally { btn.disabled = false; btn.textContent = label; }
+    }
+    function visibleBadge(on) { return `<span class="text-xs font-extrabold px-2 py-1 rounded-full ${on ? 'bg-[#E6ECDF] text-[#2F3A2C]' : 'bg-slate-100 text-slate-500'}">${on ? 'Visible' : 'Oculto'}</span>`; }
+    function actions(edit, del) { return `<div class="flex gap-2 mt-4"><button onclick="${edit}" class="btn btn-line flex-1 py-2">Editar</button><button onclick="${del}" class="btn py-2 text-red-700 hover:bg-red-50">Eliminar</button></div>`; }
 
-    $('bookForm').addEventListener('submit', async event => {
-      event.preventDefault(); $('saveButton').disabled = true; $('saveButton').textContent = 'Guardando…';
-      try {
-        const currentId = $('bookId').value;
-        let imageUrl = $('imageUrl').value;
-        if ($('coverFile').files[0]) imageUrl = await uploadFile($('coverFile').files[0], 'covers');
-        let previewImages = JSON.parse($('previewUrls').value || '[]');
-        if ($('previewFiles').files.length) previewImages = await Promise.all([...$('previewFiles').files].map(file => uploadFile(file, 'previews')));
-        const payload = { slug:$('slug').value.trim(), title:$('title').value.trim(), subtitle:$('subtitle').value.trim(), description:$('description').value.trim(), image_url:imageUrl, preview_images:previewImages, badge:$('badge').value.trim() || 'Libro', color_key:$('colorKey').value, price_physical:Number($('pricePhysical').value)||0, tags:$('tags').value.split(',').map(x=>x.trim()).filter(Boolean), published:$('published').checked, sort_order:Number($('sortOrder').value)||0 };
-        let bookId = currentId;
-        if (currentId) { const { error } = await db.from('books').update(payload).eq('id', currentId); if (error) throw error; }
-        else { const { data, error } = await db.from('books').insert(payload).select('id').single(); if (error) throw error; bookId = data.id; }
-        const chapterLines = $('chapters').value.split('\n').map(x=>x.trim()).filter(Boolean);
-        const chapters = chapterLines.map((line,index) => { const [name, rawPrice] = line.split('|'); return { book_id:bookId, code:`c${index+1}`, name:(name||'').trim(), price:Number((rawPrice||'0').trim())||0, sort_order:index, published:true }; }).filter(ch=>ch.name);
-        const { error: deleteError } = await db.from('chapters').delete().eq('book_id', bookId); if (deleteError) throw deleteError;
-        if (chapters.length) { const { error } = await db.from('chapters').insert(chapters); if (error) throw error; }
-        closeEditor(); await loadBooks(); toast('✅ Libro guardado correctamente');
-      } catch (error) { console.error(error); toast('No se pudo guardar: ' + error.message, true); }
-      finally { $('saveButton').disabled = false; $('saveButton').textContent = 'Guardar cambios'; }
-    });
+    // ================= LIBROS =================
+    async function loadBooks() {
+      const { data, error } = await db.from('books').select('*, chapters(*)').order('sort_order');
+      if (error) return toast(error.message, true);
+      books = data || []; renderBooks(); fillBookSelect();
+    }
+    function renderBooks() {
+      $('countBooks').textContent = `(${books.length})`;
+      $('statChapters').textContent = books.reduce((n, b) => n + (b.chapters?.length || 0), 0);
+      $('statPublished').textContent = books.filter(b => b.published).length;
+      $('bookList').innerHTML = books.length ? books.map(book => `
+        <article class="card">
+          <div class="flex gap-4"><div class="w-24 h-32 rounded-xl bg-[#E6ECDF] overflow-hidden flex-shrink-0">${book.image_url ? `<img src="${esc(imgPath(book.image_url))}" class="w-full h-full object-cover" alt="">` : ''}</div>
+          <div class="min-w-0"><div class="flex gap-2 items-center flex-wrap"><h3 class="fd font-semibold text-lg">${esc(book.title)}</h3>${visibleBadge(book.published)}</div><p class="text-sm text-[#656F5B] line-clamp-2">${esc(book.subtitle)}</p><p class="font-extrabold mt-2">${money(book.price_physical)}</p><p class="text-sm text-[#656F5B]">${book.chapters?.length || 0} capítulos${(book.chapters || []).some(ch => ch.price_digital) || book.price_digital ? ' · <b>con digital</b>' : ''}</p></div></div>
+          ${actions(`openBookEditor('${book.id}')`, `deleteRow('books','${book.id}')`)}
+        </article>`).join('') : '<div class="card md:col-span-2 xl:col-span-3 text-center py-10">Todavía no hay libros. Agrega el primero.</div>';
+    }
+    function openBookEditor(id = '') {
+      const book = books.find(b => b.id === id);
+      $('bookForm').reset(); $('bookId').value = book?.id || ''; $('bookEditorTitle').textContent = book ? 'Editar libro' : 'Agregar libro';
+      $('slug').value = book?.slug || ''; $('slug').disabled = Boolean(book);
+      $('title').value = book?.title || ''; $('subtitle').value = book?.subtitle || ''; $('description').value = book?.description || '';
+      $('badge').value = book?.badge || 'Libro'; $('colorKey').value = book?.color_key || 'coral'; $('pricePhysical').value = book?.price_physical || 0; $('priceDigital').value = book?.price_digital || '';
+      $('sortOrder').value = book?.sort_order ?? (books.length + 1); $('tags').value = (book?.tags || []).join(', '); $('published').checked = book?.published ?? true;
+      $('imageUrl').value = book?.image_url || ''; $('previewUrls').value = JSON.stringify(book?.preview_images || []);
+      $('chapters').value = (book?.chapters || []).sort((a, b) => a.sort_order - b.sort_order).map(ch => `${ch.name} | ${ch.price}${ch.price_digital ? ` | ${ch.price_digital}` : ''}`).join('\n');
+      $('coverPreview').src = imgPath(book?.image_url); $('coverPreview').classList.toggle('hidden', !book?.image_url);
+      showEditor('bookEditor');
+    }
+    $('title').addEventListener('input', () => { if (!$('bookId').value) $('slug').value = slugify($('title').value); });
+    $('bookForm').addEventListener('submit', e => { e.preventDefault(); withSaving($('saveBook'), 'Guardar libro', async () => {
+      const currentId = $('bookId').value;
+      let imageUrl = $('imageUrl').value;
+      if ($('coverFile').files[0]) imageUrl = await uploadFile($('coverFile').files[0], 'covers', 1000);
+      let previewImages = JSON.parse($('previewUrls').value || '[]');
+      if ($('previewFiles').files.length) previewImages = await Promise.all([...$('previewFiles').files].map(f => uploadFile(f, 'previews', 1600)));
+      const payload = { slug:$('slug').value.trim(), title:$('title').value.trim(), subtitle:$('subtitle').value.trim(), description:$('description').value.trim(), image_url:imageUrl, preview_images:previewImages, badge:$('badge').value.trim() || 'Libro', color_key:$('colorKey').value, price_physical:Number($('pricePhysical').value) || 0, price_digital:Number($('priceDigital').value) || null, tags:$('tags').value.split(',').map(x => x.trim()).filter(Boolean), published:$('published').checked, sort_order:Number($('sortOrder').value) || 0 };
+      let bookId = currentId;
+      if (currentId) { const { error } = await db.from('books').update(payload).eq('id', currentId); if (error) throw error; }
+      else { const { data, error } = await db.from('books').insert(payload).select('id').single(); if (error) throw error; bookId = data.id; }
+      const chapters = $('chapters').value.split('\n').map(x => x.trim()).filter(Boolean).map((line, i) => { const [name, raw, rawDigital] = line.split('|'); return { book_id:bookId, code:`c${i + 1}`, name:(name || '').trim(), price:Number((raw || '0').replace(/\D/g, '')) || 0, price_digital:Number((rawDigital || '').replace(/\D/g, '')) || null, sort_order:i, published:true }; }).filter(ch => ch.name);
+      const { error: delErr } = await db.from('chapters').delete().eq('book_id', bookId); if (delErr) throw delErr;
+      if (chapters.length) { const { error } = await db.from('chapters').insert(chapters); if (error) throw error; }
+      closeEditors(); await loadBooks(); toast('Libro guardado');
+    }); });
 
-    async function deleteBook(id) {
-      const book = books.find(b => b.id === id); if (!book || !confirm(`¿Eliminar “${book.title}” y todos sus capítulos?`)) return;
-      const { error } = await db.from('books').delete().eq('id', id); if (error) return toast(error.message, true);
-      await loadBooks(); toast('Libro eliminado');
+    // ================= APPS =================
+    const STATUS = { disponible: 'Disponible', beta: 'En prueba', proximamente: 'Próximamente' };
+    async function loadApps() {
+      const { data, error } = await db.from('apps').select('*').order('sort_order');
+      if (error) { $('appList').innerHTML = `<div class="card md:col-span-2 xl:col-span-3">Falta crear la tabla de apps. Ejecuta <b>actualizacion-apps-resenas.sql</b> en Supabase &gt; SQL Editor.</div>`; return; }
+      apps = data || []; renderApps();
+    }
+    function renderApps() {
+      $('countApps').textContent = `(${apps.length})`;
+      $('appList').innerHTML = apps.length ? apps.map(app => `
+        <article class="card">
+          <div class="flex gap-4 items-start">${app.icon_url ? `<img src="${esc(app.icon_url)}" class="w-16 h-16 rounded-2xl object-cover" alt="">` : '<div class="w-16 h-16 rounded-2xl bg-[#E6ECDF]"></div>'}
+          <div class="min-w-0"><div class="flex gap-2 items-center flex-wrap"><h3 class="fd font-semibold text-lg">${esc(app.name)}</h3>${visibleBadge(app.published)}</div>
+          <p class="text-sm font-bold text-[#656F5B]">${STATUS[app.status]}</p><p class="text-sm text-[#656F5B] line-clamp-2">${esc(app.tagline)}</p></div></div>
+          ${actions(`openAppEditor('${app.id}')`, `deleteRow('apps','${app.id}')`)}
+        </article>`).join('') : '<div class="card md:col-span-2 xl:col-span-3 text-center py-10">Todavía no hay apps. Cuando tengas una en desarrollo, agrégala como "Próximamente".</div>';
+    }
+    function openAppEditor(id = '') {
+      const app = apps.find(a => a.id === id); const links = app?.links || {};
+      $('appForm').reset(); $('appId').value = app?.id || ''; $('appEditorTitle').textContent = app ? 'Editar app' : 'Agregar app';
+      $('appName').value = app?.name || ''; $('appSlug').value = app?.slug || ''; $('appSlug').disabled = Boolean(app);
+      $('appTagline').value = app?.tagline || ''; $('appDescription').value = app?.description || '';
+      $('appStatus').value = app?.status || 'proximamente'; $('appColor').value = app?.color_key || 'teal';
+      $('linkAndroid').value = links.android || ''; $('linkIos').value = links.ios || ''; $('linkWeb').value = links.web || '';
+      $('appIconUrl').value = app?.icon_url || ''; $('appShotUrls').value = JSON.stringify(app?.screenshots || []);
+      $('appIconPreview').src = app?.icon_url || ''; $('appIconPreview').classList.toggle('hidden', !app?.icon_url);
+      $('appOrder').value = app?.sort_order ?? (apps.length + 1); $('appPublished').checked = app?.published ?? true;
+      showEditor('appEditor');
+    }
+    $('appName').addEventListener('input', () => { if (!$('appId').value) $('appSlug').value = slugify($('appName').value); });
+    $('appForm').addEventListener('submit', e => { e.preventDefault(); withSaving($('saveApp'), 'Guardar app', async () => {
+      let icon = $('appIconUrl').value;
+      if ($('appIconFile').files[0]) icon = await uploadFile($('appIconFile').files[0], 'apps', 512);
+      let shots = JSON.parse($('appShotUrls').value || '[]');
+      if ($('appShotFiles').files.length) shots = await Promise.all([...$('appShotFiles').files].map(f => uploadFile(f, 'apps', 1400)));
+      const links = {}; [['android', 'linkAndroid'], ['ios', 'linkIos'], ['web', 'linkWeb']].forEach(([k, id]) => { if ($(id).value.trim()) links[k] = $(id).value.trim(); });
+      const payload = { slug:$('appSlug').value.trim(), name:$('appName').value.trim(), tagline:$('appTagline').value.trim(), description:$('appDescription').value.trim(), status:$('appStatus').value, color_key:$('appColor').value, links, icon_url:icon, screenshots:shots, sort_order:Number($('appOrder').value) || 0, published:$('appPublished').checked };
+      const id = $('appId').value;
+      const { error } = id ? await db.from('apps').update(payload).eq('id', id) : await db.from('apps').insert(payload);
+      if (error) throw error;
+      closeEditors(); await loadApps(); toast('App guardada');
+    }); });
+
+    // ================= RESEÑAS =================
+    async function loadReviews() {
+      const { data, error } = await db.from('reviews').select('*').order('sort_order');
+      if (error) { $('reviewList').innerHTML = `<div class="card md:col-span-2 xl:col-span-3">Falta crear la tabla de reseñas. Ejecuta <b>actualizacion-apps-resenas.sql</b> en Supabase &gt; SQL Editor.</div>`; return; }
+      reviews = data || []; renderReviews();
+    }
+    function fillBookSelect() { $('revBook').innerHTML = '<option value="">General (sin libro)</option>' + books.map(b => `<option value="${esc(b.slug)}">${esc(b.title)}</option>`).join(''); }
+    function renderReviews() {
+      $('countReviews').textContent = `(${reviews.length})`;
+      $('reviewList').innerHTML = reviews.length ? reviews.map(r => `
+        <article class="card">
+          <div class="flex gap-2 items-center flex-wrap"><b>${esc(r.author_name)}</b><span class="text-[#E0A100]">${'★'.repeat(r.rating)}</span>${visibleBadge(r.published)}</div>
+          <p class="mt-2 text-[#4A5745] line-clamp-3">“${esc(r.body)}”</p>
+          <p class="text-sm text-[#656F5B] mt-1">${esc(r.location)}${r.book_slug ? ` · ${esc(books.find(b => b.slug === r.book_slug)?.title || r.book_slug)}` : ''}</p>
+          ${actions(`openReviewEditor('${r.id}')`, `deleteRow('reviews','${r.id}')`)}
+        </article>`).join('') : '<div class="card md:col-span-2 xl:col-span-3 text-center py-10">Todavía no hay reseñas. Pide a tus lectores su opinión por WhatsApp e ingrésala aquí.</div>';
+    }
+    function openReviewEditor(id = '') {
+      const r = reviews.find(x => x.id === id);
+      $('reviewForm').reset(); $('reviewId').value = r?.id || ''; $('reviewEditorTitle').textContent = r ? 'Editar reseña' : 'Agregar reseña';
+      $('revName').value = r?.author_name || ''; $('revLocation').value = r?.location || ''; $('revBook').value = r?.book_slug || '';
+      $('revRating').value = r?.rating || 5; $('revBody').value = r?.body || ''; $('revOrder').value = r?.sort_order ?? (reviews.length + 1); $('revPublished').checked = r?.published ?? true;
+      showEditor('reviewEditor');
+    }
+    $('reviewForm').addEventListener('submit', e => { e.preventDefault(); withSaving($('saveReview'), 'Guardar reseña', async () => {
+      const payload = { author_name:$('revName').value.trim(), location:$('revLocation').value.trim(), book_slug:$('revBook').value || null, rating:Number($('revRating').value), body:$('revBody').value.trim(), sort_order:Number($('revOrder').value) || 0, published:$('revPublished').checked };
+      const id = $('reviewId').value;
+      const { error } = id ? await db.from('reviews').update(payload).eq('id', id) : await db.from('reviews').insert(payload);
+      if (error) throw error;
+      closeEditors(); await loadReviews(); toast('Reseña guardada');
+    }); });
+
+    // ================= ELIMINAR =================
+    async function deleteRow(table, id) {
+      const list = { books, apps, reviews }[table];
+      const row = list.find(x => x.id === id);
+      const name = row?.title || row?.name || row?.author_name || 'este elemento';
+      if (!confirm(`¿Eliminar “${name}”? No se puede deshacer.`)) return;
+      const { error } = await db.from(table).delete().eq('id', id); if (error) return toast(error.message, true);
+      await ({ books: loadBooks, apps: loadApps, reviews: loadReviews })[table]();
+      toast('Eliminado');
     }
 
     db.auth.onAuthStateChange((_event, session) => { if (!session) showLogin(); });
-    db.auth.getSession().then(({data}) => data.session ? enterAdmin() : showLogin());
+    db.auth.getSession().then(({ data }) => data.session ? enterAdmin() : showLogin());
   </script>
 </body>
 </html>
