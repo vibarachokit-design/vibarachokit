@@ -23,6 +23,7 @@ create table if not exists public.books (
   color_key text not null default 'coral' check (color_key in ('coral','teal','sun','grape')),
   price_physical integer not null default 0 check (price_physical >= 0),
   price_digital integer check (price_digital >= 0),
+  video_url text not null default '',
   tags jsonb not null default '[]'::jsonb,
   published boolean not null default true,
   sort_order integer not null default 0,
@@ -137,7 +138,8 @@ create table if not exists public.apps (
   description text not null default '',
   icon_url text not null default '',
   screenshots jsonb not null default '[]'::jsonb,
-  links jsonb not null default '{}'::jsonb,          -- {"android": "...", "ios": "...", "web": "..."}
+  links jsonb not null default '{}'::jsonb,
+  video_url text not null default '',          -- {"android": "...", "ios": "...", "web": "..."}
   status text not null default 'proximamente' check (status in ('disponible','beta','proximamente')),
   color_key text not null default 'teal' check (color_key in ('coral','teal','sun','grape')),
   published boolean not null default true,
@@ -202,3 +204,13 @@ join (values
 insert into public.admin_users (user_id, email)
 select id, email from auth.users where lower(email) = lower('ibar.araya@gmail.com')
 on conflict (user_id) do update set email = excluded.email;
+
+-- ---------- JUEGOS INICIALES ----------
+-- Quedan como "Disponible" (descarga por WhatsApp). Agrega el enlace de Google Play en el panel.
+insert into public.apps (slug, name, tagline, description, screenshots, status, color_key, sort_order) values
+('turron-go-home', 'Turrón Go Home!', 'Una aventura de caminos en Mejillones', '¡Ayuda a Turrón a volver a su casita! Une los caminos por la costa de Mejillones en 48 niveles y 4 mundos.', '["img/apps/turron-go-home.webp"]'::jsonb, 'disponible', 'sun', 1),
+('turron-kofy-run', 'Turrón Kofy Run', 'Una carrera del Espacio Kihnally', 'Corre con Turrón por el borde costero, junta granos de café y llega a la cafetería Kihnally.', '["img/apps/turron-kofy-run.webp"]'::jsonb, 'disponible', 'coral', 2),
+('vector-beat', 'Vector Beat', 'Salta al ritmo entre islas flotantes', 'Un robot tejido a crochet salta por anillos y mundos de lana bajo un cielo de tormenta.', '["img/apps/vector-beat.webp"]'::jsonb, 'disponible', 'grape', 3),
+('antuan-soccer-player', 'Antuan Soccer Player', 'Fútbol para pequeños cracks', 'Antuan, el número 10, sale a la cancha a llenar el estadio de goles.', '["img/apps/antuan-soccer-player.webp"]'::jsonb, 'disponible', 'teal', 4),
+('mano-arana-mutante', 'La Mano Araña Mutante', 'Escapa del laboratorio', 'Una mano con patas de araña escapa del laboratorio esquivando zapatos, matamoscas y spray.', '["img/apps/mano-arana-mutante.webp"]'::jsonb, 'disponible', 'grape', 5)
+on conflict (slug) do nothing;

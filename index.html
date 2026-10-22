@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VibaraChokiT · Estudio Creativo — Libros y juegos desde Mejillones</title>
   <meta name="description" content="Libros ilustrados, humor absurdo y juegos creados en Mejillones, Chile, por VibaraChokiT Estudio Creativo. Pide por WhatsApp o retira en la cafetería Kihnally.">
-  <meta name="theme-color" content="#2F3A2C">
+  <meta name="theme-color" content="#1F3A2B">
   <link rel="icon" type="image/png" href="img/favicon.png">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <meta property="og:title" content="VibaraChokiT · Estudio Creativo">
@@ -23,15 +23,18 @@
         extend: {
           colors: {
             // Paleta tomada del logo
-            ink:   { DEFAULT: '#2F3A2C', 700: '#3B4837', 600: '#4A5745' },
-            sage:  { DEFAULT: '#656F5B', 400: '#8A947F', 300: '#A9B39E' },
-            mist:  { DEFAULT: '#C9D4BE', 100: '#E6ECDF', 50: '#F1F4EC' },
-            paper: '#F7F8F3',
-            // Colores de cada libro (se eligen en el panel)
-            coral: { 50: '#FBEFF1', 100: '#F6DCE1', 500: '#D9576F', 600: '#B8435A' },
-            teal:  { 50: '#EAF4F6', 100: '#D3E9ED', 500: '#2F8C9E', 600: '#247384' },
-            sun:   { 50: '#FDF6E3', 100: '#FAEBC2', 500: '#E0A100', 600: '#A87800' },
-            grape: { 50: '#F1EFF8', 100: '#E2DEF1', 500: '#7B6BB8', 600: '#62539C' },
+            ink:   { DEFAULT: '#1F3A2B', 700: '#2A4A37', 600: '#3D5A47' },
+            sage:  { DEFAULT: '#2F8552', 400: '#6FAE86', 300: '#9CCBAE' },
+            mist:  { DEFAULT: '#BFE6CC', 100: '#E4F6EA', 50: '#F2FBF5' },
+            paper: '#FFFDF7',
+            yolk:  { DEFAULT: '#FFC233', 600: '#F2A900' },
+            sky:   { DEFAULT: '#DDF2FF' },
+            night: { DEFAULT: '#1C1F52', 700: '#272B6B', 600: '#353A85' },
+            // Colores de cada libro y juego (se eligen en el panel)
+            coral: { 50: '#FFEDEC', 100: '#FFD6D4', 500: '#FF5D5D', 600: '#E03E46' },
+            teal:  { 50: '#E5F7FC', 100: '#C6EEF8', 500: '#14A8D0', 600: '#0B86A8' },
+            sun:   { 50: '#FFF7DB', 100: '#FFEBA6', 500: '#F7B500', 600: '#B57F00' },
+            grape: { 50: '#F3EEFF', 100: '#E4D9FF', 500: '#8B5CF6', 600: '#6D3FD8' },
             wasap: '#25D366'
           },
           fontFamily: {
@@ -53,7 +56,7 @@
     };
   </script>
   <style>
-    :root { --ink:#2F3A2C; --sage:#656F5B; --mist:#C9D4BE; --mist-100:#E6ECDF; --paper:#F7F8F3; --yolk:#F0B429; }
+    :root { --ink:#1F3A2B; --sage:#2F8552; --mist:#BFE6CC; --mist-100:#E4F6EA; --paper:#FFFDF7; --yolk:#FFC233; }
     html { scroll-behavior: smooth; scroll-padding-top: 84px; }
     body { background: var(--paper); color: var(--ink); }
     body.no-scroll { overflow: hidden; }
@@ -70,6 +73,7 @@
       transition: transform .15s ease, box-shadow .15s ease, background .2s;
     }
     .pad-btn:hover { background: var(--ink); }
+    .pad-btn.alt { background: #FF5D5D; } .pad-btn.alt:hover { background: #E03E46; }
     .pad-btn:active { transform: translateY(2px); box-shadow: inset 0 -1px 0 rgba(0,0,0,.18); }
     .pad-btn svg { width: 22px; height: 22px; }
 
@@ -77,7 +81,7 @@
     .shelf { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 18px 4px 26px; }
     .shelf::-webkit-scrollbar { display: none; }
     .shelf-item { flex: 0 0 auto; width: 210px; aspect-ratio: 2 / 3; scroll-snap-align: start; border-radius: 6px 14px 14px 6px; overflow: hidden; position: relative; cursor: pointer;
-      box-shadow: -6px 0 0 0 var(--sage) inset, 0 14px 28px -12px rgba(47,58,44,.55); transition: transform .3s cubic-bezier(.2,.8,.2,1); background: var(--mist-100); }
+      box-shadow: -6px 0 0 0 var(--sage) inset, 0 14px 28px -12px rgba(31,58,43,.55); transition: transform .3s cubic-bezier(.2,.8,.2,1); background: var(--mist-100); }
     .shelf-item img { width: 100%; height: 100%; object-fit: cover; }
     .shelf-item::after { content: ''; position: absolute; inset: 0 auto 0 0; width: 10px; background: linear-gradient(90deg, rgba(0,0,0,.28), transparent); }
     .shelf-item:hover, .shelf-item:focus-visible { transform: translateY(-8px) rotate(-1deg); }
@@ -93,7 +97,7 @@
     /* Chips de filtros */
     .chip { border: 2px solid var(--mist); color: var(--sage); background: white; padding: 7px 16px; border-radius: 999px; font-weight: 700; font-size: 14px; transition: all .2s; white-space: nowrap; }
     .chip:hover { border-color: var(--sage); }
-    .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+    .chip[aria-pressed="true"] { background: var(--sage); border-color: var(--sage); color: white; }
 
     /* Apps: tarjeta con "pantalla" */
     .app-screen { aspect-ratio: 16 / 10; background: var(--mist); border-radius: 18px; border: 6px solid var(--ink); position: relative; overflow: hidden; }
@@ -106,7 +110,7 @@
     .chap-btn .chap-price { font-weight: 600; opacity: .75; margin-left: 4px; }
     .chap-btn:disabled { opacity: .45; cursor: not-allowed; border-style: dashed; }
     .fmt-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--mist-100); border: 2px solid var(--mist); border-radius: 999px; padding: 4px; }
-    .fmt-toggle button { border-radius: 999px; padding: 9px 12px; font-weight: 800; color: var(--sage); display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .fmt-toggle button { border-radius: 999px; padding: 10px 12px; font-size: 15px; line-height: 1.15; text-align: left; font-weight: 800; color: var(--sage); display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
     .fmt-toggle button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
     .fmt-toggle button svg { width: 18px; height: 18px; }
 
@@ -135,8 +139,9 @@
       max-width: calc(100vw - 32px); width: max-content; animation: toastIn .35s cubic-bezier(.2,.8,.2,1) both; font-weight: 600; }
     .toast button { background: var(--yolk); color: var(--ink); font-weight: 800; border-radius: 999px; padding: 6px 14px; font-size: 13px; white-space: nowrap; }
 
-    .nav-s { background: rgba(247,248,243,.94); backdrop-filter: blur(16px); box-shadow: 0 1px 0 var(--mist); }
+    .nav-s { background: rgba(255,253,247,.95); backdrop-filter: blur(16px); box-shadow: 0 1px 0 var(--mist); }
 
+    #vSound[aria-pressed="true"] .snd-off, #vSound[aria-pressed="false"] .snd-on { display: none; }
     .preview-page { border-radius: 14px; overflow: hidden; background: var(--mist-100); }
     .preview-page img { width: 100%; height: auto; max-height: 75vh; object-fit: contain; display: block; margin: 0 auto; }
 
@@ -164,16 +169,16 @@
         <a href="#apps" class="hover:text-sage">Apps y juegos</a>
         <a href="#autor" class="hover:text-sage">El estudio</a>
         <a href="#cafeteria" class="hover:text-sage">Cafetería Kihnally</a>
-        <button onclick="openCart()" class="relative inline-flex items-center gap-2 bg-ink text-paper rounded-full pl-4 pr-5 py-2.5 hover:bg-ink-700" aria-label="Abrir carrito">
+        <button onclick="openCart()" class="relative inline-flex items-center gap-2 bg-yolk text-ink font-extrabold rounded-full pl-4 pr-5 py-2.5 hover:bg-yolk-600" aria-label="Abrir carrito">
           <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
           Carrito
-          <span id="nBadge" class="hidden min-w-[22px] h-[22px] rounded-full bg-[#F0B429] text-ink text-xs font-extrabold items-center justify-center px-1">0</span>
+          <span id="nBadge" class="hidden min-w-[22px] h-[22px] rounded-full bg-ink text-paper text-xs font-extrabold items-center justify-center px-1">0</span>
         </button>
       </div>
       <div class="flex md:hidden items-center gap-2">
         <button onclick="openCart()" class="relative w-11 h-11 rounded-full bg-ink text-paper flex items-center justify-center" aria-label="Abrir carrito">
           <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
-          <span id="mBadgeNav" class="hidden absolute -top-1 -right-1 min-w-[20px] h-5 rounded-full bg-[#F0B429] text-ink text-[11px] font-extrabold items-center justify-center px-1">0</span>
+          <span id="mBadgeNav" class="hidden absolute -top-1 -right-1 min-w-[20px] h-5 rounded-full bg-yolk text-ink text-[11px] font-extrabold items-center justify-center px-1">0</span>
         </button>
         <button id="menuBtn" class="w-11 h-11 rounded-full border-2 border-mist flex items-center justify-center" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobMenu">
           <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -191,7 +196,7 @@
   </nav>
 
   <!-- ========== HERO ========== -->
-  <header class="relative pt-[104px] lg:pt-[120px] pb-10 overflow-hidden">
+  <header class="relative pt-[104px] lg:pt-[120px] pb-14 overflow-hidden bg-gradient-to-b from-sky via-[#FFF4D6] to-paper">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-14 items-center">
       <div class="hero-in min-w-0">
         <p class="inline-flex items-center gap-2 text-sage font-bold">
@@ -205,22 +210,22 @@
           Historias ilustradas con humor absurdo, cerditos viajeros y gaviotas con actitud. Las escribimos entre tazas de café en la cafetería Kihnally, y ahora también las llevamos a la pantalla.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="#libros" class="inline-flex items-center gap-2 bg-ink text-paper font-bold rounded-full px-7 py-4 hover:bg-ink-700">Ver los libros</a>
+          <a href="#libros" class="inline-flex items-center gap-2 bg-yolk text-ink font-extrabold rounded-full px-7 py-4 shadow-[inset_0_-4px_0_rgba(0,0,0,.15)] hover:bg-yolk-600">Ver los libros</a>
           <a href="#apps" class="inline-flex items-center gap-2 bg-white border-2 border-mist text-ink font-bold rounded-full px-7 py-[14px] hover:border-sage">Conocer las apps</a>
         </div>
       </div>
 
       <div class="relative min-w-0">
-        <div class="rounded-[28px] bg-mist-100 border-2 border-mist px-4 sm:px-6 pt-5 pb-4">
+        <div class="rounded-[28px] bg-white/80 border-2 border-mist px-4 sm:px-6 pt-5 pb-4 shadow-[0_20px_50px_-30px_rgba(31,58,43,.5)]">
           <div class="flex items-center justify-between gap-4">
             <p class="font-display font-medium text-lg text-sage" id="shelfCount">Nuestro estante</p>
             <div class="flex gap-2">
               <button class="pad-btn" onclick="scrollShelf(-1)" aria-label="Libro anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-              <button class="pad-btn" onclick="scrollShelf(1)" aria-label="Libro siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+              <button class="pad-btn alt" onclick="scrollShelf(1)" aria-label="Libro siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
             </div>
           </div>
           <div class="shelf" id="shelf" aria-label="Portadas de los libros" tabindex="0"></div>
-          <div class="h-3 -mx-4 sm:-mx-6 bg-sage rounded-b-[26px]" aria-hidden="true"></div>
+          <div class="h-3 -mx-4 sm:-mx-6 rounded-b-[26px] bg-[linear-gradient(90deg,#FF5D5D,#FFC233,#2F8552,#14A8D0,#8B5CF6)]" aria-hidden="true"></div>
         </div>
         <p class="mt-3 text-sm text-sage text-center">Toca una portada para ver páginas del interior.</p>
       </div>
@@ -233,7 +238,7 @@
       <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
         <div class="max-w-xl">
           <h2 class="font-display font-semibold text-4xl sm:text-5xl text-ink">Libros</h2>
-          <p class="mt-3 text-ink-600 text-lg">Elige un libro, mira el interior y agrega los capítulos que quieras, en papel o en PDF. El pedido se confirma por WhatsApp.</p>
+          <p class="mt-3 text-ink-600 text-lg">Elige un libro, mira el interior y agrega los capítulos que quieras, en papel o en digital. El pedido se confirma por WhatsApp.</p>
         </div>
         <label class="relative block w-full lg:w-80">
           <span class="sr-only">Buscar libros</span>
@@ -251,17 +256,18 @@
   </section>
 
   <!-- ========== APPS Y JUEGOS ========== -->
-  <section id="apps" class="py-16 lg:py-24 bg-mist-100 border-y-2 border-mist">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="grid lg:grid-cols-[1fr_2fr] gap-10 lg:gap-16 items-start">
-        <div class="lg:sticky lg:top-28">
-          <svg viewBox="0 0 64 40" class="w-20 text-sage" aria-hidden="true"><rect x="0" y="0" width="64" height="40" rx="20" fill="currentColor"/><path d="M16 12h5v5h5v5h-5v5h-5v-5h-5v-5h5z" fill="#E6ECDF"/><circle cx="46" cy="14" r="3.2" fill="#E6ECDF"/><circle cx="40" cy="20" r="3.2" fill="#E6ECDF"/><circle cx="52" cy="20" r="3.2" fill="#E6ECDF"/><circle cx="46" cy="26" r="3.2" fill="#E6ECDF"/></svg>
-          <h2 class="mt-5 font-display font-semibold text-4xl sm:text-5xl text-ink">Apps y juegos</h2>
-          <p class="mt-3 text-ink-600 text-lg">Los personajes de nuestros libros saltan a la pantalla: juegos para aprender, reír y recorrer Chile.</p>
-          <a id="appsNotify" href="https://wa.me/56995436140?text=Hola!%20Quiero%20saber%20cu%C3%A1ndo%20salen%20las%20apps%20de%20VibaraChokiT" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 bg-ink text-paper font-bold rounded-full px-6 py-3.5 hover:bg-ink-700">Avísenme cuando salgan</a>
+  <section id="apps" class="py-16 lg:py-24 bg-night text-white relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none opacity-60 bg-[radial-gradient(circle_at_15%_20%,rgba(139,92,246,.45),transparent_40%),radial-gradient(circle_at_85%_80%,rgba(20,168,208,.35),transparent_45%)]" aria-hidden="true"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div class="max-w-xl">
+          <svg viewBox="0 0 64 40" class="w-20" aria-hidden="true"><rect x="0" y="0" width="64" height="40" rx="20" fill="#FFC233"/><path d="M16 12h5v5h5v5h-5v5h-5v-5h-5v-5h5z" fill="#1C1F52"/><circle cx="46" cy="14" r="3.2" fill="#FF5D5D"/><circle cx="40" cy="20" r="3.2" fill="#14A8D0"/><circle cx="52" cy="20" r="3.2" fill="#2F8552"/><circle cx="46" cy="26" r="3.2" fill="#8B5CF6"/></svg>
+          <h2 class="mt-5 font-display font-semibold text-4xl sm:text-5xl">Apps y juegos</h2>
+          <p class="mt-3 text-white/75 text-lg">Turrón, Antuan y otros personajes del estudio, ahora para jugar en el celular. Descárgalos para Android por WhatsApp o Google Play. La versión para iPhone está en desarrollo.</p>
         </div>
-        <div id="appsGrid" class="grid sm:grid-cols-2 gap-6"></div>
+        <a id="appsNotify" href="https://wa.me/56995436140?text=Hola!%20Quiero%20saber%20cu%C3%A1ndo%20salen%20los%20juegos%20de%20VibaraChokiT" target="_blank" rel="noopener" class="self-start lg:self-auto inline-flex items-center gap-2 bg-yolk text-ink font-extrabold rounded-full px-6 py-3.5 hover:bg-yolk-600">Avísenme cuando salgan</a>
       </div>
+      <div id="appsGrid" class="mt-10 columns-1 sm:columns-2 lg:columns-3 gap-6"></div>
     </div>
   </section>
 
@@ -285,10 +291,10 @@
   </section>
 
   <!-- ========== CAFETERÍA ========== -->
-  <section id="cafeteria" class="py-16 lg:py-24">
+  <section id="cafeteria" class="py-16 lg:py-24 bg-sun-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-16 items-center">
       <figure class="relative max-w-md mx-auto lg:mx-0 w-full">
-        <img src="img/portada-kihnally.webp" alt="Afiche de Barista Kihnally, temporada 1, ambientado en Mejillones" class="w-full rounded-[22px] border-[6px] border-white shadow-[0_24px_48px_-20px_rgba(47,58,44,.6)] -rotate-2" onerror="handleImageError(this)">
+        <img src="img/portada-kihnally.webp" alt="Afiche de Barista Kihnally, temporada 1, ambientado en Mejillones" class="w-full rounded-[22px] border-[6px] border-white shadow-[0_24px_48px_-20px_rgba(31,58,43,.6)] -rotate-2" onerror="handleImageError(this)">
       </figure>
       <div>
         <h2 class="font-display font-semibold text-4xl sm:text-5xl text-ink">Cafetería Kihnally</h2>
@@ -347,7 +353,7 @@
   <!-- ========== BOTÓN FLOTANTE CARRITO (móvil y al bajar) ========== -->
   <button id="cartFab" onclick="openCart()" class="hidden fixed bottom-5 right-5 z-[90] w-16 h-16 rounded-full bg-ink text-paper shadow-[0_14px_30px_-10px_rgba(0,0,0,.5)] items-center justify-center hover:bg-ink-700" aria-label="Abrir carrito">
     <svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
-    <span id="cBadge" class="absolute -top-1 -right-1 min-w-[24px] h-6 rounded-full bg-[#F0B429] text-ink text-xs font-extrabold flex items-center justify-center px-1">0</span>
+    <span id="cBadge" class="absolute -top-1 -right-1 min-w-[24px] h-6 rounded-full bg-yolk text-ink text-xs font-extrabold flex items-center justify-center px-1">0</span>
   </button>
 
   <!-- ========== MODAL LIBRO ========== -->
@@ -357,7 +363,7 @@
       <div class="m-cont bg-paper rounded-[28px] shadow-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto">
         <div class="grid md:grid-cols-[0.9fr_1.1fr]">
           <div class="relative bg-mist-100 p-6 sm:p-8 flex items-center justify-center md:rounded-l-[28px]">
-            <img id="mImg" src="" alt="" class="w-full max-w-[260px] md:max-w-none rounded-[6px_14px_14px_6px] shadow-[0_20px_40px_-18px_rgba(47,58,44,.7)]" onerror="handleImageError(this)">
+            <img id="mImg" src="" alt="" class="w-full max-w-[260px] md:max-w-none rounded-[6px_14px_14px_6px] shadow-[0_20px_40px_-18px_rgba(31,58,43,.7)]" onerror="handleImageError(this)">
           </div>
           <div class="p-6 sm:p-8 flex flex-col">
             <div class="flex items-start justify-between gap-4">
@@ -370,15 +376,15 @@
             <button id="mPreviewBtn" class="mt-4 self-start font-bold text-sage underline underline-offset-4 hover:text-ink">Ver páginas del interior</button>
 
             <div class="mt-6" id="formatContainer">
-              <p class="font-bold">Formato</p>
+              <p class="font-bold">1. ¿Físico o digital?</p>
               <div class="fmt-toggle mt-3" role="group" aria-label="Formato del libro">
-                <button type="button" data-format="fisico" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7"/></svg>Físico</button>
-                <button type="button" data-format="digital" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><path d="M12 7v7m-3-3 3 3 3-3"/></svg>Digital (PDF)</button>
+                <button type="button" data-format="fisico" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7"/></svg><span>Físico <span class="fmt-price font-semibold opacity-80"></span></span></button>
+                <button type="button" data-format="digital" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><path d="M12 7v7m-3-3 3 3 3-3"/></svg><span>Digital <span class="fmt-price font-semibold opacity-80"></span></span></button>
               </div>
             </div>
 
             <div class="mt-6" id="chapterSelectorContainer">
-              <p class="font-bold">Elige los capítulos</p>
+              <p class="font-bold" id="chapTitle">Elige los capítulos</p>
               <div id="chapterSelector" class="mt-3 flex flex-wrap gap-2"></div>
             </div>
 
@@ -392,6 +398,32 @@
             </div>
             <div id="mTags" class="mt-5 flex flex-wrap gap-2"></div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== MODAL VIDEO ========== -->
+  <div id="videoModal" class="fixed inset-0 z-[108] hidden" role="dialog" aria-modal="true" aria-labelledby="vTitle">
+    <div class="m-ov absolute inset-0 bg-[#0d0f2a]/90 backdrop-blur-sm" onclick="closeVideo()"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-full p-3 sm:p-6">
+      <div class="m-cont w-full max-w-4xl">
+        <div class="flex items-center justify-between gap-3 mb-3 text-white">
+          <p id="vTitle" class="font-display text-xl sm:text-2xl font-semibold truncate"></p>
+          <div class="flex items-center gap-2 shrink-0">
+            <button id="vSound" type="button" aria-pressed="true" class="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center" aria-label="Activar o silenciar sonido">
+              <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="snd-on" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/><path class="snd-off" d="m17 9 5 6m0-6-5 6"/></svg>
+            </button>
+            <button type="button" onclick="closeVideo()" class="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center" aria-label="Cerrar"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+          </div>
+        </div>
+        <div class="relative rounded-[22px] overflow-hidden bg-black flex items-center justify-center">
+          <video id="vPlayer" class="block w-full max-h-[72vh] object-contain" playsinline preload="auto" onended="finishVideo()"></video>
+          <div id="vEnd" style="background:rgba(28,31,82,.94)" class="hidden absolute inset-0 flex flex-col items-center justify-center text-center text-white p-6"></div>
+        </div>
+        <div class="mt-3 h-1.5 rounded-full bg-white/15 overflow-hidden"><div id="vBar" class="h-full w-0 bg-yolk"></div></div>
+        <div class="mt-4 flex justify-end">
+          <button id="vSkip" type="button" onclick="finishVideo()" class="bg-yolk text-ink font-extrabold rounded-full px-6 py-3 hover:bg-yolk-600">Saltar video</button>
         </div>
       </div>
     </div>
@@ -434,9 +466,28 @@
           <button onclick="closeCart(); location.hash='#libros'" class="mt-6 bg-ink text-paper font-bold rounded-full px-6 py-3 hover:bg-ink-700">Ver los libros</button>
         </div>
         <div id="cList" class="space-y-3 hidden"></div>
+        <form id="cCheckout" class="hidden mt-6 space-y-5" onsubmit="event.preventDefault(); sendWhatsApp();" novalidate>
+          <h4 class="font-display text-xl">Antes de enviar</h4>
+          <label class="block"><span class="font-bold">Tu nombre</span>
+            <input id="coName" class="mt-1 w-full bg-white border-2 border-mist rounded-xl px-3 py-2.5 focus:outline-none focus:border-sage" autocomplete="name" required></label>
+          <fieldset id="coFisico" class="hidden rounded-2xl border-2 border-mist bg-white p-4">
+            <legend class="px-1 font-bold">Libros físicos: ¿cómo los recibes?</legend>
+            <label class="flex items-center gap-2 mt-1"><input type="radio" name="coEntrega" value="retiro" class="w-4 h-4 accent-[#2F8552]"> Retiro en la cafetería Kihnally</label>
+            <label class="flex items-center gap-2 mt-2"><input type="radio" name="coEntrega" value="envio" class="w-4 h-4 accent-[#2F8552]"> Envío por pagar</label>
+            <input id="coDireccion" class="hidden mt-3 w-full border-2 border-mist rounded-xl px-3 py-2.5 focus:outline-none focus:border-sage" placeholder="Dirección y comuna" autocomplete="street-address">
+          </fieldset>
+          <fieldset id="coDigital" class="hidden rounded-2xl border-2 border-mist bg-white p-4">
+            <legend class="px-1 font-bold">Libros digitales: ¿dónde te los enviamos?</legend>
+            <label class="flex items-center gap-2 mt-1"><input type="radio" name="coDestino" value="whatsapp" class="w-4 h-4 accent-[#2F8552]"> A este mismo WhatsApp</label>
+            <label class="flex items-center gap-2 mt-2"><input type="radio" name="coDestino" value="correo" class="w-4 h-4 accent-[#2F8552]"> Por correo electrónico</label>
+            <input id="coCorreo" type="email" class="hidden mt-3 w-full border-2 border-mist rounded-xl px-3 py-2.5 focus:outline-none focus:border-sage" placeholder="tucorreo@ejemplo.com" autocomplete="email">
+          </fieldset>
+          <p id="coError" class="hidden text-coral-600 font-bold" role="alert"></p>
+        </form>
       </div>
       <div id="cFoot" class="border-t-2 border-mist px-6 py-5 hidden">
         <div class="flex items-center justify-between mb-4"><span class="font-bold text-lg">Total</span><span id="cTotal" class="font-display font-semibold text-3xl"></span></div>
+        <p id="cSplit" class="-mt-2 mb-3 text-sm text-sage"></p>
         <button onclick="sendWhatsApp()" class="w-full bg-wasap text-white font-extrabold rounded-full px-6 py-4 hover:brightness-95">Enviar pedido por WhatsApp</button>
         <button onclick="clearCart()" class="w-full mt-2 text-sm font-bold text-sage hover:text-coral-600 py-2">Vaciar carrito</button>
       </div>
@@ -452,7 +503,7 @@
     const esc = v => String(v ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
     const formatPrice = n => '$' + Number(n || 0).toLocaleString('es-CL');
     // Formatos: 'fisico' usa price / pricePhysical; 'digital' usa priceDigital (0 = no disponible en digital)
-    const FORMAT_LABEL = { fisico: 'Físico', digital: 'Digital (PDF)' };
+    const FORMAT_LABEL = { fisico: 'Físico', digital: 'Digital' };
     const chapterPrice = (ch, fmt) => fmt === 'digital' ? (ch.priceDigital || 0) : ch.price;
     const hasFormat = (b, fmt) => fmt === 'fisico' ? true
       : b.chapters.length ? b.chapters.some(ch => ch.priceDigital > 0) : b.priceDigital > 0;
@@ -473,12 +524,19 @@
 
     // Catálogo de respaldo (se usa si Supabase no responde)
     let BOOKS = {
-      chanchini: { id:'chanchini', title:'¿Dónde está Chanchini?', subtitle:'Aventura, viajes e infancia', description:'Conoce a Chanchini, la viajera más pequeña de Chile. Este cerdito soñador vive en la cafetería Kihnally y quiere recorrer cada rincón del país, desde Arica hasta Punta Arenas.', img:'img/chanchini.webp', previewImages:['img/chanchini-pagina1.webp','img/chanchini-pagina2.webp'], badge:'Aventura', colorKey:'coral', pricePhysical:5990, tags:['Viajes','Infantil','Chile','Aventura'], chapters:[{id:'c1',name:'Capítulo 1',price:5990},{id:'c2',name:'Capítulo 2',price:5990}] },
-      chinowon:  { id:'chinowon', title:'Chinowon', subtitle:'El diccionario menos confiable del mundo', description:'Traducciones que jamás encontrarás en una academia. Humor absurdo 100% garantizado. Si no tiene sentido… ¡es Chinowon!', img:'img/chinowon.webp', previewImages:['img/chinowon-pagina1.webp','img/chinowon-pagina2.webp'], badge:'Humor', colorKey:'sun', pricePhysical:5990, tags:['Humor','Absurdo','Diccionario','Risa'], chapters:[{id:'c1',name:'Capítulo 1',price:5990},{id:'c2',name:'Capítulo 2',price:5990},{id:'c3',name:'Capítulo 3',price:5990},{id:'c4',name:'Capítulo 4',price:5990}] },
-      barista:   { id:'barista', title:'Barista Kihnally', subtitle:'Temporada 1: café, cultura y aventura', description:'6 aventuras en Mejillones como nunca antes las viste. Gaviotas con actitud, fantasmas en el faro y el mejor café del puerto.', img:'img/barista.webp', previewImages:['img/barista-pagina1.webp','img/barista-pagina2.webp'], badge:'Serie', colorKey:'teal', pricePhysical:4990, tags:['Aventura','Mejillones','Café','6 episodios'], chapters:[1,2,3,4,5,6].map(n=>({id:'c'+n,name:'Capítulo '+n,price:3500})) },
-      turon:     { id:'turon', title:'Turón: El perro con carita de ratón', subtitle:'Amistad, sueños y un camarón muy especial', description:'Una historia sobre amistad, sueños y un camarón muy especial. Turón te robará el corazón con esa carita imposible.', img:'img/turon.webp', previewImages:['img/turon-pagina1.webp','img/turon-pagina2.webp'], badge:'Infantil', colorKey:'grape', pricePhysical:4990, tags:['Infantil','Amistad','Sueños','Emoción'], chapters:[1,2,3,4].map(n=>({id:'c'+n,name:'Capítulo '+n,price:3500})) }
+      chanchini: { id:'chanchini', title:'¿Dónde está Chanchini?', subtitle:'Aventura, viajes e infancia', description:'Conoce a Chanchini, la viajera más pequeña de Chile. Este cerdito soñador vive en la cafetería Kihnally y quiere recorrer cada rincón del país, desde Arica hasta Punta Arenas.', img:'img/chanchini.webp', previewImages:['img/chanchini-pagina1.webp','img/chanchini-pagina2.webp'], badge:'Aventura', colorKey:'coral', pricePhysical:5990, tags:['Viajes','Infantil','Chile','Aventura'], chapters:[1,2].map(n=>({id:'c'+n,name:'Capítulo '+n,price:5990,priceDigital:3500})) },
+      chinowon:  { id:'chinowon', title:'Chinowon', subtitle:'El diccionario menos confiable del mundo', description:'Traducciones que jamás encontrarás en una academia. Humor absurdo 100% garantizado. Si no tiene sentido… ¡es Chinowon!', img:'img/chinowon.webp', previewImages:['img/chinowon-pagina1.webp','img/chinowon-pagina2.webp'], badge:'Humor', colorKey:'sun', pricePhysical:5990, tags:['Humor','Absurdo','Diccionario','Risa'], chapters:[1,2,3,4].map(n=>({id:'c'+n,name:'Capítulo '+n,price:5990,priceDigital:3500})) },
+      barista:   { id:'barista', title:'Barista Kihnally', subtitle:'Temporada 1: café, cultura y aventura', description:'6 aventuras en Mejillones como nunca antes las viste. Gaviotas con actitud, fantasmas en el faro y el mejor café del puerto.', img:'img/barista.webp', previewImages:['img/barista-pagina1.webp','img/barista-pagina2.webp'], badge:'Serie', colorKey:'teal', pricePhysical:4990, tags:['Aventura','Mejillones','Café','6 episodios'], chapters:[1,2,3,4,5,6].map(n=>({id:'c'+n,name:'Capítulo '+n,price:3500,priceDigital:3000})) },
+      turon:     { id:'turon', title:'Turón: El perro con carita de ratón', subtitle:'Amistad, sueños y un camarón muy especial', description:'Una historia sobre amistad, sueños y un camarón muy especial. Turón te robará el corazón con esa carita imposible.', img:'img/turon.webp', previewImages:['img/turon-pagina1.webp','img/turon-pagina2.webp'], badge:'Infantil', colorKey:'grape', pricePhysical:4990, tags:['Infantil','Amistad','Sueños','Emoción'], chapters:[1,2,3,4].map(n=>({id:'c'+n,name:'Capítulo '+n,price:3500,priceDigital:3000})) }
     };
-    let APPS = [];      // se llenan desde Supabase (tabla apps)
+    // Juegos incluidos: se muestran mientras la tabla "apps" no exista en Supabase
+    let APPS = [
+      { slug:'turron-go-home', name:'Turrón Go Home!', tagline:'Una aventura de caminos en Mejillones', description:'¡Ayuda a Turrón a volver a su casita! Une los caminos por la costa de Mejillones en 48 niveles y 4 mundos.', screenshots:['img/apps/turron-go-home.webp'], status:'disponible', color_key:'sun', links:{} },
+      { slug:'turron-kofy-run', name:'Turrón Kofy Run', tagline:'Una carrera del Espacio Kihnally', description:'Corre con Turrón por el borde costero, junta granos de café y llega a la cafetería Kihnally.', screenshots:['img/apps/turron-kofy-run.webp'], status:'disponible', color_key:'coral', links:{} },
+      { slug:'vector-beat', name:'Vector Beat', tagline:'Salta al ritmo entre islas flotantes', description:'Un robot tejido a crochet salta por anillos y mundos de lana bajo un cielo de tormenta.', screenshots:['img/apps/vector-beat.webp'], status:'disponible', color_key:'grape', links:{} },
+      { slug:'antuan-soccer-player', name:'Antuan Soccer Player', tagline:'Fútbol para pequeños cracks', description:'Antuan, el número 10, sale a la cancha a llenar el estadio de goles.', screenshots:['img/apps/antuan-soccer-player.webp'], status:'disponible', color_key:'teal', links:{} },
+      { slug:'mano-arana-mutante', name:'La Mano Araña Mutante', tagline:'Escapa del laboratorio', description:'Una mano con patas de araña escapa del laboratorio esquivando zapatos, matamoscas y spray.', screenshots:['img/apps/mano-arana-mutante.webp'], status:'disponible', color_key:'grape', links:{} }
+    ];
     let REVIEWS = [];   // se llenan desde Supabase (tabla reviews)
 
     let cart = [];
@@ -508,7 +566,7 @@
       if (bookRows && bookRows.length) {
         BOOKS = Object.fromEntries(bookRows.map(row => [row.slug, {
           id: row.slug, title: row.title, subtitle: row.subtitle || '', description: row.description || '',
-          img: imgPath(row.image_url), previewImages: (row.preview_images || []).map(imgPath),
+          img: imgPath(row.image_url), previewImages: (row.preview_images || []).map(imgPath), video: row.video_url || '',
           badge: row.badge || 'Libro', colorKey: COLOR[row.color_key] ? row.color_key : 'coral',
           pricePhysical: row.price_physical || 0, priceDigital: row.price_digital || 0, tags: row.tags || [],
           chapters: (row.chapters || []).filter(ch => ch.published).sort((a, b) => a.sort_order - b.sort_order).map(ch => ({ id: ch.id, name: ch.name, price: ch.price, priceDigital: ch.price_digital || 0 }))
@@ -516,7 +574,9 @@
       } else if (books.status === 'rejected' || books.value?.error) {
         console.warn('Supabase no disponible; se usa el catálogo incluido.');
       }
-      APPS = ok(apps) || [];
+      const appRows = ok(apps);
+      if (appRows) APPS = appRows;   // si la tabla existe, manda lo que diga el panel
+      attachVideos();
       REVIEWS = ok(reviews) || [];
     }
 
@@ -596,11 +656,12 @@
         const multi = prices.length > 1;
         return `
           <article class="book-card group">
-            <button class="block w-full text-left" onclick="openBookModal('${esc(key)}')" aria-label="Ver ${esc(b.title)}">
-              <div class="cover relative rounded-[6px_16px_16px_6px] overflow-hidden ${c.tint} shadow-[-5px_0_0_0_rgba(47,58,44,.35)_inset,0_16px_30px_-16px_rgba(47,58,44,.6)]">
+            <button class="block w-full text-left" onclick="openBook('${esc(key)}')" aria-label="Ver ${esc(b.title)}">
+              <div class="cover relative rounded-[6px_16px_16px_6px] overflow-hidden ${c.tint} shadow-[-5px_0_0_0_rgba(31,58,43,.35)_inset,0_16px_30px_-16px_rgba(31,58,43,.6)]">
                 <img src="${esc(b.img)}" alt="" class="w-full h-full object-cover" loading="lazy" onerror="handleImageError(this)">
                 <span class="absolute top-3 left-3 ${c.badge} text-white text-xs font-extrabold px-2.5 py-1 rounded-full">${esc(b.badge)}</span>
                 ${digital ? '<span class="absolute bottom-3 left-3 bg-white/95 text-ink text-xs font-extrabold px-2.5 py-1 rounded-full">También en digital</span>' : ''}
+                ${b.video ? PLAY_BADGE : ''}
               </div>
               <h3 class="mt-4 font-display font-semibold text-xl sm:text-2xl leading-tight text-ink group-hover:${c.text}">${esc(b.title)}</h3>
               <p class="mt-1 text-sm sm:text-base text-ink-600 line-clamp-2">${esc(b.subtitle || b.description)}</p>
@@ -621,51 +682,56 @@
     // =============================================
     const STORE = {
       android: { label: 'Google Play', icon: '<path d="M4 3.5v17l9-8.5z" fill="currentColor"/><path d="M4 3.5l12 7-3 2zM4 20.5l12-7-3-2z" fill="currentColor" opacity=".6"/><path d="M16 10.5 20 12.8l-4 2.2-3-2.5z" fill="currentColor"/>' },
-      ios:     { label: 'App Store',   icon: '<rect x="6" y="2.5" width="12" height="19" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' },
+      ios:     { label: 'App Store (iPhone)',   icon: '<rect x="6" y="2.5" width="12" height="19" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' },
       web:     { label: 'Jugar en la web', icon: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" fill="none" stroke="currentColor" stroke-width="2"/>' }
     };
     const STATUS = { disponible: 'Disponible', beta: 'En prueba', proximamente: 'Próximamente' };
 
+    function appButtons(app) {
+        const links = app.links || {};
+        const ready = app.status === 'disponible' || app.status === 'beta';
+        const waText = encodeURIComponent(`Hola! Quiero descargar el juego ${app.name} para Android 🎮`);
+        let buttons = ready ? `
+          <a href="https://wa.me/${WA}?text=${waText}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-wasap text-white font-extrabold rounded-full pl-3 pr-4 py-2.5 hover:brightness-95">
+            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 2a8 8 0 1 1-4.1 14.9l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 0 1 12 4zm-3.2 4c-.2 0-.5 0-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.8 2.2.9 2.6.7 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2-1.3-.8-.7-1.3-1.5-1.4-1.8-.2-.3 0-.4.1-.5l.4-.5.3-.4v-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4z"/></svg>Descargar por WhatsApp</a>` : '';
+        buttons += ['android', 'web', 'ios'].filter(k => links[k]).map(k => `
+          <a href="${esc(links[k])}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-yolk text-ink font-extrabold rounded-full pl-3 pr-4 py-2.5 hover:bg-yolk-600">
+            <svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true">${STORE[k].icon}</svg>${STORE[k].label}</a>`).join('');
+        if (ready && !links.ios) buttons += `<span class="inline-flex items-center gap-2 text-white/70 font-bold px-2 py-2.5">
+            <svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true">${STORE.ios.icon}</svg>iPhone: en desarrollo</span>`;
+        return buttons;
+    }
+
     function renderApps() {
       const grid = $('appsGrid');
-      $('statApps').textContent = APPS.length ? APPS.length : 'Pronto';
-      if (!APPS.length) {
-        // Sin apps aún: mostramos lo que viene, con los personajes de los libros
-        const ideas = [
-          { name: 'Chanchini por Chile', text: 'Ayuda a Chanchini a encontrar su camino desde Arica hasta Punta Arenas.', img: 'img/chanchini.webp' },
-          { name: 'Chinowon: el juego', text: 'Adivina qué significan las palabras más absurdas del diccionario.', img: 'img/chinowon.webp' }
-        ];
-        grid.innerHTML = ideas.map(i => `
-          <article class="bg-paper rounded-[24px] border-2 border-mist p-5">
-            <div class="app-screen"><img src="${i.img}" alt="" class="opacity-35 grayscale" loading="lazy">
-              <span class="absolute inset-0 flex items-center justify-center"><span class="bg-ink text-paper font-extrabold rounded-full px-4 py-2">En desarrollo</span></span></div>
-            <h3 class="mt-5 font-display font-semibold text-2xl">${i.name}</h3>
-            <p class="mt-1 text-ink-600">${i.text}</p>
-          </article>`).join('');
-        return;
-      }
-      $('appsNotify').classList.toggle('hidden', !APPS.some(a => a.status === 'proximamente'));
+      $('statApps').textContent = APPS.length || 'Pronto';
+      $('appsNotify').classList.toggle('hidden', APPS.length > 0 && !APPS.some(a => a.status !== 'disponible'));
+      const ring = { coral: 'ring-coral-500', teal: 'ring-teal-500', sun: 'ring-sun-500', grape: 'ring-grape-500' };
+      const pill = { disponible: 'bg-[#2F8552] text-white', beta: 'bg-teal-500 text-white', proximamente: 'bg-yolk text-ink' };
       grid.innerHTML = APPS.map(app => {
         const links = app.links || {};
         const shots = (app.screenshots || []).map(imgPath);
-        const c = COLOR[app.color_key] || COLOR.teal;
-        const buttons = Object.keys(STORE).filter(k => links[k]).map(k => `
-          <a href="${esc(links[k])}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-ink text-paper font-bold rounded-full pl-3 pr-4 py-2.5 hover:bg-ink-700">
-            <svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true">${STORE[k].icon}</svg>${STORE[k].label}</a>`).join('');
+        const buttons = appButtons(app);
         return `
-          <article class="bg-paper rounded-[24px] border-2 border-mist p-5 flex flex-col">
-            <div class="app-screen">${shots[0] ? `<img src="${esc(shots[0])}" alt="Captura de ${esc(app.name)}" loading="lazy" onerror="handleImageError(this)">` : ''}</div>
-            <div class="mt-5 flex items-start gap-4">
-              ${app.icon_url ? `<img src="${esc(imgPath(app.icon_url))}" alt="" class="w-14 h-14 rounded-2xl object-cover shrink-0 border-2 border-mist" onerror="this.remove()">` : ''}
-              <div class="min-w-0">
-                <h3 class="font-display font-semibold text-2xl leading-tight">${esc(app.name)}</h3>
-                <p class="mt-1 text-sm font-extrabold ${c.text}">${STATUS[app.status] || ''}${app.tagline ? ` · ${esc(app.tagline)}` : ''}</p>
+          <article class="break-inside-avoid mb-6 bg-night-700 rounded-[26px] p-3 ring-2 ${ring[app.color_key] || ring.teal}">
+            ${shots[0] ? `<${app.video ? `button type="button" onclick="openAppVideo('${esc(app.slug)}')" aria-label="Ver video de ${esc(app.name)}"` : 'div'} class="group block w-full text-left relative rounded-[18px] overflow-hidden bg-night-600">
+              <img src="${esc(shots[0])}" alt="Imagen de ${esc(app.name)}" class="w-full h-auto max-h-[560px] object-cover object-top" loading="lazy" onerror="handleImageError(this)">
+              <span class="absolute top-3 right-3 text-xs font-extrabold px-3 py-1.5 rounded-full ${pill[app.status] || pill.proximamente}">${STATUS[app.status] || ''}</span>
+              ${app.video ? PLAY_BADGE : ''}
+            </${app.video ? 'button' : 'div'}>` : ''}
+            <div class="px-3 pt-4 pb-3">
+              <div class="flex items-start gap-3">
+                ${app.icon_url ? `<img src="${esc(imgPath(app.icon_url))}" alt="" class="w-12 h-12 rounded-xl object-cover shrink-0" onerror="this.remove()">` : ''}
+                <div class="min-w-0">
+                  <h3 class="font-display font-semibold text-2xl leading-tight">${esc(app.name)}</h3>
+                  ${app.tagline ? `<p class="mt-1 text-white/70 font-semibold">${esc(app.tagline)}</p>` : ''}
+                </div>
               </div>
+              ${app.description ? `<p class="mt-3 text-white/80">${esc(app.description)}</p>` : ''}
+              ${buttons ? `<div class="mt-4 flex flex-wrap gap-2">${buttons}</div>` : ''}
             </div>
-            <p class="mt-3 text-ink-600">${esc(app.description)}</p>
-            <div class="mt-auto pt-5 flex flex-wrap gap-2">${buttons || '<span class="text-sage font-semibold">Muy pronto en tiendas</span>'}</div>
           </article>`;
-      }).join('');
+      }).join('') || '<p class="text-white/75 text-lg">Muy pronto publicaremos nuestros juegos aquí.</p>';
     }
 
     // =============================================
@@ -685,6 +751,69 @@
           </figure>`;
       }).join('');
     }
+
+    // =============================================
+    // VIDEOS PROMOCIONALES (10 s, antes de comprar o descargar)
+    // =============================================
+    // Videos incluidos en la carpeta video/. Si el panel tiene un video propio (video_url), se usa ese.
+    const LOCAL_VIDEOS = [
+      { test: /chanchini/i,          src: 'video/chanchini.mp4' },
+      { test: /chinowon/i,           src: 'video/chinowon.mp4' },
+      { test: /barista/i,            src: 'video/barista.mp4' },
+      { test: /princesa gato/i,      src: 'video/princesa-gato.mp4' },
+      { test: /turr?on.go.home/i,    src: 'video/turron-go-home.mp4' },
+      { test: /vector.beat/i,        src: 'video/vector-beat.mp4' },
+      { test: /antuan/i,             src: 'video/antuan-soccer-player.mp4' }
+    ];
+    const findVideo = text => (LOCAL_VIDEOS.find(v => v.test.test(text)) || {}).src || '';
+    function attachVideos() {
+      Object.values(BOOKS).forEach(b => { b.video = b.video || findVideo(`${b.id} ${b.title}`); });
+      APPS.forEach(a => { a.video = a.video_url || a.video || findVideo(`${a.slug} ${a.name}`); });
+    }
+    const PLAY_BADGE = `<span class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <span class="w-16 h-16 rounded-full bg-white/90 text-ink flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+        <svg viewBox="0 0 24 24" class="w-7 h-7 ml-1" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></span></span>
+      <span class="absolute bottom-3 right-3 bg-ink/85 text-white text-xs font-extrabold px-2.5 py-1 rounded-full pointer-events-none">Video 10 s</span>`;
+
+    let videoTimer = null, videoAfter = null;
+    function openVideo({ src, title, after, endHtml }) {
+      const v = $('vPlayer');
+      videoAfter = after; $('vEnd').classList.add('hidden'); $('vEnd').innerHTML = endHtml || '';
+      $('vTitle').textContent = title;
+      $('vSkip').textContent = after ? 'Saltar video' : 'Ver opciones de descarga'; $('vSkip').classList.remove('invisible');
+      v.src = src; v.currentTime = 0; v.muted = false;
+      $('vSound').setAttribute('aria-pressed', 'true');
+      openLayer('videoModal');
+      // Se intenta con sonido (el clic lo permite); si el navegador lo bloquea, sigue sin sonido
+      v.play().catch(() => { v.muted = true; $('vSound').setAttribute('aria-pressed', 'false'); v.play().catch(() => {}); });
+      clearInterval(videoTimer);
+      videoTimer = setInterval(() => { if (v.duration) $('vBar').style.width = Math.min(100, v.currentTime / v.duration * 100) + '%'; }, 100);
+    }
+    function finishVideo() {
+      const v = $('vPlayer'); v.pause(); clearInterval(videoTimer); $('vBar').style.width = '100%';
+      if (videoAfter) { const go = videoAfter; closeVideo(); go(); }
+      else { $('vEnd').classList.remove('hidden'); $('vSkip').classList.add('invisible'); $('vEnd').querySelector('a,button')?.focus(); }
+    }
+    function closeVideo() {
+      const v = $('vPlayer'); v.pause(); v.removeAttribute('src'); v.load();
+      clearInterval(videoTimer); videoAfter = null; closeLayer('videoModal');
+    }
+    window.openBook = function(key) {
+      const b = BOOKS[key]; if (!b) return;
+      if (!b.video) return openBookModal(key);
+      openVideo({ src: b.video, title: b.title, after: () => openBookModal(key) });
+    };
+    window.openAppVideo = function(slug) {
+      const app = APPS.find(a => a.slug === slug); if (!app?.video) return;
+      const btns = appButtons(app);
+      openVideo({ src: app.video, title: app.name, endHtml: `
+        <p class="font-display text-3xl font-semibold">${esc(app.name)}</p>
+        ${app.tagline ? `<p class="mt-1 text-white/75 font-semibold">${esc(app.tagline)}</p>` : ''}
+        <div class="mt-5 flex flex-wrap justify-center gap-2">${btns || '<span class="text-white/80 font-bold">Muy pronto disponible</span>'}</div>
+        <button type="button" onclick="replayVideo()" class="mt-5 text-white/80 font-bold underline underline-offset-4">Ver de nuevo</button>` });
+    };
+    window.replayVideo = function() { const v = $('vPlayer'); $('vEnd').classList.add('hidden'); $('vSkip').classList.remove('invisible'); v.currentTime = 0; v.play().catch(() => {}); clearInterval(videoTimer); videoTimer = setInterval(() => { if (v.duration) $('vBar').style.width = Math.min(100, v.currentTime / v.duration * 100) + '%'; }, 100); };
+    window.closeVideo = closeVideo; window.finishVideo = finishVideo;
 
     // =============================================
     // VISTA PREVIA
@@ -714,7 +843,7 @@
       let modalImage = $('mImg');
       if (!(modalImage instanceof HTMLImageElement)) {
         const img = document.createElement('img'); img.id = 'mImg';
-        img.className = 'w-full max-w-[260px] md:max-w-none rounded-[6px_14px_14px_6px] shadow-[0_20px_40px_-18px_rgba(47,58,44,.7)]';
+        img.className = 'w-full max-w-[260px] md:max-w-none rounded-[6px_14px_14px_6px] shadow-[0_20px_40px_-18px_rgba(31,58,43,.7)]';
         img.onerror = function() { handleImageError(this); };
         modalImage.replaceWith(img); modalImage = img;
       }
@@ -730,7 +859,14 @@
       currentBookId = bookId;
       const digital = hasFormat(book, 'digital');
       $('formatContainer').classList.toggle('hidden', !digital);
-      setFormat('fisico');
+      const minOf = fmt => { const p = book.chapters.length ? book.chapters.map(ch => chapterPrice(ch, fmt)).filter(Boolean) : [fmt === 'digital' ? book.priceDigital : book.pricePhysical].filter(Boolean); return p.length ? Math.min(...p) : 0; };
+      document.querySelectorAll('.fmt-toggle button').forEach(b => {
+        const m = minOf(b.dataset.format);
+        b.querySelector('.fmt-price').textContent = m ? `· ${book.chapters.length > 1 ? 'desde ' : ''}${formatPrice(m)}` : '';
+      });
+      $('chapTitle').textContent = digital ? '2. Elige los capítulos' : 'Elige los capítulos';
+      // Si hay versión digital, el cliente debe elegir el formato explícitamente
+      setFormat(digital ? null : 'fisico');
       openLayer('bookModal');
     }
     function closeBookModal() { closeLayer('bookModal'); selectedChapters.clear(); currentBookId = null; }
@@ -739,8 +875,9 @@
       format = fmt;
       document.querySelectorAll('.fmt-toggle button').forEach(b => b.setAttribute('aria-pressed', b.dataset.format === fmt));
       $('mDelivery').textContent = fmt === 'digital'
-        ? 'Digital en PDF · te lo enviamos por WhatsApp o correo apenas confirmemos el pago'
-        : 'Libro físico · retiro en la cafetería o envío por pagar';
+        ? 'Digital · lectura en el navegador, protegida contra copia e impresión. Te la enviamos al confirmar el pago'
+        : fmt === 'fisico' ? 'Libro físico · retiro en la cafetería o envío por pagar'
+        : 'Elige si lo quieres físico o digital';
       if (currentBookId) renderChapterSelector(currentBookId);
     }
 
@@ -748,8 +885,8 @@
       const book = BOOKS[bookId];
       const hasChapters = book.chapters.length > 0;
       // Mantener solo las selecciones disponibles en el formato elegido
-      book.chapters.forEach(ch => { if (!chapterPrice(ch, format)) selectedChapters.delete(ch.id); });
-      $('chapterSelectorContainer').classList.toggle('hidden', !hasChapters);
+      book.chapters.forEach(ch => { if (format && !chapterPrice(ch, format)) selectedChapters.delete(ch.id); });
+      $('chapterSelectorContainer').classList.toggle('hidden', !hasChapters || !format);
       $('chapterSelector').innerHTML = book.chapters.map(ch => {
         const price = chapterPrice(ch, format);
         const on = selectedChapters.has(ch.id);
@@ -769,20 +906,21 @@
       const book = BOOKS[bookId];
       const hasChapters = book.chapters.length > 0;
       const selected = book.chapters.filter(ch => selectedChapters.has(ch.id));
-      const price = hasChapters ? selected.reduce((s, ch) => s + chapterPrice(ch, format), 0)
+      const price = !format ? 0 : hasChapters ? selected.reduce((s, ch) => s + chapterPrice(ch, format), 0)
         : (format === 'digital' ? book.priceDigital : book.pricePhysical);
-      const canAdd = !hasChapters || selected.length > 0;
+      const canAdd = Boolean(format) && (!hasChapters || selected.length > 0);
       $('mPriceF').textContent = formatPrice(price);
-      $('mChapterLabel').textContent = !hasChapters ? 'Libro completo'
+      $('mChapterLabel').textContent = !format ? '' : !hasChapters ? 'Libro completo'
         : selected.length ? `${selected.length} ${selected.length === 1 ? 'capítulo elegido' : 'capítulos elegidos'}` : 'Elige al menos un capítulo';
       $('btnFisico').disabled = !canAdd;
+      $('btnFisico').textContent = !format ? 'Elige físico o digital' : format === 'digital' ? 'Agregar digital al carrito' : 'Agregar físico al carrito';
     }
 
     // =============================================
     // CARRITO
     // =============================================
     function addToCart(bookId) {
-      const book = BOOKS[bookId]; if (!book) return;
+      const book = BOOKS[bookId]; if (!book || !format) return;
       const choices = book.chapters.length
         ? book.chapters.filter(ch => selectedChapters.has(ch.id) && chapterPrice(ch, format) > 0)
             .map(ch => ({ id: ch.id, name: ch.name, price: chapterPrice(ch, format) }))
@@ -825,16 +963,31 @@
       $('cEmpty').classList.toggle('hidden', !empty);
       $('cList').classList.toggle('hidden', empty);
       $('cFoot').classList.toggle('hidden', empty);
+      $('cCheckout').classList.toggle('hidden', empty);
       if (empty) return;
       $('cTotal').textContent = formatPrice(cartTotal());
-      $('cList').innerHTML = cart.map((item, i) => `
+      const sub = f => cart.filter(i => i.format === f).reduce((s, i) => s + i.price * i.quantity, 0);
+      const hasF = cart.some(i => i.format === 'fisico'), hasD = cart.some(i => i.format === 'digital');
+      $('coFisico').classList.toggle('hidden', !hasF);
+      $('coDigital').classList.toggle('hidden', !hasD);
+      $('cSplit').textContent = [hasF && `Físico ${formatPrice(sub('fisico'))}`, hasD && `Digital ${formatPrice(sub('digital'))}`].filter(Boolean).join(' · ');
+      const group = (f, title) => {
+        const rows = cart.map((item, i) => [item, i]).filter(([item]) => item.format === f);
+        if (!rows.length) return '';
+        return `<h4 class="font-display text-lg flex items-center justify-between pt-2"><span>${title}</span><span class="text-base font-sans font-extrabold">${formatPrice(sub(f))}</span></h4>` + rows.map(([item, i]) => cartRow(item, i)).join('');
+      };
+      $('cList').innerHTML = group('fisico', '📖 Libros físicos') + group('digital', '📱 Libros digitales');
+    }
+
+    function cartRow(item, i) {
+      return `
         <div class="flex gap-3 bg-white border-2 border-mist rounded-2xl p-3">
           <img src="${esc(item.img)}" alt="" class="w-14 h-20 rounded-lg object-cover shrink-0" onerror="handleImageError(this)">
           <div class="flex-1 min-w-0">
             <p class="font-bold leading-snug truncate">${esc(item.title)}</p>
             <p class="text-sm text-sage">${esc(item.chapterName)} · <span class="font-bold ${item.format === 'digital' ? 'text-teal-600' : ''}">${FORMAT_LABEL[item.format]}</span></p>
             <div class="mt-2 flex items-center justify-between">
-              ${item.format === 'digital' ? '<span class="text-sm text-sage">Se envía en PDF</span>' : `<div class="flex items-center border-2 border-mist rounded-full">
+              ${item.format === 'digital' ? '<span class="text-sm text-sage">Lectura digital protegida</span>' : `<div class="flex items-center border-2 border-mist rounded-full">
                 <button onclick="changeQuantity(${i},-1)" class="w-8 h-8 font-bold" aria-label="Quitar uno">−</button>
                 <span class="w-6 text-center font-extrabold">${item.quantity}</span>
                 <button onclick="changeQuantity(${i},1)" class="w-8 h-8 font-bold" aria-label="Agregar uno">+</button>
@@ -845,25 +998,48 @@
               </div>
             </div>
           </div>
-        </div>`).join('');
+        </div>`;
     }
 
     function bumpCart() {
       ['cartFab'].forEach(id => { const el = $(id); el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); });
     }
 
+    function checkoutError(msg, el) {
+      $('coError').textContent = msg; $('coError').classList.remove('hidden');
+      el?.focus?.(); $('coError').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      return false;
+    }
     function sendWhatsApp() {
       if (!cart.length) return;
-      const line = (item, n) => `${n}. *${item.title}*\n   ${item.chapterName}${item.quantity > 1 ? ` × ${item.quantity}` : ''} = ${formatPrice(item.price * item.quantity)}\n`;
+      $('coError').classList.add('hidden');
       const fisico = cart.filter(i => i.format !== 'digital');
       const digital = cart.filter(i => i.format === 'digital');
-      let msg = '📚 *Pedido VibaraChokiT*\n\n';
-      if (fisico.length) msg += '📖 *Libros físicos*\n' + fisico.map((it, i) => line(it, i + 1)).join('') + '\n';
-      if (digital.length) msg += '📱 *Libros digitales (PDF)*\n' + digital.map((it, i) => line(it, i + 1)).join('') + '\n';
-      msg += `*Total: ${formatPrice(cartTotal())}*\n\n`;
-      if (fisico.length) msg += '¿Retiro en la cafetería Kihnally o envío? ';
-      if (digital.length) msg += '¿A qué correo o número envío los PDF?';
-      window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg.trim()), '_blank');
+      const name = $('coName').value.trim();
+      const entrega = document.querySelector('input[name="coEntrega"]:checked')?.value;
+      const destino = document.querySelector('input[name="coDestino"]:checked')?.value;
+      const direccion = $('coDireccion').value.trim(), correo = $('coCorreo').value.trim();
+      if (!name) return checkoutError('Escribe tu nombre.', $('coName'));
+      if (fisico.length && !entrega) return checkoutError('Elige si retiras los libros físicos o prefieres envío.', document.querySelector('input[name="coEntrega"]'));
+      if (fisico.length && entrega === 'envio' && !direccion) return checkoutError('Escribe la dirección para el envío.', $('coDireccion'));
+      if (digital.length && !destino) return checkoutError('Elige dónde te enviamos los libros digitales.', document.querySelector('input[name="coDestino"]'));
+      if (digital.length && destino === 'correo' && !/^\S+@\S+\.\S+$/.test(correo)) return checkoutError('Escribe un correo válido para los libros digitales.', $('coCorreo'));
+
+      const sub = list => list.reduce((s, i) => s + i.price * i.quantity, 0);
+      const line = (item, n) => `${n}. *${item.title}*\n   ${item.chapterName}${item.quantity > 1 ? ` × ${item.quantity}` : ''} = ${formatPrice(item.price * item.quantity)}\n`;
+      let msg = `📚 *Pedido VibaraChokiT*\nCliente: ${name}\n\n`;
+      if (fisico.length) {
+        msg += '📖 *LIBROS FÍSICOS*\n' + fisico.map((it, i) => line(it, i + 1)).join('');
+        msg += `Subtotal físico: ${formatPrice(sub(fisico))}\n`;
+        msg += entrega === 'retiro' ? 'Entrega: retiro en la cafetería Kihnally\n\n' : `Entrega: envío por pagar a ${direccion}\n\n`;
+      }
+      if (digital.length) {
+        msg += '📱 *LIBROS DIGITALES* (lectura protegida)\n' + digital.map((it, i) => line(it, i + 1)).join('');
+        msg += `Subtotal digital: ${formatPrice(sub(digital))}\n`;
+        msg += destino === 'correo' ? `Enviar a: ${correo}\n\n` : 'Enviar a: este WhatsApp\n\n';
+      }
+      msg += `*Total: ${formatPrice(cartTotal())}*`;
+      window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank');
       cart = []; saveCart(); renderCart(); closeCart();
       showToast('Pedido enviado a WhatsApp. Te responderemos ahí.');
     }
@@ -893,7 +1069,7 @@
     function closeLayer(id) {
       if ($(id).classList.contains('hidden')) return;
       $(id).classList.add('hidden');
-      if ($('bookModal').classList.contains('hidden') && $('previewModal').classList.contains('hidden') && $('cartDr').classList.contains('hidden'))
+      if ($('bookModal').classList.contains('hidden') && $('previewModal').classList.contains('hidden') && $('videoModal').classList.contains('hidden') && $('cartDr').classList.contains('hidden'))
         document.body.classList.remove('no-scroll');
       lastFocus?.focus?.();
     }
@@ -936,19 +1112,26 @@
 
       document.addEventListener('keydown', e => {
         if (e.key !== 'Escape') return;
-        if (!$('previewModal').classList.contains('hidden')) closePreviewModal();
+        if (!$('videoModal').classList.contains('hidden')) closeVideo();
+        else if (!$('previewModal').classList.contains('hidden')) closePreviewModal();
         else if (!$('bookModal').classList.contains('hidden')) closeBookModal();
         else closeCart();
       });
 
       $('bookSearch').addEventListener('input', e => { searchTerm = e.target.value; renderBooks(); });
       document.querySelectorAll('.fmt-toggle button').forEach(b => b.addEventListener('click', () => setFormat(b.dataset.format)));
+      // Si el video no se puede reproducir, se pasa directo a la compra/descarga
+      $('vPlayer').addEventListener('error', () => { if ($('vPlayer').getAttribute('src') && !$('videoModal').classList.contains('hidden')) finishVideo(); });
+      $('vSound').addEventListener('click', () => { const v = $('vPlayer'); v.muted = !v.muted; $('vSound').setAttribute('aria-pressed', String(!v.muted)); });
+      document.querySelectorAll('input[name="coEntrega"]').forEach(r => r.addEventListener('change', () => $('coDireccion').classList.toggle('hidden', r.value !== 'envio' || !r.checked)));
+      document.querySelectorAll('input[name="coDestino"]').forEach(r => r.addEventListener('change', () => $('coCorreo').classList.toggle('hidden', r.value !== 'correo' || !r.checked)));
     }
 
     Object.assign(window, { openBookModal, closeBookModal, openCart, closeCart, sendWhatsApp, addToCart });
 
     async function init() {
       $('year').textContent = new Date().getFullYear();
+      attachVideos();
       renderShelf(); renderFilters(); renderBooks(); renderApps();
       initNav();
       await loadFromSupabase();

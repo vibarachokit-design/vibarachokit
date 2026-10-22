@@ -13,35 +13,35 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <style>
-    body { background: #F1F4EC; color: #2F3A2C; font-family: Nunito, system-ui, sans-serif; }
+    body { background: #F2FBF5; color: #1F3A2B; font-family: Nunito, system-ui, sans-serif; }
     h1, h2, .fd { font-family: Fredoka, Nunito, sans-serif; }
-    .field { width:100%; border:2px solid #C9D4BE; border-radius:12px; padding:10px 12px; background:white; }
-    .field:focus { outline:none; border-color:#656F5B; }
-    .label { display:block; font-size:14px; font-weight:800; margin-bottom:6px; color:#4A5745; }
-    .hint { font-size:13px; color:#656F5B; margin-top:6px; }
+    .field { width:100%; border:2px solid #BFE6CC; border-radius:12px; padding:10px 12px; background:white; }
+    .field:focus { outline:none; border-color:#2F8552; }
+    .label { display:block; font-size:14px; font-weight:800; margin-bottom:6px; color:#3D5A47; }
+    .hint { font-size:13px; color:#2F8552; margin-top:6px; }
     .btn { border-radius: 999px; font-weight: 800; padding: 10px 20px; }
-    .btn-dark { background:#2F3A2C; color:#F7F8F3; } .btn-dark:hover { background:#3B4837; }
-    .btn-line { background:white; border:2px solid #C9D4BE; } .btn-line:hover { border-color:#656F5B; }
-    .tab { padding: 10px 18px; border-radius: 999px; font-weight: 800; color:#656F5B; }
-    .tab[aria-selected="true"] { background:#2F3A2C; color:#F7F8F3; }
-    .card { background:white; border:2px solid #E6ECDF; border-radius:20px; padding:18px; }
-    .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:20px; z-index:100; padding:14px 18px; border-radius:14px; color:white; background:#2F3A2C; box-shadow:0 15px 40px #0003; max-width:calc(100vw - 32px); font-weight:700; }
-    :focus-visible { outline: 3px solid #F0B429; outline-offset: 2px; }
+    .btn-dark { background:#1F3A2B; color:#FFFDF7; } .btn-dark:hover { background:#2A4A37; }
+    .btn-line { background:white; border:2px solid #BFE6CC; } .btn-line:hover { border-color:#2F8552; }
+    .tab { padding: 10px 18px; border-radius: 999px; font-weight: 800; color:#2F8552; }
+    .tab[aria-selected="true"] { background:#1F3A2B; color:#FFFDF7; }
+    .card { background:white; border:2px solid #E4F6EA; border-radius:20px; padding:18px; }
+    .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:20px; z-index:100; padding:14px 18px; border-radius:14px; color:white; background:#1F3A2B; box-shadow:0 15px 40px #0003; max-width:calc(100vw - 32px); font-weight:700; }
+    :focus-visible { outline: 3px solid #FFC233; outline-offset: 2px; }
   </style>
 </head>
 <body class="min-h-screen">
   <section id="loginView" class="min-h-screen flex items-center justify-center p-5">
-    <form id="loginForm" class="bg-white rounded-3xl border-2 border-[#E6ECDF] p-8 w-full max-w-md">
+    <form id="loginForm" class="bg-white rounded-3xl border-2 border-[#E4F6EA] p-8 w-full max-w-md">
       <img src="img/logo-vibarachokit.png" alt="VibaraChokiT Estudio Creativo" class="w-48 mb-6">
       <h1 class="text-3xl font-semibold">Panel de administración</h1>
-      <p class="text-[#656F5B] mt-2 mb-7">Acceso solo para administradores.</p>
+      <p class="text-[#2F8552] mt-2 mb-7">Acceso solo para administradores.</p>
       <label class="label" for="loginEmail">Correo</label>
       <input id="loginEmail" class="field mb-4" type="email" autocomplete="username" required>
       <label class="label" for="loginPassword">Contraseña</label>
       <input id="loginPassword" class="field mb-6" type="password" autocomplete="current-password" required>
       <button id="loginButton" class="btn btn-dark w-full py-3">Ingresar</button>
       <p id="loginError" class="text-red-600 text-sm mt-4 hidden"></p>
-      <a href="index.html" class="block text-center text-[#656F5B] mt-6 underline underline-offset-4">Volver a la tienda</a>
+      <a href="index.html" class="block text-center text-[#2F8552] mt-6 underline underline-offset-4">Volver a la tienda</a>
     </form>
   </section>
 
@@ -49,13 +49,30 @@
     <header class="flex flex-col md:flex-row gap-4 md:items-center justify-between mb-6">
       <div class="flex items-center gap-4">
         <img src="img/logo-icono.png" alt="" class="w-12">
-        <div><h1 class="text-3xl font-semibold">Panel VibaraChokiT</h1><p id="sessionEmail" class="text-[#656F5B]"></p></div>
+        <div><h1 class="text-3xl font-semibold">Panel VibaraChokiT</h1><p id="sessionEmail" class="text-[#2F8552]"></p></div>
       </div>
       <div class="flex flex-wrap gap-2">
         <a href="index.html" target="_blank" class="btn btn-line">Ver tienda</a>
         <button onclick="logout()" class="btn btn-line">Cerrar sesión</button>
       </div>
     </header>
+
+    <section id="setupBanner" class="hidden mb-6 rounded-3xl border-2 border-[#F2A900] bg-[#FFF7DB] p-5 md:p-7">
+      <h2 class="text-2xl font-semibold">Falta un paso en Supabase (5 minutos, una sola vez)</h2>
+      <p class="mt-2 text-[#3D5A47] max-w-3xl">Para guardar apps, reseñas y precios digitales, la base de datos necesita unas tablas nuevas. Se crean pegando un código que ya está listo:</p>
+      <ol class="mt-4 space-y-2 list-decimal pl-6 text-[#1F3A2B]">
+        <li>Presiona <b>Copiar código</b>.</li>
+        <li>Presiona <b>Abrir el editor de Supabase</b> e inicia sesión si te lo pide. Se abre una consulta nueva en blanco (si no, en el menú izquierdo entra a <b>SQL Editor</b> y elige <b>New query</b>).</li>
+        <li>Pega el código (Ctrl + V o ⌘ + V) y presiona el botón verde <b>Run</b>.</li>
+        <li>Cuando diga <b>Success</b>, vuelve aquí y presiona <b>Ya lo hice</b>.</li>
+      </ol>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <button id="copySql" class="btn btn-dark">Copiar código</button>
+        <a id="openSqlEditor" href="https://supabase.com/dashboard" target="_blank" rel="noopener" class="btn btn-line">Abrir el editor de Supabase</a>
+        <button onclick="location.reload()" class="btn btn-line">Ya lo hice</button>
+      </div>
+      <details class="mt-4"><summary class="cursor-pointer font-bold text-[#2F8552]">Ver el código</summary><pre id="sqlPreview" class="mt-3 max-h-64 overflow-auto bg-white rounded-xl p-4 text-xs border-2 border-[#E4F6EA]"></pre></details>
+    </section>
 
     <div class="flex flex-wrap gap-2 mb-6" role="tablist">
       <button class="tab" role="tab" data-tab="books" aria-selected="true">Libros <span id="countBooks"></span></button>
@@ -66,7 +83,7 @@
     <!-- LIBROS -->
     <section data-panel="books">
       <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
-        <p class="text-[#4A5745]"><b id="statChapters">0</b> capítulos · <b id="statPublished">0</b> libros visibles</p>
+        <p class="text-[#3D5A47]"><b id="statChapters">0</b> capítulos · <b id="statPublished">0</b> libros visibles</p>
         <button onclick="openBookEditor()" class="btn btn-dark">Agregar libro</button>
       </div>
       <div id="bookList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
@@ -75,7 +92,7 @@
     <!-- APPS -->
     <section data-panel="apps" class="hidden">
       <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
-        <p class="text-[#4A5745] max-w-xl">Mientras no haya apps publicadas, la tienda muestra dos ideas "En desarrollo" con tus personajes.</p>
+        <p class="text-[#3D5A47] max-w-xl">Con estado <b>Disponible</b> o <b>En prueba</b>, la tienda muestra el botón <b>Descargar por WhatsApp</b>. Pega el enlace de Google Play para mostrar ese botón también. Mientras no haya enlace de App Store, aparece "iPhone: en desarrollo".</p>
         <button onclick="openAppEditor()" class="btn btn-dark">Agregar app</button>
       </div>
       <div id="appList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
@@ -84,7 +101,7 @@
     <!-- RESEÑAS -->
     <section data-panel="reviews" class="hidden">
       <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
-        <p class="text-[#4A5745] max-w-xl">Agrega solo reseñas reales, con permiso de quien la escribió. La sección no aparece en la tienda si no hay reseñas visibles.</p>
+        <p class="text-[#3D5A47] max-w-xl">Agrega solo reseñas reales, con permiso de quien la escribió. La sección no aparece en la tienda si no hay reseñas visibles.</p>
         <button onclick="openReviewEditor()" class="btn btn-dark">Agregar reseña</button>
       </div>
       <div id="reviewList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
@@ -92,8 +109,8 @@
   </main>
 
   <!-- EDITOR LIBRO -->
-  <div id="bookEditor" class="editor hidden fixed inset-0 z-50 bg-[#2F3A2C]/70 p-3 md:p-8 overflow-y-auto">
-    <form id="bookForm" class="bg-[#F7F8F3] max-w-4xl mx-auto rounded-3xl p-6 md:p-8">
+  <div id="bookEditor" class="editor hidden fixed inset-0 z-50 bg-[#1F3A2B]/70 p-3 md:p-8 overflow-y-auto">
+    <form id="bookForm" class="bg-[#FFFDF7] max-w-4xl mx-auto rounded-3xl p-6 md:p-8">
       <div class="flex justify-between items-center mb-7"><h2 id="bookEditorTitle" class="text-2xl font-semibold">Agregar libro</h2><button type="button" onclick="closeEditors()" class="btn btn-line">Cerrar</button></div>
       <input id="bookId" type="hidden">
       <div class="grid md:grid-cols-2 gap-5">
@@ -109,7 +126,8 @@
         <div class="md:col-span-2"><label class="label" for="tags">Categorías, separadas por coma</label><input id="tags" class="field" placeholder="Infantil, Aventura, Chile"><p class="hint">Se convierten en los filtros de la tienda. Repite las mismas palabras entre libros para agruparlos.</p></div>
         <div><label class="label" for="coverFile">Portada</label><input id="coverFile" class="field" type="file" accept="image/jpeg,image/png,image/webp"><input id="imageUrl" type="hidden"><img id="coverPreview" class="hidden mt-3 w-28 h-36 object-cover rounded-xl" alt="Portada actual"></div>
         <div><label class="label" for="previewFiles">Páginas del interior</label><input id="previewFiles" class="field" type="file" accept="image/jpeg,image/png,image/webp" multiple><p class="hint">Las nuevas imágenes reemplazan las anteriores. Se optimizan automáticamente.</p><input id="previewUrls" type="hidden"></div>
-        <div class="md:col-span-2"><label class="label" for="chapters">Capítulos: uno por línea, con formato Nombre | Precio físico | Precio digital</label><textarea id="chapters" class="field font-mono" rows="6" placeholder="Capítulo 1 | 3500 | 1990&#10;Capítulo 2 | 3500 | 1990"></textarea><p class="hint">Si dejas el precio digital vacío, ese capítulo se vende solo en físico.</p></div>
+        <div class="md:col-span-2"><label class="label" for="bookVideoFile">Video promocional (MP4, ~10 segundos)</label><input id="bookVideoFile" class="field" type="file" accept="video/mp4,video/webm"><input id="bookVideoUrl" type="hidden"><p class="hint" id="bookVideoHint">Se muestra al tocar el libro, antes de la compra. Usa videos de menos de 15 MB.</p><label class="flex items-center gap-2 mt-2 text-sm"><input id="bookVideoRemove" type="checkbox"> Quitar el video actual</label></div>
+        <div class="md:col-span-2"><label class="label" for="chapters">Capítulos: uno por línea, con formato Nombre | Precio físico | Precio digital</label><textarea id="chapters" class="field font-mono" rows="6" placeholder="Capítulo 1 | 3500 | 1990&#10;Capítulo 2 | 3500 | 1990"></textarea><p class="hint">Si dejas el precio digital vacío, ese capítulo se vende solo en físico. La versión digital se entrega como lectura HTML protegida.</p></div>
         <label class="md:col-span-2 flex items-center gap-3"><input id="published" type="checkbox" class="w-5 h-5" checked><span class="font-bold">Visible en la tienda</span></label>
       </div>
       <div class="flex justify-end gap-3 mt-8"><button type="button" onclick="closeEditors()" class="btn btn-line">Cancelar</button><button id="saveBook" class="btn btn-dark">Guardar libro</button></div>
@@ -117,8 +135,8 @@
   </div>
 
   <!-- EDITOR APP -->
-  <div id="appEditor" class="editor hidden fixed inset-0 z-50 bg-[#2F3A2C]/70 p-3 md:p-8 overflow-y-auto">
-    <form id="appForm" class="bg-[#F7F8F3] max-w-4xl mx-auto rounded-3xl p-6 md:p-8">
+  <div id="appEditor" class="editor hidden fixed inset-0 z-50 bg-[#1F3A2B]/70 p-3 md:p-8 overflow-y-auto">
+    <form id="appForm" class="bg-[#FFFDF7] max-w-4xl mx-auto rounded-3xl p-6 md:p-8">
       <div class="flex justify-between items-center mb-7"><h2 id="appEditorTitle" class="text-2xl font-semibold">Agregar app</h2><button type="button" onclick="closeEditors()" class="btn btn-line">Cerrar</button></div>
       <input id="appId" type="hidden">
       <div class="grid md:grid-cols-2 gap-5">
@@ -133,6 +151,7 @@
         <div class="md:col-span-2"><label class="label" for="linkWeb">Enlace para jugar en la web</label><input id="linkWeb" class="field" type="url" placeholder="https://..."></div>
         <div><label class="label" for="appIconFile">Ícono (cuadrado)</label><input id="appIconFile" class="field" type="file" accept="image/jpeg,image/png,image/webp"><input id="appIconUrl" type="hidden"><img id="appIconPreview" class="hidden mt-3 w-16 h-16 rounded-2xl object-cover" alt="Ícono actual"></div>
         <div><label class="label" for="appShotFiles">Capturas de pantalla</label><input id="appShotFiles" class="field" type="file" accept="image/jpeg,image/png,image/webp" multiple><p class="hint">La primera captura se muestra en la tarjeta. Reemplazan las anteriores.</p><input id="appShotUrls" type="hidden"></div>
+        <div class="md:col-span-2"><label class="label" for="appVideoFile">Video promocional (MP4, ~10 segundos)</label><input id="appVideoFile" class="field" type="file" accept="video/mp4,video/webm"><input id="appVideoUrl" type="hidden"><p class="hint" id="appVideoHint">Se muestra al tocar la imagen del juego; al terminar aparecen las opciones de descarga.</p><label class="flex items-center gap-2 mt-2 text-sm"><input id="appVideoRemove" type="checkbox"> Quitar el video actual</label></div>
         <div><label class="label" for="appOrder">Orden</label><input id="appOrder" class="field" type="number" step="1" value="0"></div>
         <label class="flex items-center gap-3 self-end pb-3"><input id="appPublished" type="checkbox" class="w-5 h-5" checked><span class="font-bold">Visible en la tienda</span></label>
       </div>
@@ -141,8 +160,8 @@
   </div>
 
   <!-- EDITOR RESEÑA -->
-  <div id="reviewEditor" class="editor hidden fixed inset-0 z-50 bg-[#2F3A2C]/70 p-3 md:p-8 overflow-y-auto">
-    <form id="reviewForm" class="bg-[#F7F8F3] max-w-2xl mx-auto rounded-3xl p-6 md:p-8">
+  <div id="reviewEditor" class="editor hidden fixed inset-0 z-50 bg-[#1F3A2B]/70 p-3 md:p-8 overflow-y-auto">
+    <form id="reviewForm" class="bg-[#FFFDF7] max-w-2xl mx-auto rounded-3xl p-6 md:p-8">
       <div class="flex justify-between items-center mb-7"><h2 id="reviewEditorTitle" class="text-2xl font-semibold">Agregar reseña</h2><button type="button" onclick="closeEditors()" class="btn btn-line">Cerrar</button></div>
       <input id="reviewId" type="hidden">
       <div class="grid md:grid-cols-2 gap-5">
@@ -158,6 +177,167 @@
     </form>
   </div>
 
+  <script type="text/plain" id="setupSql">-- Paso único: tablas nuevas + precios físico/digital + videos
+-- =====================================================================
+-- ACTUALIZACIÓN COMPLETA (apps y juegos, reseñas, imágenes WebP, venta digital)
+--
+-- Cómo ejecutarlo:
+--   1. Entra a https://supabase.com/dashboard y abre tu proyecto.
+--   2. Menú izquierdo: "SQL Editor" -> botón "New query".
+--   3. Pega TODO este archivo y presiona "Run" (o Ctrl + Enter).
+--   4. Debe decir "Success. No rows returned".
+--
+-- Se puede ejecutar más de una vez sin problema. No borra libros, precios ni capítulos.
+-- =====================================================================
+
+-- ---------- APPS Y JUEGOS ----------
+create table if not exists public.apps (
+  id text primary key default gen_random_uuid()::text,
+  slug text not null unique check (slug ~ '^[a-z0-9-]+$'),
+  name text not null,
+  tagline text not null default '',
+  description text not null default '',
+  icon_url text not null default '',
+  screenshots jsonb not null default '[]'::jsonb,
+  links jsonb not null default '{}'::jsonb,          -- {"android": "...", "ios": "...", "web": "..."}
+  status text not null default 'proximamente' check (status in ('disponible','beta','proximamente')),
+  color_key text not null default 'teal' check (color_key in ('coral','teal','sun','grape')),
+  published boolean not null default true,
+  sort_order integer not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+drop trigger if exists apps_touch_updated_at on public.apps;
+create trigger apps_touch_updated_at before update on public.apps
+for each row execute function public.touch_updated_at();
+
+alter table public.apps enable row level security;
+drop policy if exists "Public can read published apps" on public.apps;
+create policy "Public can read published apps" on public.apps for select
+using (published or public.is_admin());
+drop policy if exists "Admins manage apps" on public.apps;
+create policy "Admins manage apps" on public.apps for all
+using (public.is_admin()) with check (public.is_admin());
+
+-- ---------- RESEÑAS (solo reales, ingresadas desde el panel) ----------
+create table if not exists public.reviews (
+  id text primary key default gen_random_uuid()::text,
+  author_name text not null,
+  location text not null default '',
+  book_slug text,                                    -- opcional: slug del libro reseñado
+  rating integer not null default 5 check (rating between 1 and 5),
+  body text not null,
+  published boolean not null default true,
+  sort_order integer not null default 0,
+  created_at timestamptz not null default now()
+);
+
+alter table public.reviews enable row level security;
+drop policy if exists "Public can read published reviews" on public.reviews;
+create policy "Public can read published reviews" on public.reviews for select
+using (published or public.is_admin());
+drop policy if exists "Admins manage reviews" on public.reviews;
+create policy "Admins manage reviews" on public.reviews for all
+using (public.is_admin()) with check (public.is_admin());
+
+-- ---------- IMÁGENES: de PNG/JPG a WebP ----------
+-- Las imágenes de la carpeta img/ se convirtieron a .webp (10 veces más livianas).
+-- Las imágenes subidas desde el panel (Supabase Storage) no se tocan.
+update public.books
+set image_url = regexp_replace(image_url, '\.(png|jpe?g)$', '.webp', 'i')
+where image_url like 'img/%';
+
+update public.books
+set preview_images = (
+  select coalesce(jsonb_agg(
+    case when p like 'img/%' then to_jsonb(regexp_replace(p, '\.(png|jpe?g)$', '.webp', 'i')) else to_jsonb(p) end
+  ), '[]'::jsonb)
+  from jsonb_array_elements_text(preview_images) as p
+)
+where preview_images::text like '%img/%';
+
+-- ---------- VENTA DIGITAL ----------
+-- Precio digital vacío o 0 = ese capítulo/libro NO se vende en digital.
+alter table public.chapters add column if not exists price_digital integer check (price_digital >= 0);
+alter table public.books    add column if not exists price_digital integer check (price_digital >= 0);
+
+-- ---------- JUEGOS INICIALES ----------
+-- Quedan como "Disponible" (descarga por WhatsApp). Agrega el enlace de Google Play en el panel.
+insert into public.apps (slug, name, tagline, description, screenshots, status, color_key, sort_order) values
+('turron-go-home', 'Turrón Go Home!', 'Una aventura de caminos en Mejillones', '¡Ayuda a Turrón a volver a su casita! Une los caminos por la costa de Mejillones en 48 niveles y 4 mundos.', '["img/apps/turron-go-home.webp"]'::jsonb, 'disponible', 'sun', 1),
+('turron-kofy-run', 'Turrón Kofy Run', 'Una carrera del Espacio Kihnally', 'Corre con Turrón por el borde costero, junta granos de café y llega a la cafetería Kihnally.', '["img/apps/turron-kofy-run.webp"]'::jsonb, 'disponible', 'coral', 2),
+('vector-beat', 'Vector Beat', 'Salta al ritmo entre islas flotantes', 'Un robot tejido a crochet salta por anillos y mundos de lana bajo un cielo de tormenta.', '["img/apps/vector-beat.webp"]'::jsonb, 'disponible', 'grape', 3),
+('antuan-soccer-player', 'Antuan Soccer Player', 'Fútbol para pequeños cracks', 'Antuan, el número 10, sale a la cancha a llenar el estadio de goles.', '["img/apps/antuan-soccer-player.webp"]'::jsonb, 'disponible', 'teal', 4),
+('mano-arana-mutante', 'La Mano Araña Mutante', 'Escapa del laboratorio', 'Una mano con patas de araña escapa del laboratorio esquivando zapatos, matamoscas y spray.', '["img/apps/mano-arana-mutante.webp"]'::jsonb, 'disponible', 'grape', 5)
+on conflict (slug) do nothing;
+
+
+alter table public.chapters add column if not exists price_digital integer check (price_digital >= 0);
+alter table public.books    add column if not exists price_digital integer check (price_digital >= 0);
+
+-- Precios por libro: todos los capítulos de cada libro tienen el mismo valor.
+-- Los libros se buscan por título (y subtítulo en La Princesa Gato), sin importar mayúsculas.
+with precios(titulo, subtitulo, fisico, digital) as (values
+  ('%chanchini%',          '%',                 5990, 3500),
+  ('chinowon%',            '%',                 5990, 3500),
+  ('%barista%',            '%',                 3500, 3000),
+  ('tur%n%',               '%',                 3500, 3000),
+  ('%princesa gato%',      '%camanchaca%',      5990, 4990),
+  ('%princesa gato%',      '%nubes%',           5990, 4990),
+  ('%princesa gato%',      '%intercambio%',     5990, 4990),
+  ('%princesa gato%',      '%termales%',        5990, 4990),
+  ('%princesa gato%',      '%mar%ritual%',      5990, 4990),
+  ('update%',              '%',                 8990, 7990),
+  ('%cozy%',               '%',                 3500, 3200),
+  ('%colorea mejillones%', '%',                 3500, 3200)
+)
+update public.chapters ch
+set price = p.fisico, price_digital = p.digital
+from public.books b, precios p
+where ch.book_id = b.id
+  and b.title ilike p.titulo
+  and b.subtitle ilike p.subtitulo;
+
+-- Mi Yo Interior no tiene capítulos: se vende como libro completo
+update public.books
+set price_physical = 12990, price_digital = 8900
+where title ilike '%yo interior%';
+
+-- Juegos: ya se pueden descargar (WhatsApp / Google Play). iPhone en desarrollo.
+do $$
+begin
+  if to_regclass('public.apps') is not null then
+    update public.apps set status = 'disponible'
+    where slug in ('turron-go-home','turron-kofy-run','vector-beat','antuan-soccer-player','mano-arana-mutante');
+  end if;
+end $$;
+
+-- Videos promocionales de 10 segundos (carpeta video/ del sitio)
+alter table public.books add column if not exists video_url text not null default '';
+do $$
+begin
+  if to_regclass('public.apps') is not null then
+    alter table public.apps add column if not exists video_url text not null default '';
+    update public.apps set video_url = 'video/' || slug || '.mp4'
+    where slug in ('turron-go-home','vector-beat','antuan-soccer-player') and video_url = '';
+  end if;
+end $$;
+update public.books set video_url = 'video/chanchini.mp4'     where title ilike '%chanchini%'     and video_url = '';
+update public.books set video_url = 'video/chinowon.mp4'      where title ilike 'chinowon%'       and video_url = '';
+update public.books set video_url = 'video/barista.mp4'       where title ilike '%barista%'       and video_url = '';
+update public.books set video_url = 'video/princesa-gato.mp4' where title ilike '%princesa gato%' and video_url = '';
+
+-- Revisión: cada libro con sus precios
+select b.title as libro, b.subtitle as subtitulo,
+       count(ch.id) as capitulos,
+       coalesce(min(ch.price), b.price_physical) as fisico,
+       coalesce(min(ch.price_digital), b.price_digital) as digital
+from public.books b
+left join public.chapters ch on ch.book_id = b.id
+group by b.id, b.title, b.subtitle, b.price_physical, b.price_digital, b.sort_order
+order by b.sort_order;
+</script>
   <script>
     const config = window.KIHNALLY_CONFIG;
     const db = window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey);
@@ -189,10 +369,28 @@
       const { data: role } = await db.from('admin_users').select('user_id').eq('user_id', user.id).maybeSingle();
       if (!role) { await db.auth.signOut(); $('loginError').textContent = 'Este usuario no tiene permiso de administrador.'; $('loginError').classList.remove('hidden'); return showLogin(); }
       $('loginView').classList.add('hidden'); $('adminView').classList.remove('hidden'); $('sessionEmail').textContent = user.email;
-      await Promise.all([loadBooks(), loadApps(), loadReviews()]);
+      await Promise.all([loadBooks(), loadApps(), loadReviews(), checkDigital()]);
     }
     function showLogin() { $('adminView').classList.add('hidden'); $('loginView').classList.remove('hidden'); }
     async function logout() { await db.auth.signOut(); showLogin(); }
+
+    // ---------- Configuración pendiente en Supabase ----------
+    const SETUP_SQL = $('setupSql').textContent.trim();
+    const projectRef = (config.supabaseUrl.match(/https:\/\/([^.]+)\.supabase\.co/) || [])[1];
+    if (projectRef) $('openSqlEditor').href = `https://supabase.com/dashboard/project/${projectRef}/sql/new`;
+    $('sqlPreview').textContent = SETUP_SQL;
+    function showSetup() { $('setupBanner').classList.remove('hidden'); }
+    async function checkDigital() {
+      const { error } = await db.from('chapters').select('price_digital').limit(1);
+      const { error: e2 } = await db.from('books').select('video_url').limit(1);
+      if (error || e2) showSetup();
+    }
+    $('copySql').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(SETUP_SQL); }
+      catch (e) { const t = document.createElement('textarea'); t.value = SETUP_SQL; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+      $('copySql').textContent = 'Código copiado';
+      setTimeout(() => $('copySql').textContent = 'Copiar código', 3000);
+    });
 
     // ---------- Pestañas ----------
     document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
@@ -223,12 +421,20 @@
       if (error) throw error;
       return db.storage.from(config.storageBucket).getPublicUrl(path).data.publicUrl;
     }
+    async function uploadVideo(file) {
+      if (file.size > 15 * 1024 * 1024) throw new Error('El video pesa más de 15 MB. Acórtalo a ~10 segundos o comprímelo.');
+      const ext = (file.name.split('.').pop() || 'mp4').toLowerCase();
+      const path = `videos/${crypto.randomUUID()}.${ext}`;
+      const { error } = await db.storage.from(config.storageBucket).upload(path, file, { contentType: file.type || 'video/mp4', upsert: false });
+      if (error) throw error;
+      return db.storage.from(config.storageBucket).getPublicUrl(path).data.publicUrl;
+    }
     async function withSaving(btn, label, fn) {
       btn.disabled = true; btn.textContent = 'Guardando…';
       try { await fn(); } catch (error) { console.error(error); toast('No se pudo guardar: ' + error.message, true); }
       finally { btn.disabled = false; btn.textContent = label; }
     }
-    function visibleBadge(on) { return `<span class="text-xs font-extrabold px-2 py-1 rounded-full ${on ? 'bg-[#E6ECDF] text-[#2F3A2C]' : 'bg-slate-100 text-slate-500'}">${on ? 'Visible' : 'Oculto'}</span>`; }
+    function visibleBadge(on) { return `<span class="text-xs font-extrabold px-2 py-1 rounded-full ${on ? 'bg-[#E4F6EA] text-[#1F3A2B]' : 'bg-slate-100 text-slate-500'}">${on ? 'Visible' : 'Oculto'}</span>`; }
     function actions(edit, del) { return `<div class="flex gap-2 mt-4"><button onclick="${edit}" class="btn btn-line flex-1 py-2">Editar</button><button onclick="${del}" class="btn py-2 text-red-700 hover:bg-red-50">Eliminar</button></div>`; }
 
     // ================= LIBROS =================
@@ -243,8 +449,8 @@
       $('statPublished').textContent = books.filter(b => b.published).length;
       $('bookList').innerHTML = books.length ? books.map(book => `
         <article class="card">
-          <div class="flex gap-4"><div class="w-24 h-32 rounded-xl bg-[#E6ECDF] overflow-hidden flex-shrink-0">${book.image_url ? `<img src="${esc(imgPath(book.image_url))}" class="w-full h-full object-cover" alt="">` : ''}</div>
-          <div class="min-w-0"><div class="flex gap-2 items-center flex-wrap"><h3 class="fd font-semibold text-lg">${esc(book.title)}</h3>${visibleBadge(book.published)}</div><p class="text-sm text-[#656F5B] line-clamp-2">${esc(book.subtitle)}</p><p class="font-extrabold mt-2">${money(book.price_physical)}</p><p class="text-sm text-[#656F5B]">${book.chapters?.length || 0} capítulos${(book.chapters || []).some(ch => ch.price_digital) || book.price_digital ? ' · <b>con digital</b>' : ''}</p></div></div>
+          <div class="flex gap-4"><div class="w-24 h-32 rounded-xl bg-[#E4F6EA] overflow-hidden flex-shrink-0">${book.image_url ? `<img src="${esc(imgPath(book.image_url))}" class="w-full h-full object-cover" alt="">` : ''}</div>
+          <div class="min-w-0"><div class="flex gap-2 items-center flex-wrap"><h3 class="fd font-semibold text-lg">${esc(book.title)}</h3>${visibleBadge(book.published)}</div><p class="text-sm text-[#2F8552] line-clamp-2">${esc(book.subtitle)}</p><p class="font-extrabold mt-2">${money(book.price_physical)}</p><p class="text-sm text-[#2F8552]">${book.chapters?.length || 0} capítulos${(book.chapters || []).some(ch => ch.price_digital) || book.price_digital ? ' · <b>con digital</b>' : ''}</p></div></div>
           ${actions(`openBookEditor('${book.id}')`, `deleteRow('books','${book.id}')`)}
         </article>`).join('') : '<div class="card md:col-span-2 xl:col-span-3 text-center py-10">Todavía no hay libros. Agrega el primero.</div>';
     }
@@ -258,6 +464,7 @@
       $('imageUrl').value = book?.image_url || ''; $('previewUrls').value = JSON.stringify(book?.preview_images || []);
       $('chapters').value = (book?.chapters || []).sort((a, b) => a.sort_order - b.sort_order).map(ch => `${ch.name} | ${ch.price}${ch.price_digital ? ` | ${ch.price_digital}` : ''}`).join('\n');
       $('coverPreview').src = imgPath(book?.image_url); $('coverPreview').classList.toggle('hidden', !book?.image_url);
+      $('bookVideoUrl').value = book?.video_url || ''; $('bookVideoHint').textContent = book?.video_url ? 'Video actual: ' + book.video_url.split('/').pop() : 'Se muestra al tocar el libro, antes de la compra. Usa videos de menos de 15 MB.';
       showEditor('bookEditor');
     }
     $('title').addEventListener('input', () => { if (!$('bookId').value) $('slug').value = slugify($('title').value); });
@@ -267,7 +474,9 @@
       if ($('coverFile').files[0]) imageUrl = await uploadFile($('coverFile').files[0], 'covers', 1000);
       let previewImages = JSON.parse($('previewUrls').value || '[]');
       if ($('previewFiles').files.length) previewImages = await Promise.all([...$('previewFiles').files].map(f => uploadFile(f, 'previews', 1600)));
-      const payload = { slug:$('slug').value.trim(), title:$('title').value.trim(), subtitle:$('subtitle').value.trim(), description:$('description').value.trim(), image_url:imageUrl, preview_images:previewImages, badge:$('badge').value.trim() || 'Libro', color_key:$('colorKey').value, price_physical:Number($('pricePhysical').value) || 0, price_digital:Number($('priceDigital').value) || null, tags:$('tags').value.split(',').map(x => x.trim()).filter(Boolean), published:$('published').checked, sort_order:Number($('sortOrder').value) || 0 };
+      let videoUrl = $('bookVideoRemove').checked ? '' : $('bookVideoUrl').value;
+      if ($('bookVideoFile').files[0]) videoUrl = await uploadVideo($('bookVideoFile').files[0]);
+      const payload = { video_url:videoUrl, slug:$('slug').value.trim(), title:$('title').value.trim(), subtitle:$('subtitle').value.trim(), description:$('description').value.trim(), image_url:imageUrl, preview_images:previewImages, badge:$('badge').value.trim() || 'Libro', color_key:$('colorKey').value, price_physical:Number($('pricePhysical').value) || 0, price_digital:Number($('priceDigital').value) || null, tags:$('tags').value.split(',').map(x => x.trim()).filter(Boolean), published:$('published').checked, sort_order:Number($('sortOrder').value) || 0 };
       let bookId = currentId;
       if (currentId) { const { error } = await db.from('books').update(payload).eq('id', currentId); if (error) throw error; }
       else { const { data, error } = await db.from('books').insert(payload).select('id').single(); if (error) throw error; bookId = data.id; }
@@ -281,16 +490,16 @@
     const STATUS = { disponible: 'Disponible', beta: 'En prueba', proximamente: 'Próximamente' };
     async function loadApps() {
       const { data, error } = await db.from('apps').select('*').order('sort_order');
-      if (error) { $('appList').innerHTML = `<div class="card md:col-span-2 xl:col-span-3">Falta crear la tabla de apps. Ejecuta <b>actualizacion-apps-resenas.sql</b> en Supabase &gt; SQL Editor.</div>`; return; }
+      if (error) { showSetup(); $('appList').innerHTML = `<div class="card md:col-span-2 xl:col-span-3">Las apps se podrán agregar cuando completes el paso de Supabase que aparece arriba.</div>`; return; }
       apps = data || []; renderApps();
     }
     function renderApps() {
       $('countApps').textContent = `(${apps.length})`;
       $('appList').innerHTML = apps.length ? apps.map(app => `
         <article class="card">
-          <div class="flex gap-4 items-start">${app.icon_url ? `<img src="${esc(app.icon_url)}" class="w-16 h-16 rounded-2xl object-cover" alt="">` : '<div class="w-16 h-16 rounded-2xl bg-[#E6ECDF]"></div>'}
+          <div class="flex gap-4 items-start">${app.icon_url ? `<img src="${esc(app.icon_url)}" class="w-16 h-16 rounded-2xl object-cover" alt="">` : '<div class="w-16 h-16 rounded-2xl bg-[#E4F6EA]"></div>'}
           <div class="min-w-0"><div class="flex gap-2 items-center flex-wrap"><h3 class="fd font-semibold text-lg">${esc(app.name)}</h3>${visibleBadge(app.published)}</div>
-          <p class="text-sm font-bold text-[#656F5B]">${STATUS[app.status]}</p><p class="text-sm text-[#656F5B] line-clamp-2">${esc(app.tagline)}</p></div></div>
+          <p class="text-sm font-bold text-[#2F8552]">${STATUS[app.status]}</p><p class="text-sm text-[#2F8552] line-clamp-2">${esc(app.tagline)}</p></div></div>
           ${actions(`openAppEditor('${app.id}')`, `deleteRow('apps','${app.id}')`)}
         </article>`).join('') : '<div class="card md:col-span-2 xl:col-span-3 text-center py-10">Todavía no hay apps. Cuando tengas una en desarrollo, agrégala como "Próximamente".</div>';
     }
@@ -303,6 +512,7 @@
       $('linkAndroid').value = links.android || ''; $('linkIos').value = links.ios || ''; $('linkWeb').value = links.web || '';
       $('appIconUrl').value = app?.icon_url || ''; $('appShotUrls').value = JSON.stringify(app?.screenshots || []);
       $('appIconPreview').src = app?.icon_url || ''; $('appIconPreview').classList.toggle('hidden', !app?.icon_url);
+      $('appVideoUrl').value = app?.video_url || ''; $('appVideoHint').textContent = app?.video_url ? 'Video actual: ' + app.video_url.split('/').pop() : 'Se muestra al tocar la imagen del juego; al terminar aparecen las opciones de descarga.';
       $('appOrder').value = app?.sort_order ?? (apps.length + 1); $('appPublished').checked = app?.published ?? true;
       showEditor('appEditor');
     }
@@ -313,7 +523,9 @@
       let shots = JSON.parse($('appShotUrls').value || '[]');
       if ($('appShotFiles').files.length) shots = await Promise.all([...$('appShotFiles').files].map(f => uploadFile(f, 'apps', 1400)));
       const links = {}; [['android', 'linkAndroid'], ['ios', 'linkIos'], ['web', 'linkWeb']].forEach(([k, id]) => { if ($(id).value.trim()) links[k] = $(id).value.trim(); });
-      const payload = { slug:$('appSlug').value.trim(), name:$('appName').value.trim(), tagline:$('appTagline').value.trim(), description:$('appDescription').value.trim(), status:$('appStatus').value, color_key:$('appColor').value, links, icon_url:icon, screenshots:shots, sort_order:Number($('appOrder').value) || 0, published:$('appPublished').checked };
+      let videoUrl = $('appVideoRemove').checked ? '' : $('appVideoUrl').value;
+      if ($('appVideoFile').files[0]) videoUrl = await uploadVideo($('appVideoFile').files[0]);
+      const payload = { video_url:videoUrl, slug:$('appSlug').value.trim(), name:$('appName').value.trim(), tagline:$('appTagline').value.trim(), description:$('appDescription').value.trim(), status:$('appStatus').value, color_key:$('appColor').value, links, icon_url:icon, screenshots:shots, sort_order:Number($('appOrder').value) || 0, published:$('appPublished').checked };
       const id = $('appId').value;
       const { error } = id ? await db.from('apps').update(payload).eq('id', id) : await db.from('apps').insert(payload);
       if (error) throw error;
@@ -323,7 +535,7 @@
     // ================= RESEÑAS =================
     async function loadReviews() {
       const { data, error } = await db.from('reviews').select('*').order('sort_order');
-      if (error) { $('reviewList').innerHTML = `<div class="card md:col-span-2 xl:col-span-3">Falta crear la tabla de reseñas. Ejecuta <b>actualizacion-apps-resenas.sql</b> en Supabase &gt; SQL Editor.</div>`; return; }
+      if (error) { showSetup(); $('reviewList').innerHTML = `<div class="card md:col-span-2 xl:col-span-3">Las reseñas se podrán agregar cuando completes el paso de Supabase que aparece arriba.</div>`; return; }
       reviews = data || []; renderReviews();
     }
     function fillBookSelect() { $('revBook').innerHTML = '<option value="">General (sin libro)</option>' + books.map(b => `<option value="${esc(b.slug)}">${esc(b.title)}</option>`).join(''); }
@@ -332,8 +544,8 @@
       $('reviewList').innerHTML = reviews.length ? reviews.map(r => `
         <article class="card">
           <div class="flex gap-2 items-center flex-wrap"><b>${esc(r.author_name)}</b><span class="text-[#E0A100]">${'★'.repeat(r.rating)}</span>${visibleBadge(r.published)}</div>
-          <p class="mt-2 text-[#4A5745] line-clamp-3">“${esc(r.body)}”</p>
-          <p class="text-sm text-[#656F5B] mt-1">${esc(r.location)}${r.book_slug ? ` · ${esc(books.find(b => b.slug === r.book_slug)?.title || r.book_slug)}` : ''}</p>
+          <p class="mt-2 text-[#3D5A47] line-clamp-3">“${esc(r.body)}”</p>
+          <p class="text-sm text-[#2F8552] mt-1">${esc(r.location)}${r.book_slug ? ` · ${esc(books.find(b => b.slug === r.book_slug)?.title || r.book_slug)}` : ''}</p>
           ${actions(`openReviewEditor('${r.id}')`, `deleteRow('reviews','${r.id}')`)}
         </article>`).join('') : '<div class="card md:col-span-2 xl:col-span-3 text-center py-10">Todavía no hay reseñas. Pide a tus lectores su opinión por WhatsApp e ingrésala aquí.</div>';
     }
