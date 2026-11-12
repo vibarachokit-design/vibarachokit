@@ -193,6 +193,40 @@
 -- Se puede ejecutar más de una vez sin problema. No borra libros, precios ni capítulos.
 -- =====================================================================
 
+-- ---------- REQUISITOS (se crean si no existen) ----------
+create extension if not exists pgcrypto;
+
+create table if not exists public.admin_users (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  email text not null unique,
+  created_at timestamptz not null default now()
+);
+
+create or replace function public.is_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists(select 1 from public.admin_users where user_id = auth.uid());
+$$;
+
+create or replace function public.touch_updated_at()
+returns trigger language plpgsql as $$
+begin new.updated_at = now(); return new; end;
+$$;
+
+alter table public.admin_users enable row level security;
+drop policy if exists "Admins can view their role" on public.admin_users;
+create policy "Admins can view their role" on public.admin_users for select
+using (user_id = auth.uid());
+
+-- Administrador del panel (el usuario debe existir en Authentication > Users)
+insert into public.admin_users (user_id, email)
+select id, email from auth.users where lower(email) = lower('ibar.araya@gmail.com')
+on conflict (user_id) do update set email = excluded.email;
+
 -- ---------- APPS Y JUEGOS ----------
 create table if not exists public.apps (
   id text primary key default gen_random_uuid()::text,
