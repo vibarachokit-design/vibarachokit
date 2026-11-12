@@ -62,6 +62,7 @@
       <p class="mt-2 text-[#3D5A47] max-w-3xl">Para guardar apps, reseñas y precios digitales, la base de datos necesita unas tablas nuevas. Se crean pegando un código que ya está listo:</p>
       <ol class="mt-4 space-y-2 list-decimal pl-6 text-[#1F3A2B]">
         <li>Presiona <b>Copiar código</b>.</li>
+        <li>Revisa que la dirección del navegador en Supabase contenga <b id="projRef">lpjuwxywvuifjqoudglp</b>: ese es el proyecto de tu tienda. Si el código dice "PROYECTO EQUIVOCADO", cambia de proyecto.</li>
         <li>Presiona <b>Abrir el editor de Supabase</b> e inicia sesión si te lo pide. Se abre una consulta nueva en blanco (si no, en el menú izquierdo entra a <b>SQL Editor</b> y elige <b>New query</b>).</li>
         <li>Pega el código (Ctrl + V o ⌘ + V) y presiona el botón verde <b>Run</b>.</li>
         <li>Cuando diga <b>Success</b>, vuelve aquí y presiona <b>Ya lo hice</b>.</li>
@@ -192,6 +193,17 @@
 --
 -- Se puede ejecutar más de una vez sin problema. No borra libros, precios ni capítulos.
 -- =====================================================================
+
+-- ---------- PROTECCIÓN: solo se ejecuta en el proyecto de la tienda ----------
+do $$
+begin
+  if to_regclass('public.books') is null
+     or not exists (select 1 from information_schema.columns
+                    where table_schema = 'public' and table_name = 'books' and column_name = 'image_url')
+     or to_regclass('public.chapters') is null then
+    raise exception 'PROYECTO EQUIVOCADO: aquí no está la tienda VibaraChokiT. No se cambió nada. Abre el proyecto lpjuwxywvuifjqoudglp en Supabase y vuelve a ejecutar.';
+  end if;
+end $$;
 
 -- ---------- REQUISITOS (se crean si no existen) ----------
 create extension if not exists pgcrypto;
