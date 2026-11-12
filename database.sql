@@ -139,6 +139,9 @@ create table if not exists public.apps (
   icon_url text not null default '',
   screenshots jsonb not null default '[]'::jsonb,
   links jsonb not null default '{}'::jsonb,
+  segment text not null default 'juegos' check (segment in ('juegos','empresas')),
+  features jsonb not null default '[]'::jsonb,
+  audience text not null default '',
   video_url text not null default '',          -- {"android": "...", "ios": "...", "web": "..."}
   status text not null default 'proximamente' check (status in ('disponible','beta','proximamente')),
   color_key text not null default 'teal' check (color_key in ('coral','teal','sun','grape')),

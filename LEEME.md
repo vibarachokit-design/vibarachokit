@@ -1,7 +1,7 @@
 # VibaraChokiT · Estudio Creativo — cómo publicar esta versión
 
 ## 1. Sube los archivos a tu hosting / GitHub
-Reemplaza `index.html`, `admin.html`, `database.sql`, la carpeta `img/` completa (incluye `img/apps/`) y la carpeta nueva `video/`.
+Reemplaza `index.html`, `admin.html`, `database.sql`, sube el archivo nuevo `empresas.html`, la carpeta `img/` completa (incluye `img/apps/`) y la carpeta nueva `video/`.
 
 ## 2. Completa el paso de Supabase (una sola vez)
 Entra a `admin.html`. Si falta algo, verás un recuadro amarillo con el botón **Copiar código** y el enlace
@@ -14,6 +14,7 @@ precios digitales, pasa las imágenes a WebP y carga los 5 juegos. No borra nada
 **¿Ya habías hecho este paso antes?** Ejecuta también `actualizacion-precios.sql` (SQL Editor → New query →
 pegar → Run). Carga los precios físico y digital de la planilla, marca los juegos como disponibles y asigna los videos.
 Al final muestra una tabla para revisar cada libro. Si nunca hiciste el paso, el botón del panel ya lo incluye.
+Para la página de empresas ejecuta también `actualizacion-empresas.sql` (agrega Sección, Funciones y Para quién a las apps).
 
 ## 2b. Versión digital
 En el panel, agrega el precio digital a cada capítulo: `Capítulo 1 | 3500 | 1990` (físico | digital).
@@ -28,6 +29,9 @@ y dónde enviar los digitales (este WhatsApp o un correo).
 - **Apps y juegos**: agrega cada app con estado *Próximamente*, *En prueba* o *Disponible*,
   y los enlaces a Google Play, App Store o web. Los 5 juegos vienen como *Disponible*: muestran
   "Descargar por WhatsApp" y, mientras no haya enlace de App Store, "iPhone: en desarrollo".
+- **Aplicaciones empresariales** (`empresas.html`): en "Apps, juegos y empresas" elige *Sección: Aplicaciones
+  empresariales*. Completa funciones (una por línea), áreas a las que apunta y, si tienes, un enlace web de demo.
+  Mientras no haya ninguna, la página muestra 3 soluciones de ejemplo.
 - **Videos**: cada libro y juego puede tener un video de ~10 s (MP4, menos de 15 MB). Al tocar el libro
   se reproduce y luego se abre la compra; en los juegos, al terminar aparecen las opciones de descarga.
   Los 7 videos actuales están en la carpeta `video/`.

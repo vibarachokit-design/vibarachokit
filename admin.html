@@ -76,7 +76,7 @@
 
     <div class="flex flex-wrap gap-2 mb-6" role="tablist">
       <button class="tab" role="tab" data-tab="books" aria-selected="true">Libros <span id="countBooks"></span></button>
-      <button class="tab" role="tab" data-tab="apps" aria-selected="false">Apps y juegos <span id="countApps"></span></button>
+      <button class="tab" role="tab" data-tab="apps" aria-selected="false">Apps, juegos y empresas <span id="countApps"></span></button>
       <button class="tab" role="tab" data-tab="reviews" aria-selected="false">Reseñas <span id="countReviews"></span></button>
     </div>
 
@@ -142,8 +142,11 @@
       <div class="grid md:grid-cols-2 gap-5">
         <div><label class="label" for="appName">Nombre</label><input id="appName" class="field" required></div>
         <div><label class="label" for="appSlug">Identificador</label><input id="appSlug" class="field" pattern="[a-z0-9-]+" required></div>
+        <div class="md:col-span-2"><label class="label" for="appSegment">Sección</label><select id="appSegment" class="field"><option value="juegos">Juegos (tienda principal)</option><option value="empresas">Aplicaciones empresariales (empresas.html)</option></select></div>
         <div class="md:col-span-2"><label class="label" for="appTagline">Frase corta</label><input id="appTagline" class="field" placeholder="Juego de preguntas para niños"></div>
         <div class="md:col-span-2"><label class="label" for="appDescription">Descripción</label><textarea id="appDescription" class="field" rows="3"></textarea></div>
+        <div class="md:col-span-2 biz-only hidden"><label class="label" for="appFeatures">Funciones principales (una por línea)</label><textarea id="appFeatures" class="field" rows="4" placeholder="Simulador del procedimiento paso a paso&#10;Evaluación final con puntaje"></textarea></div>
+        <div class="md:col-span-2 biz-only hidden"><label class="label" for="appAudience">Para quién (áreas)</label><input id="appAudience" class="field" placeholder="Seguridad, Operaciones, Recursos Humanos"><p class="hint">El enlace "web" se muestra como "Ver demo en línea". En empresas, "En prueba" se muestra como "Piloto".</p></div>
         <div><label class="label" for="appStatus">Estado</label><select id="appStatus" class="field"><option value="proximamente">Próximamente</option><option value="beta">En prueba</option><option value="disponible">Disponible</option></select></div>
         <div><label class="label" for="appColor">Color</label><select id="appColor" class="field"><option value="teal">Mar</option><option value="coral">Frambuesa</option><option value="sun">Yema</option><option value="grape">Lavanda</option></select></div>
         <div><label class="label" for="linkAndroid">Enlace Google Play</label><input id="linkAndroid" class="field" type="url" placeholder="https://play.google.com/..."></div>
@@ -337,6 +340,19 @@ from public.books b
 left join public.chapters ch on ch.book_id = b.id
 group by b.id, b.title, b.subtitle, b.price_physical, b.price_digital, b.sort_order
 order by b.sort_order;
+
+-- Aplicaciones empresariales
+do $$
+begin
+  if to_regclass('public.apps') is not null then
+    alter table public.apps add column if not exists segment text not null default 'juegos';
+    alter table public.apps add column if not exists features jsonb not null default '[]'::jsonb;
+    alter table public.apps add column if not exists audience text not null default '';
+    alter table public.apps add column if not exists video_url text not null default '';
+    alter table public.apps drop constraint if exists apps_segment_check;
+    alter table public.apps add constraint apps_segment_check check (segment in ('juegos','empresas'));
+  end if;
+end $$;
 </script>
   <script>
     const config = window.KIHNALLY_CONFIG;
@@ -383,7 +399,8 @@ order by b.sort_order;
     async function checkDigital() {
       const { error } = await db.from('chapters').select('price_digital').limit(1);
       const { error: e2 } = await db.from('books').select('video_url').limit(1);
-      if (error || e2) showSetup();
+      const { error: e3 } = await db.from('apps').select('segment').limit(1);
+      if (error || e2 || e3) showSetup();
     }
     $('copySql').addEventListener('click', async () => {
       try { await navigator.clipboard.writeText(SETUP_SQL); }
@@ -499,15 +516,19 @@ order by b.sort_order;
         <article class="card">
           <div class="flex gap-4 items-start">${app.icon_url ? `<img src="${esc(app.icon_url)}" class="w-16 h-16 rounded-2xl object-cover" alt="">` : '<div class="w-16 h-16 rounded-2xl bg-[#E4F6EA]"></div>'}
           <div class="min-w-0"><div class="flex gap-2 items-center flex-wrap"><h3 class="fd font-semibold text-lg">${esc(app.name)}</h3>${visibleBadge(app.published)}</div>
-          <p class="text-sm font-bold text-[#2F8552]">${STATUS[app.status]}</p><p class="text-sm text-[#2F8552] line-clamp-2">${esc(app.tagline)}</p></div></div>
+          <p class="text-sm font-bold text-[#2F8552]">${app.segment === 'empresas' ? '🏢 Empresas · ' : '🎮 Juegos · '}${STATUS[app.status]}</p><p class="text-sm text-[#2F8552] line-clamp-2">${esc(app.tagline)}</p></div></div>
           ${actions(`openAppEditor('${app.id}')`, `deleteRow('apps','${app.id}')`)}
         </article>`).join('') : '<div class="card md:col-span-2 xl:col-span-3 text-center py-10">Todavía no hay apps. Cuando tengas una en desarrollo, agrégala como "Próximamente".</div>';
     }
+    function toggleBiz() { document.querySelectorAll('.biz-only').forEach(el => el.classList.toggle('hidden', $('appSegment').value !== 'empresas')); }
+    $('appSegment').addEventListener('change', toggleBiz);
     function openAppEditor(id = '') {
       const app = apps.find(a => a.id === id); const links = app?.links || {};
       $('appForm').reset(); $('appId').value = app?.id || ''; $('appEditorTitle').textContent = app ? 'Editar app' : 'Agregar app';
       $('appName').value = app?.name || ''; $('appSlug').value = app?.slug || ''; $('appSlug').disabled = Boolean(app);
       $('appTagline').value = app?.tagline || ''; $('appDescription').value = app?.description || '';
+      $('appSegment').value = app?.segment || 'juegos'; toggleBiz();
+      $('appFeatures').value = (app?.features || []).join('\n'); $('appAudience').value = app?.audience || '';
       $('appStatus').value = app?.status || 'proximamente'; $('appColor').value = app?.color_key || 'teal';
       $('linkAndroid').value = links.android || ''; $('linkIos').value = links.ios || ''; $('linkWeb').value = links.web || '';
       $('appIconUrl').value = app?.icon_url || ''; $('appShotUrls').value = JSON.stringify(app?.screenshots || []);
@@ -525,7 +546,7 @@ order by b.sort_order;
       const links = {}; [['android', 'linkAndroid'], ['ios', 'linkIos'], ['web', 'linkWeb']].forEach(([k, id]) => { if ($(id).value.trim()) links[k] = $(id).value.trim(); });
       let videoUrl = $('appVideoRemove').checked ? '' : $('appVideoUrl').value;
       if ($('appVideoFile').files[0]) videoUrl = await uploadVideo($('appVideoFile').files[0]);
-      const payload = { video_url:videoUrl, slug:$('appSlug').value.trim(), name:$('appName').value.trim(), tagline:$('appTagline').value.trim(), description:$('appDescription').value.trim(), status:$('appStatus').value, color_key:$('appColor').value, links, icon_url:icon, screenshots:shots, sort_order:Number($('appOrder').value) || 0, published:$('appPublished').checked };
+      const payload = { segment:$('appSegment').value, features:$('appFeatures').value.split('\n').map(x => x.trim()).filter(Boolean), audience:$('appAudience').value.trim(), video_url:videoUrl, slug:$('appSlug').value.trim(), name:$('appName').value.trim(), tagline:$('appTagline').value.trim(), description:$('appDescription').value.trim(), status:$('appStatus').value, color_key:$('appColor').value, links, icon_url:icon, screenshots:shots, sort_order:Number($('appOrder').value) || 0, published:$('appPublished').checked };
       const id = $('appId').value;
       const { error } = id ? await db.from('apps').update(payload).eq('id', id) : await db.from('apps').insert(payload);
       if (error) throw error;
