@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplicaciones empresariales · VibaraChokiT</title>
+  <meta name="description" content="Aplicaciones web para empresas: capacitaciones interactivas de procedimientos, paneles de indicadores e inspecciones en terreno. Desarrolladas en Mejillones, Chile.">
+  <meta name="theme-color" content="#14251C">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <meta property="og:title" content="Aplicaciones empresariales · VibaraChokiT">
+  <meta property="og:description" content="Convertimos procedimientos y planillas en aplicaciones web simples de usar.">
+  <meta property="og:image" content="img/icono-512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:     { DEFAULT: '#14251C', 700: '#1E3529', 600: '#3B4F44', 500: '#5B6E63' },
+            brand:   { DEFAULT: '#2F8552', 600: '#256B42', 100: '#E3F1E8', 50: '#F1F8F3' },
+            surface: '#F4F7F5',
+            line:    '#DCE4DF',
+            yolk:    '#FFC233',
+            wasap:   '#25D366'
+          },
+          fontFamily: { sans: ['Manrope', 'system-ui', 'sans-serif'] }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root { --ink:#14251C; --brand:#2F8552; --line:#DCE4DF; --surface:#F4F7F5; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body { background: #fff; color: var(--ink); font-feature-settings: "ss01"; }
+    :focus-visible { outline: 3px solid #FFC233; outline-offset: 3px; border-radius: 8px; }
+    .nav-s { box-shadow: 0 1px 0 var(--line); background: rgba(255,255,255,.96); backdrop-filter: blur(12px); }
+    .field { width: 100%; border: 1.5px solid var(--line); border-radius: 10px; padding: 11px 14px; background: #fff; font-weight: 500; }
+    .field:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(47,133,82,.15); }
+    .grid-bg { background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 48px 48px; }
+    /* Maqueta del producto en el hero */
+    .mock { box-shadow: 0 1px 0 rgba(20,37,28,.04), 0 30px 60px -30px rgba(20,37,28,.45); }
+    .bar-fill { transform-origin: left; animation: fill 1.4s cubic-bezier(.2,.8,.2,1) .4s both; }
+    @keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body class="font-sans antialiased">
+
+  <a href="#soluciones" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] bg-ink text-white px-4 py-2 rounded-lg">Saltar a las soluciones</a>
+
+  <!-- NAV -->
+  <nav id="nav" class="fixed top-0 inset-x-0 z-50 bg-white transition-shadow" aria-label="Principal">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between gap-6">
+      <a href="empresas.html" class="flex items-center gap-3" aria-label="VibaraChokiT Empresas, inicio">
+        <img src="img/logo-icono.png" alt="" class="w-10 h-auto">
+        <span class="leading-tight">
+          <span class="block font-extrabold tracking-tight text-[17px]">VibaraChokiT</span>
+          <span class="block text-[13px] font-semibold text-brand">Aplicaciones empresariales</span>
+        </span>
+      </a>
+      <div class="hidden md:flex items-center gap-7 text-[15px] font-semibold text-ink-600">
+        <a href="#soluciones" class="hover:text-ink">Soluciones</a>
+        <a href="#proceso" class="hover:text-ink">Cómo trabajamos</a>
+        <a href="#contacto" class="hover:text-ink">Contacto</a>
+        <a href="index.html" class="hover:text-ink">Libros y juegos</a>
+        <a href="#contacto" class="bg-ink text-white rounded-lg px-4 py-2.5 hover:bg-ink-700">Solicitar una demo</a>
+      </div>
+      <a href="#contacto" class="md:hidden whitespace-nowrap bg-ink text-white rounded-lg px-4 py-2.5 text-sm font-bold">Solicitar demo</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="relative pt-[120px] pb-20 lg:pb-28 overflow-hidden border-b border-line">
+    <div class="absolute inset-0 grid-bg opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" aria-hidden="true"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[1fr_1.05fr] gap-14 items-center">
+      <div class="min-w-0">
+        <h1 class="text-[2.5rem] leading-[1.05] sm:text-[3.4rem] lg:text-[3.9rem] font-extrabold tracking-[-0.03em]">
+          Tus procesos, convertidos en aplicaciones que tu equipo sí usa.
+        </h1>
+        <p class="mt-6 text-lg text-ink-600 leading-relaxed max-w-[34rem]">
+          Transformamos procedimientos, planillas y formularios en aplicaciones web simples: capacitaciones interactivas, paneles de indicadores e inspecciones en terreno. Funcionan en el celular y en el computador, sin instalar nada.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a href="#contacto" class="inline-flex items-center gap-2 bg-ink text-white font-bold rounded-lg px-6 py-4 hover:bg-ink-700">Solicitar una demo</a>
+          <a href="#soluciones" class="inline-flex items-center gap-2 bg-white border-[1.5px] border-line font-bold rounded-lg px-6 py-4 hover:border-ink">Ver soluciones</a>
+        </div>
+        <p class="mt-8 text-sm text-ink-500 max-w-md">Desarrollado en Mejillones, Región de Antofagasta, para empresas de cualquier tamaño.</p>
+      </div>
+
+      <!-- Maqueta: capacitación interactiva + indicador -->
+      <div class="relative min-w-0 mb-16 lg:mb-0" aria-hidden="true">
+        <div class="mock rounded-2xl border border-line bg-white overflow-hidden">
+          <div class="flex items-center gap-2 px-4 h-10 border-b border-line bg-surface">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#E06C5E]"></span><span class="w-2.5 h-2.5 rounded-full bg-yolk"></span><span class="w-2.5 h-2.5 rounded-full bg-brand"></span>
+            <span class="ml-3 text-xs font-semibold text-ink-500 truncate">capacitacion.tuempresa.cl / procedimiento-de-bloqueo</span>
+          </div>
+          <div class="grid sm:grid-cols-[180px_1fr]">
+            <aside class="hidden sm:block border-r border-line p-4 bg-white">
+              <p class="text-[11px] font-bold text-ink-500">Módulos</p>
+              <ul class="mt-3 space-y-1.5 text-[13px] font-semibold">
+                <li class="flex items-center gap-2 text-ink-500"><span class="w-4 h-4 rounded-full bg-brand text-white grid place-items-center text-[9px]">✓</span>Objetivo y alcance</li>
+                <li class="flex items-center gap-2 text-ink-500"><span class="w-4 h-4 rounded-full bg-brand text-white grid place-items-center text-[9px]">✓</span>Riesgos</li>
+                <li class="flex items-center gap-2 bg-brand-50 text-ink rounded-md -mx-2 px-2 py-1"><span class="w-4 h-4 rounded-full border-2 border-brand"></span>Simulador</li>
+                <li class="flex items-center gap-2 text-ink-500"><span class="w-4 h-4 rounded-full border-2 border-line"></span>Repaso</li>
+                <li class="flex items-center gap-2 text-ink-500"><span class="w-4 h-4 rounded-full border-2 border-line"></span>Evaluación</li>
+              </ul>
+            </aside>
+            <div class="p-5 sm:p-6">
+              <div class="flex items-center justify-between text-xs font-bold text-ink-500"><span>Paso 3 de 6</span><span>50%</span></div>
+              <div class="mt-2 h-2 rounded-full bg-surface overflow-hidden"><div class="bar-fill h-full w-1/2 bg-brand rounded-full"></div></div>
+              <p class="mt-5 text-lg font-extrabold leading-snug">Antes de intervenir el equipo, ¿qué haces primero?</p>
+              <div class="mt-4 space-y-2 text-sm font-semibold">
+                <div class="border-[1.5px] border-line rounded-lg px-3.5 py-2.5">Retiro la protección del equipo</div>
+                <div class="border-[1.5px] border-brand bg-brand-50 rounded-lg px-3.5 py-2.5 flex items-center justify-between">Aíslo la energía y coloco mi candado <span class="text-brand font-extrabold">Correcto</span></div>
+                <div class="border-[1.5px] border-line rounded-lg px-3.5 py-2.5">Aviso al supervisor al terminar</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mock absolute -bottom-20 right-4 sm:right-8 w-[230px] rounded-xl border border-line bg-white p-4">
+          <p class="text-xs font-bold text-ink-500">Capacitados este mes</p>
+          <p class="mt-1 text-3xl font-extrabold tracking-tight">86<span class="text-base text-ink-500 font-bold"> / 104</span></p>
+          <div class="mt-3 flex items-end gap-1.5 h-12">
+            <span class="flex-1 bg-brand-100 rounded-sm h-[35%]"></span><span class="flex-1 bg-brand-100 rounded-sm h-[50%]"></span><span class="flex-1 bg-brand-100 rounded-sm h-[45%]"></span><span class="flex-1 bg-brand-100 rounded-sm h-[70%]"></span><span class="flex-1 bg-brand rounded-sm h-[83%]"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SOLUCIONES -->
+  <section id="soluciones" class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl sm:text-[2.6rem] font-extrabold tracking-[-0.02em] leading-tight">Soluciones</h2>
+        <p class="mt-4 text-lg text-ink-600">Cada aplicación se adapta a los procedimientos, la marca y los usuarios de tu empresa.</p>
+      </div>
+      <div id="bizGrid" class="mt-12 grid md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section id="proceso" class="py-20 lg:py-28 bg-surface border-y border-line">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-20">
+      <div>
+        <h2 class="text-3xl sm:text-[2.6rem] font-extrabold tracking-[-0.02em] leading-tight">Cómo trabajamos</h2>
+        <p class="mt-4 text-lg text-ink-600 max-w-md">De tu documento a una aplicación en uso, con revisiones en cada etapa y sin compromisos largos para partir.</p>
+      </div>
+      <ol class="grid sm:grid-cols-2 gap-x-10 gap-y-12">
+        <li class="border-t-2 border-ink pt-5"><p class="text-sm font-extrabold text-brand">Paso 1</p><h3 class="mt-2 text-xl font-extrabold">Diagnóstico</h3><p class="mt-2 text-ink-600">Revisamos contigo el proceso, el documento o la planilla y definimos qué debe hacer la aplicación y quién la usará.</p></li>
+        <li class="border-t-2 border-ink pt-5"><p class="text-sm font-extrabold text-brand">Paso 2</p><h3 class="mt-2 text-xl font-extrabold">Prototipo</h3><p class="mt-2 text-ink-600">Te mostramos una primera versión navegable para que tu equipo la pruebe y la comente antes de cerrarla.</p></li>
+        <li class="border-t-2 border-ink pt-5"><p class="text-sm font-extrabold text-brand">Paso 3</p><h3 class="mt-2 text-xl font-extrabold">Implementación</h3><p class="mt-2 text-ink-600">Publicamos la aplicación con tus usuarios, tu logo y tus colores, y capacitamos a quienes la administrarán.</p></li>
+        <li class="border-t-2 border-ink pt-5"><p class="text-sm font-extrabold text-brand">Paso 4</p><h3 class="mt-2 text-xl font-extrabold">Soporte y mejoras</h3><p class="mt-2 text-ink-600">Ajustamos contenidos cuando cambia el procedimiento y sumamos funciones según lo que pida el equipo.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- QUÉ INCLUYE -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl sm:text-[2.6rem] font-extrabold tracking-[-0.02em] leading-tight max-w-2xl">Lo que incluye cada aplicación</h2>
+      <dl class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-line border border-line rounded-2xl overflow-hidden">
+        <div class="bg-white p-7"><dt class="flex items-center gap-3 font-extrabold text-lg"><svg viewBox="0 0 24 24" class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18h2"/></svg>Celular, tablet y computador</dt><dd class="mt-2 text-ink-600">Se abre desde un enlace, sin descargar ni instalar programas.</dd></div>
+        <div class="bg-white p-7"><dt class="flex items-center gap-3 font-extrabold text-lg"><svg viewBox="0 0 24 24" class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Acceso por usuario</dt><dd class="mt-2 text-ink-600">Cada persona entra con su cuenta y ve solo lo que le corresponde.</dd></div>
+        <div class="bg-white p-7"><dt class="flex items-center gap-3 font-extrabold text-lg"><svg viewBox="0 0 24 24" class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Reportes descargables</dt><dd class="mt-2 text-ink-600">Resultados y avance exportables a Excel o PDF para tus informes.</dd></div>
+        <div class="bg-white p-7"><dt class="flex items-center gap-3 font-extrabold text-lg"><svg viewBox="0 0 24 24" class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/></svg>Tus datos son tuyos</dt><dd class="mt-2 text-ink-600">La información queda en una base de datos de tu empresa, con respaldo.</dd></div>
+        <div class="bg-white p-7"><dt class="flex items-center gap-3 font-extrabold text-lg"><svg viewBox="0 0 24 24" class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/></svg>Soporte en español</dt><dd class="mt-2 text-ink-600">Atención directa por WhatsApp y correo, desde Chile.</dd></div>
+        <div class="bg-white p-7"><dt class="flex items-center gap-3 font-extrabold text-lg"><svg viewBox="0 0 24 24" class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Con tu imagen</dt><dd class="mt-2 text-ink-600">Logo, colores y lenguaje de tu empresa en cada pantalla.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="py-20 lg:py-28 bg-ink text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-20">
+      <div>
+        <h2 class="text-3xl sm:text-[2.6rem] font-extrabold tracking-[-0.02em] leading-tight">Conversemos sobre tu proceso</h2>
+        <p class="mt-4 text-lg text-white/75 max-w-md">Cuéntanos qué necesitas y te mostramos una demo con un caso parecido al tuyo. Respondemos por WhatsApp.</p>
+        <ul class="mt-10 space-y-4 text-white/85 font-semibold">
+          <li class="flex items-center gap-3"><svg viewBox="0 0 24 24" class="w-5 h-5 text-yolk" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg><a href="https://wa.me/56995436140" target="_blank" rel="noopener" class="hover:text-white">+56 9 9543 6140</a></li>
+          <li class="flex items-center gap-3"><svg viewBox="0 0 24 24" class="w-5 h-5 text-yolk" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Mejillones, Región de Antofagasta</li>
+        </ul>
+      </div>
+      <form id="demoForm" class="bg-white text-ink rounded-2xl p-6 sm:p-8 grid sm:grid-cols-2 gap-5" novalidate>
+        <label class="block"><span class="text-sm font-bold">Nombre</span><input id="fName" class="field mt-1.5" autocomplete="name" required></label>
+        <label class="block"><span class="text-sm font-bold">Empresa</span><input id="fCompany" class="field mt-1.5" autocomplete="organization" required></label>
+        <label class="block"><span class="text-sm font-bold">Cargo</span><input id="fRole" class="field mt-1.5" autocomplete="organization-title"></label>
+        <label class="block"><span class="text-sm font-bold">Correo</span><input id="fEmail" type="email" class="field mt-1.5" autocomplete="email"></label>
+        <label class="block sm:col-span-2"><span class="text-sm font-bold">Solución de interés</span><select id="fSolution" class="field mt-1.5"></select></label>
+        <label class="block sm:col-span-2"><span class="text-sm font-bold">¿Qué necesitas resolver?</span><textarea id="fNeed" rows="4" class="field mt-1.5" placeholder="Ej.: capacitar a 120 trabajadores en un procedimiento nuevo antes de fin de mes." required></textarea></label>
+        <p id="fError" class="hidden sm:col-span-2 text-[#C2402F] font-bold" role="alert"></p>
+        <button class="sm:col-span-2 bg-wasap text-white font-extrabold rounded-lg px-6 py-4 hover:brightness-95">Enviar solicitud por WhatsApp</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="bg-ink text-white/60 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between text-sm">
+      <div class="flex items-center gap-3"><img src="img/logo-icono.png" alt="" class="w-8 brightness-0 invert opacity-80">© <span id="year">2026</span> VibaraChokiT Estudio Creativo</div>
+      <div class="flex gap-6"><a href="index.html" class="hover:text-white">Libros y juegos</a><a href="#soluciones" class="hover:text-white">Soluciones</a><a href="#contacto" class="hover:text-white">Contacto</a></div>
+    </div>
+  </footer>
+
+  <script>
+  (function() {
+    'use strict';
+    const WA = '56995436140';
+    const $ = id => document.getElementById(id);
+    const esc = v => String(v ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+
+    // Soluciones de ejemplo: se muestran mientras no haya aplicaciones empresariales en el panel
+    let SOLUTIONS = [
+      { slug: 'capacitacion-interactiva', name: 'Capacitación interactiva de procedimientos', tagline: 'De un documento Word o PDF a un curso web',
+        description: 'Convierte un procedimiento en una capacitación que se completa desde el celular: contenidos claros, simulador paso a paso, juegos de repaso y evaluación final.',
+        features: ['Simulador del procedimiento paso a paso', 'Juegos de repaso para fijar contenidos', 'Evaluación final con puntaje', 'Reporte de quién se capacitó y con qué nota'],
+        audience: 'Seguridad, Operaciones, Recursos Humanos', status: 'disponible', icon: 'train' },
+      { slug: 'panel-indicadores', name: 'Panel de indicadores', tagline: 'Tus planillas convertidas en un tablero',
+        description: 'Reúne los datos que hoy viven en distintas planillas Excel en un panel con gráficos, filtros y alertas que todo el equipo puede consultar.',
+        features: ['Gráficos actualizados desde tus planillas', 'Filtros por área, faena y periodo', 'Exportación a PDF y Excel'],
+        audience: 'Gerencias, Control de gestión', status: 'beta', icon: 'chart' },
+      { slug: 'inspecciones-terreno', name: 'Checklist e inspecciones en terreno', tagline: 'Formularios móviles con fotos',
+        description: 'Reemplaza los formularios en papel por un checklist en el celular, con fotos, firma y ubicación, que llega de inmediato a la oficina.',
+        features: ['Funciona en terreno con señal débil', 'Fotos, firma y ubicación en cada registro', 'Hallazgos con responsable y plazo'],
+        audience: 'Mantenimiento, Prevención de riesgos', status: 'proximamente', icon: 'check' }
+    ];
+    const STATUS = {
+      disponible:   { label: 'Disponible',    cls: 'bg-brand-100 text-brand-600' },
+      beta:         { label: 'Piloto',        cls: 'bg-[#FFF3D1] text-[#8A6100]' },
+      proximamente: { label: 'En desarrollo', cls: 'bg-surface text-ink-500 border border-line' }
+    };
+    const ICONS = {
+      train: '<path d="M4 5h16v11H4z"/><path d="M8 20h8M12 16v4"/><path d="m10 8.5 4 2-4 2z" fill="currentColor"/>',
+      chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+      check: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="m9 12 2 2 4-4"/>',
+      app:   '<rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/>'
+    };
+
+    async function load() {
+      const cfg = window.KIHNALLY_CONFIG;
+      if (!cfg || !window.supabase) return;
+      try {
+        const db = window.supabase.createClient(cfg.supabaseUrl, cfg.supabasePublishableKey);
+        const { data, error } = await db.from('apps').select('*').eq('published', true).eq('segment', 'empresas').order('sort_order');
+        if (!error && data && data.length) SOLUTIONS = data.map(a => ({ ...a, icon: 'app' }));
+      } catch (e) { /* se mantienen las soluciones de ejemplo */ }
+    }
+
+    function render() {
+      $('bizGrid').innerHTML = SOLUTIONS.map(s => {
+        const st = STATUS[s.status] || STATUS.disponible;
+        const features = Array.isArray(s.features) ? s.features : [];
+        const links = s.links || {};
+        const img = (s.screenshots || [])[0];
+        const ask = encodeURIComponent(`Hola, quiero una demo de "${s.name}" para mi empresa.`);
+        return `
+          <article class="group flex flex-col rounded-2xl border border-line bg-white p-7 hover:border-ink-500 transition-colors">
+            ${img ? `<img src="${esc(img)}" alt="" class="-mx-7 -mt-7 mb-6 w-[calc(100%+3.5rem)] max-w-none aspect-[16/9] object-cover rounded-t-2xl border-b border-line" loading="lazy">` : ''}
+            <div class="flex items-start justify-between gap-4">
+              ${s.icon_url ? `<img src="${esc(s.icon_url)}" alt="" class="w-12 h-12 rounded-xl object-cover">`
+                : `<span class="w-12 h-12 rounded-xl bg-brand-50 text-brand grid place-items-center"><svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[s.icon] || ICONS.app}</svg></span>`}
+              <span class="text-xs font-extrabold rounded-full px-3 py-1.5 ${st.cls}">${st.label}</span>
+            </div>
+            <h3 class="mt-6 text-xl font-extrabold leading-snug">${esc(s.name)}</h3>
+            ${s.tagline ? `<p class="mt-1 font-semibold text-brand">${esc(s.tagline)}</p>` : ''}
+            <p class="mt-3 text-ink-600 leading-relaxed">${esc(s.description)}</p>
+            ${features.length ? `<ul class="mt-5 space-y-2.5 text-[15px] font-semibold">${features.map(f => `
+              <li class="flex gap-2.5"><svg viewBox="0 0 24 24" class="w-5 h-5 shrink-0 text-brand mt-0.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg>${esc(f)}</li>`).join('')}</ul>` : ''}
+            ${s.audience ? `<p class="mt-6 pt-5 border-t border-line text-sm text-ink-500"><span class="font-bold text-ink-600">Para:</span> ${esc(s.audience)}</p>` : '<div class="mt-6"></div>'}
+            <div class="mt-auto pt-6 flex flex-wrap gap-2">
+              <a href="https://wa.me/${WA}?text=${ask}" target="_blank" rel="noopener" class="inline-flex items-center bg-ink text-white font-bold rounded-lg px-4 py-2.5 hover:bg-ink-700">Solicitar demo</a>
+              ${links.web ? `<a href="${esc(links.web)}" target="_blank" rel="noopener" class="inline-flex items-center border-[1.5px] border-line font-bold rounded-lg px-4 py-2.5 hover:border-ink">Ver demo en línea</a>` : ''}
+            </div>
+          </article>`;
+      }).join('');
+      $('fSolution').innerHTML = '<option value="">Todavía no lo sé</option>' + SOLUTIONS.map(s => `<option>${esc(s.name)}</option>`).join('') + '<option>Otra / a la medida</option>';
+    }
+
+    $('demoForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const v = id => $(id).value.trim();
+      const err = (m, el) => { $('fError').textContent = m; $('fError').classList.remove('hidden'); el.focus(); };
+      $('fError').classList.add('hidden');
+      if (!v('fName')) return err('Escribe tu nombre.', $('fName'));
+      if (!v('fCompany')) return err('Escribe el nombre de tu empresa.', $('fCompany'));
+      if (v('fEmail') && !/^\S+@\S+\.\S+$/.test(v('fEmail'))) return err('Revisa el correo: parece incompleto.', $('fEmail'));
+      if (!v('fNeed')) return err('Cuéntanos brevemente qué necesitas resolver.', $('fNeed'));
+      let msg = `🏢 *Solicitud de demo · Aplicaciones empresariales*\n\nNombre: ${v('fName')}\nEmpresa: ${v('fCompany')}`;
+      if (v('fRole')) msg += `\nCargo: ${v('fRole')}`;
+      if (v('fEmail')) msg += `\nCorreo: ${v('fEmail')}`;
+      msg += `\nSolución: ${v('fSolution') || 'Todavía no lo sé'}\n\nNecesidad:\n${v('fNeed')}`;
+      window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank');
+    });
+
+    const onScroll = () => $('nav').classList.toggle('nav-s', scrollY > 10);
+    addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    $('year').textContent = new Date().getFullYear();
+    render();
+    load().then(render);
+  })();
+  </script>
+</body>
+</html>
